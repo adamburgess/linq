@@ -1,4 +1,4 @@
-name: gh-pages
+name: test
 on:
   push:
     branches:
@@ -32,4 +32,5 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: coverage/lcov.info
+          name: node-${{ matrix.node }}
           fail_ci_if_error: true
