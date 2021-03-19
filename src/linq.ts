@@ -9,6 +9,9 @@ export interface ISequence<T> extends Iterable<T> {
     /** Filters with a predicate that must return a truthy value */
     where<TResult extends T>(f: (arg: T | TResult) => any): TypedISequence<TResult>
 
+    /** Reverses the sequence. */
+    reverse(): TypedISequence<T>
+
     /** Counts the number of elements in the sequence */
     count(): number
 }
@@ -69,6 +72,31 @@ class Sequence<T> implements ISequence<T> {
         }
 
         return new Sequence(iterable) as unknown as TypedISequence<TResult>;
+    }
+
+    reverse() {
+        const iterable: Iterable<T> = {
+            [Symbol.iterator]: () => {
+                const items = Array.from(this.iterable);
+                let position = items.length;
+                return {
+                    next(): IteratorResult<T> {
+                        if (position === 0) {
+                            return {
+                                done: true
+                            } as IteratorReturnResult<T>;
+                        } else {
+                            return {
+                                done: false,
+                                value: items[--position]
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return new Sequence(iterable) as unknown as TypedISequence<T>;
     }
 
     count() {
