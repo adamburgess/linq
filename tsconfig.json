@@ -1,0 +1,15 @@
+{
+    "include": ["src", "test"],
+    "compilerOptions": {
+        "module": "esnext",
+        "target": "esnext",
+        "strict": true,
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
+        "lib": ["esnext"],
+        "noEmit": true,
+        "moduleResolution": "node",
+        "incremental": true,
+        "tsBuildInfoFile": "node_modules/.tsbuildinfo"
+    }
+}

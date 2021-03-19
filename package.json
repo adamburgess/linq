@@ -1,0 +1,39 @@
+{
+    "name": "@adamburgess/linq",
+    "version": "0.0.1",
+    "description": "A linq library.",
+    "scripts": {
+        "test": "c8 --r lcov -- pta dist/test/*.test.js",
+        "build": "rm -rf dist && esbuild --log-level=warning src/*.ts src/**/*.ts test/*.ts --platform=node --sourcemap --outdir=dist",
+        "bt": "nr build && nr test && tsc",
+        "watch": "nodemon -w src -w test -e ts -x nr -- bt"
+    },
+    "type": "module",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/adamburgess/linq.git"
+    },
+    "keywords": [
+        "linq",
+        "iterator"
+    ],
+    "jest": {},
+    "author": "Adam Burgess",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/adamburgess/linq/issues"
+    },
+    "homepage": "https://github.com/adamburgess/linq#readme",
+    "devDependencies": {
+        "@adamburgess/nr": "^1.0.1",
+        "@types/node": "^14.14.35",
+        "c8": "^7.6.0",
+        "delay": "^5.0.0",
+        "esbuild": "^0.9.4",
+        "nodemon": "^2.0.7",
+        "pta": "^0.2.1",
+        "source-map-support": "^0.5.19",
+        "typescript": "^4.2.3",
+        "zora": "^4.0.2"
+    }
+}
