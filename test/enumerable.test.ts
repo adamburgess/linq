@@ -3,7 +3,7 @@ import { Assert } from 'zora'
 import { expectType } from './helpers.js'
 import Enumerable from '../src/enumerable.js'
 
-export default async function enumerable(t: Assert) {
+export default function enumerable(t: Assert) {
     t.test('range', t => {
         const range = Enumerable.range(1, 3);
         expectType<Iterable<number>>(range);

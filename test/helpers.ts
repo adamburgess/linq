@@ -1,1 +1,1 @@
-export function expectType<T>(arg: T) { }
+export function expectType<T>(_: T) { }

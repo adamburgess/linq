@@ -4,7 +4,7 @@ import { expectType } from './helpers.js'
 import Enumerable from '../src/enumerable.js'
 import from, { INumberSequence, ISequence, SequenceTypes } from '../src/linq.js'
 
-export default async function linq(t: Assert) {
+export default function linq(t: Assert) {
     t.test('constructor', t => {
         t.test('with array', t => {
             const result = from([1, 2, 3]);
@@ -19,11 +19,11 @@ export default async function linq(t: Assert) {
 
     const numArr = from([1, 2, 3]);
     expectType<ISequence<number>>(numArr);
-    const strArr = from(["do", "re", "mi"]);
+    const strArr = from(['do', 're', 'mi']);
     expectType<ISequence<string>>(strArr);
-    const symbol = Symbol("Symbol");
-    const unionArr = from(["truthy", false, true, 0, 1, 2, symbol]);
-    unionArr.where(x => x == 1);
+    const symbol = Symbol('Symbol');
+    const unionArr = from(['truthy', false, true, 0, 1, 2, symbol]);
+    unionArr.where(x => x === 1);
     expectType<ISequence<string | number | boolean | symbol>>(unionArr);
     const anyArr = unionArr as ISequence<any>;
     const rangeArr = from(Enumerable.range(0, 3));
@@ -61,7 +61,7 @@ export default async function linq(t: Assert) {
 
         t.test('any', t => {
             const truthy = unionArr.where(x => x);
-            t.deepEqual(Array.from(truthy), ["truthy", true, 1, 2, symbol]);
+            t.deepEqual(Array.from(truthy), ['truthy', true, 1, 2, symbol]);
         });
 
         t.test('narrowing', t => {
@@ -100,7 +100,8 @@ export default async function linq(t: Assert) {
             t.equals(numArr.sum(), 1 + 2 + 3);
         });
         t.test('strings', t => {
-            // @ts-expect-error
+            // @ts-expect-error sum should not be on strArr's type
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-call
             strArr.sum();
         });
     });
@@ -110,7 +111,8 @@ export default async function linq(t: Assert) {
             t.equal(numArr.average(), (1 + 2 + 3) / 3);
         });
         t.test('strings', t => {
-            // @ts-expect-error
+            // @ts-expect-error average should not be on strArr's type
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-call
             strArr.average();
         })
     });
@@ -121,10 +123,7 @@ export default async function linq(t: Assert) {
             .reverse()                  // 4, 3, 2
             .map(x => x * 2)            // 8, 6, 4
             .where(x => x % 4 === 0)    // 8, 4
-        // 1, 2, 3
-        // 2, 3, 4
-        // 4, 3, 2
-        // 8, 6, 4
+
         t.deepEqual(Array.from(e2e), [8, 4]);
     })
 }
