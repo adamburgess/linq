@@ -90,6 +90,11 @@ export default async function linq(t: Assert) {
         });
     });
 
+    t.test('reverse', t => {
+        const reverse = numArr.reverse();
+        t.deepEqual(Array.from(reverse), [3, 2, 1]);
+    });
+
     t.test('sum', t => {
         t.test('numbers', t => {
             t.equals(numArr.sum(), 1 + 2 + 3);
@@ -109,4 +114,17 @@ export default async function linq(t: Assert) {
             strArr.average();
         })
     });
+
+    t.test('e2e', t => {
+        const e2e = from([1, 2, 3])     // 1, 2, 3
+            .map(x => x + 1)            // 2, 3, 4
+            .reverse()                  // 4, 3, 2
+            .map(x => x * 2)            // 8, 6, 4
+            .where(x => x % 4 === 0)    // 8, 4
+        // 1, 2, 3
+        // 2, 3, 4
+        // 4, 3, 2
+        // 8, 6, 4
+        t.deepEqual(Array.from(e2e), [8, 4]);
+    })
 }
