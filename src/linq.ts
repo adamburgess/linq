@@ -92,25 +92,20 @@ class Sequence<T> implements ISequence<T> {
     where<TResult = T>(f: (arg: T | TResult) => arg is TResult): TypedISequence<TResult>
     where<TResult extends T>(f: (arg: T | TResult) => boolean): TypedISequence<TResult>
     where<TResult extends T>(f: (arg: T | TResult) => any): TypedISequence<TResult> {
-        const iterable: Iterable<TResult> = {
-            [Symbol.iterator]: () => {
-                const parent = this.iterable[Symbol.iterator]();
-                return {
-                    next(): IteratorResult<TResult> {
-                        while (true) {
-                            const next = parent.next();
-                            if (next.done) return next;
+        const whered = wrappedIterator(this.iterable, iterator => {
+            return () => {
+                while (true) {
+                    const next = iterator.next();
+                    if (next.done) return next;
 
-                            if (f(next.value)) {
-                                return next as unknown as IteratorYieldResult<TResult>;
-                            }
-                        }
+                    if (f(next.value)) {
+                        return next as unknown as IteratorYieldResult<TResult>;
                     }
                 }
             }
-        }
+        });
 
-        return new Sequence(iterable) as unknown as TypedISequence<TResult>;
+        return new Sequence(whered) as unknown as TypedISequence<TResult>;
     }
 
     reverse() {
