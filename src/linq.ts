@@ -12,7 +12,9 @@ export interface ISequence<T> extends Iterable<T> {
     /** Reverses the sequence. */
     reverse(): TypedISequence<T>
 
+    /** Project each element to get a key, and group all items by that key. */
     groupBy<TKey, TProject = T>(keySelector: (arg: T) => TKey): ISequence<TypedIKeySequence<TKey, TProject>>
+    /** Project each element to get a key, and group all items, each projected onto another type. */
     groupBy<TKey, TProject = T>(keySelector: (arg: T) => TKey, elementSelector?: (arg: T) => TProject): ISequence<TypedIKeySequence<TKey, TProject>>
 
     /** Counts the number of elements in the sequence */
@@ -71,26 +73,20 @@ class Sequence<T> implements ISequence<T> {
     }
 
     map<TResult>(f: (arg: T) => TResult): TypedISequence<TResult> {
-        const iterable: Iterable<TResult> = {
-            [Symbol.iterator]: () => {
-                const parent = this.iterable[Symbol.iterator]();
-                return {
-                    next(): IteratorResult<TResult> {
-                        const next = parent.next();
-                        if (next.done) {
-                            return next;
-                        } else {
-                            return {
-                                done: false,
-                                value: f(next.value)
-                            };
-                        }
-                    }
+        const mapped = wrappedIterator(this.iterable, iterable => {
+            return () => {
+                const next = iterable.next();
+                if (next.done) {
+                    return next;
+                } else {
+                    return {
+                        value: f(next.value)
+                    };
                 }
             }
-        }
+        });
 
-        return new Sequence(iterable) as unknown as TypedISequence<TResult>;
+        return new Sequence(mapped) as unknown as TypedISequence<TResult>;
     }
 
     where<TResult = T>(f: (arg: T | TResult) => arg is TResult): TypedISequence<TResult>
@@ -118,7 +114,7 @@ class Sequence<T> implements ISequence<T> {
     }
 
     reverse() {
-        const wrapped = wrappedIterable(this.iterable, function (iterable) {
+        const reversed = wrappedIterable(this.iterable, function (iterable) {
             const items = Array.from(iterable);
             let position = items.length;
 
@@ -136,12 +132,12 @@ class Sequence<T> implements ISequence<T> {
             }
         });
 
-        return new Sequence(wrapped) as unknown as TypedISequence<T>;
+        return new Sequence(reversed) as unknown as TypedISequence<T>;
     }
 
     groupBy<TKey, TProject = T>(keySelector: (arg: T) => TKey): ISequence<TypedIKeySequence<TKey, TProject>>
     groupBy<TKey, TProject = T>(keySelector: (arg: T) => TKey, elementSelector?: (arg: T) => TProject): ISequence<TypedIKeySequence<TKey, TProject>> {
-        const wrapped = wrappedIterator<T, TypedIKeySequence<TKey, TProject>>(this.iterable, function (iterator) {
+        const grouped = wrappedIterator<T, TypedIKeySequence<TKey, TProject>>(this.iterable, function (iterator) {
             const map = new Map<TKey, TProject[]>();
             while (true) {
                 const n = iterator.next();
@@ -169,7 +165,7 @@ class Sequence<T> implements ISequence<T> {
             };
         });
 
-        return new Sequence(wrapped);
+        return new Sequence(grouped);
     }
 
     count() {
