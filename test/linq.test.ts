@@ -129,6 +129,11 @@ export default function linq(t: Assert) {
         });
     });
 
+    t.test('toArray', t => {
+        t.deepEqual(Array.from(numArr), [1, 2, 3]);
+        t.deepEqual(numArr.toArray(), [1, 2, 3]);
+    });
+
     t.test('sum', t => {
         t.test('numbers', t => {
             t.equals(numArr.sum(), 1 + 2 + 3);
