@@ -179,6 +179,7 @@ class Sequence<T> implements ISequence<T> {
     }
 
     average() {
+        // in types we make sure average is only allowed on number types.
         let value = 0;
         let count = 0;
         for (const x of this.iterable) {
