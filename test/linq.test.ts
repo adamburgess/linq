@@ -134,6 +134,17 @@ export default function linq(t: Assert) {
         t.deepEqual(numArr.toArray(), [1, 2, 3]);
     });
 
+    t.test('toMap', t => {
+        const expected = new Map<number, string>([
+            [1, '1'],
+            [2, '2'],
+            [3, '3']
+        ]);
+        const actual = numArr.toMap(x => x, x => x.toString());
+        expectType<Map<number, string>>(actual);
+        t.deepEqual(Array.from(actual), Array.from(expected));
+    });
+
     t.test('sum', t => {
         t.test('numbers', t => {
             t.equals(numArr.sum(), 1 + 2 + 3);
