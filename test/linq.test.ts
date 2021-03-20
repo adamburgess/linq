@@ -2,7 +2,7 @@ import 'source-map-support/register.js'
 import { Assert } from 'zora'
 import { expectType } from './helpers.js'
 import Enumerable from '../src/enumerable.js'
-import from, { INumberKeySequence, INumberSequence, ISequence, SequenceTypes } from '../src/linq.js'
+import from, { IKeySequence, INumberKeySequence, INumberSequence, ISequence, SequenceTypes } from '../src/linq.js'
 
 export default function linq(t: Assert) {
     t.test('constructor', t => {
@@ -96,20 +96,37 @@ export default function linq(t: Assert) {
     });
 
     t.test('groupBy', t => {
-        const grouped = numArr.groupBy(x => x % 2 === 0 ? 'even' : 'odd');
-        expectType<ISequence<INumberKeySequence<'even' | 'odd'>>>(grouped);
-        const basic = grouped.map(g => ({ key: g.key, val: g.toArray() }));
-        t.deepEqual(Array.from(basic), [
-            {
-                key: 'odd',
-                val: [1, 3]
-            }, {
-                key: 'even',
-                val: [2]
-            }
-        ]);
-        // check repeatability:
-        t.equals(grouped.map(g => ({ key: g.key, val: g.toArray() })).count(), 2);
+        t.test('with key selector only', t => {
+            const grouped = numArr.groupBy(x => x % 2 === 0 ? 'even' : 'odd');
+            expectType<ISequence<INumberKeySequence<'even' | 'odd'>>>(grouped);
+            const basic = grouped.map(g => ({ key: g.key, val: g.toArray() }));
+            t.deepEqual(Array.from(basic), [
+                {
+                    key: 'odd',
+                    val: [1, 3]
+                }, {
+                    key: 'even',
+                    val: [2]
+                }
+            ]);
+            // check repeatability:
+            t.equals(grouped.map(g => ({ key: g.key, val: g.toArray() })).count(), 2);
+        });
+
+        t.test('with both', t => {
+            const grouped = numArr.groupBy(x => x % 2 === 0 ? 'even' : 'odd', x => x.toString());
+            expectType<ISequence<IKeySequence<'even' | 'odd', string>>>(grouped);
+            const basic = grouped.map(g => ({ key: g.key, val: g.toArray() }));
+            t.deepEqual(Array.from(basic), [
+                {
+                    key: 'odd',
+                    val: ['1', '3']
+                }, {
+                    key: 'even',
+                    val: ['2']
+                }
+            ]);
+        });
     });
 
     t.test('sum', t => {
