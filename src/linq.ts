@@ -12,8 +12,18 @@ export interface ISequence<T> extends Iterable<T> {
     /** Reverses the sequence. */
     reverse(): TypedISequence<T>
 
+    groupBy<TKey, TProject = T>(keySelector: (arg: T) => TKey): ISequence<TypedIKeySequence<TKey, TProject>>
+    groupBy<TKey, TProject = T>(keySelector: (arg: T) => TKey, elementSelector?: (arg: T) => TProject): ISequence<TypedIKeySequence<TKey, TProject>>
+
     /** Counts the number of elements in the sequence */
     count(): number
+
+    /**
+     * Converts this sequence to an array.
+     * Note: If you are using this Sequence in a for..of loop, you do _not_ need this.
+     *       You can use the sequence directly.
+    */
+    toArray(): T[]
 }
 
 export interface INumberSequence extends ISequence<number> {
@@ -21,7 +31,29 @@ export interface INumberSequence extends ISequence<number> {
     average(): number
 }
 
+export interface IKeySequence<TKey, TElement> extends ISequence<TElement> {
+    readonly key: TKey;
+}
+export type INumberKeySequence<TKey> = IKeySequence<TKey, number> & INumberSequence;
+
+// disable Distributive Conditional Types
+export type TypedISequence<T> = [T] extends [number] ? INumberSequence : ISequence<T>;
+export type TypedIKeySequence<TKey, TElement> = [TElement] extends [number] ? INumberKeySequence<TKey> : IKeySequence<TKey, TElement>;
+
 export type SequenceTypes<T> = T extends ISequence<infer Y> ? Y : never;
+
+function wrappedIterator<T, TOut = T>(parentIterable: Iterable<T>, f: (iterator: Iterator<T>) => () => IteratorResult<TOut>) {
+    const iterable: Iterable<TOut> = {
+        [Symbol.iterator]: () => {
+            const parentIterator = parentIterable[Symbol.iterator]();
+            const next = f(parentIterator);
+            return {
+                next
+            };
+        }
+    }
+    return iterable;
+}
 
 class Sequence<T> implements ISequence<T> {
     constructor(protected iterable: Iterable<T>) {
@@ -99,6 +131,39 @@ class Sequence<T> implements ISequence<T> {
         return new Sequence(iterable) as unknown as TypedISequence<T>;
     }
 
+    groupBy<TKey, TProject = T>(keySelector: (arg: T) => TKey): ISequence<TypedIKeySequence<TKey, TProject>>
+    groupBy<TKey, TProject = T>(keySelector: (arg: T) => TKey, elementSelector?: (arg: T) => TProject): ISequence<TypedIKeySequence<TKey, TProject>> {
+        const wrapped = wrappedIterator<T, TypedIKeySequence<TKey, TProject>>(this.iterable, function (iterator) {
+            const map = new Map<TKey, TProject[]>();
+            while (true) {
+                const n = iterator.next();
+                if (n.done) break;
+                const item = n.value;
+                const key = keySelector(item);
+                const element = elementSelector ? elementSelector(item) : (item as unknown as TProject);
+                const bucket = map.get(key);
+                if (bucket === undefined) map.set(key, [element]);
+                else bucket.push(element);
+            }
+
+            // now, since we have collected everything, create an output sequence.
+            // we could nearly return the Map directly, but we'll take control for now.
+            const mapIterator = map[Symbol.iterator]();
+
+            return () => {
+                const result = mapIterator.next();
+                if (result.done) return result;
+
+                const [key, value] = result.value;
+                return {
+                    value: new KeySequence(value, key) as unknown as TypedIKeySequence<TKey, TProject>
+                };
+            };
+        });
+
+        return new Sequence(wrapped);
+    }
+
     count() {
         let count = 0;
         for (const _ of this.iterable) count++;
@@ -132,16 +197,23 @@ class Sequence<T> implements ISequence<T> {
     //     }
     // }
 
+    toArray() {
+        return Array.from(this);
+    }
+
     [Symbol.iterator]() {
         return this.iterable[Symbol.iterator]();
     }
 }
 
+class KeySequence<TKey, TElement> extends Sequence<TElement> implements IKeySequence<TKey, TElement> {
+    constructor(protected iterable: Iterable<TElement>, public readonly key: TKey) {
+        super(iterable);
+    }
+}
+
 type Test = Sequence<number> extends INumberSequence ? true : false;
 // Test should be true!
-
-// disable Distributive Conditional Types
-type TypedISequence<T> = [T] extends [number] ? INumberSequence : ISequence<T>;
 
 export function from<T>(arg: Iterable<T>): TypedISequence<T> {
     return new Sequence(arg) as unknown as TypedISequence<T>;

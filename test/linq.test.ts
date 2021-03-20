@@ -2,7 +2,7 @@ import 'source-map-support/register.js'
 import { Assert } from 'zora'
 import { expectType } from './helpers.js'
 import Enumerable from '../src/enumerable.js'
-import from, { INumberSequence, ISequence, SequenceTypes } from '../src/linq.js'
+import from, { INumberKeySequence, INumberSequence, ISequence, SequenceTypes } from '../src/linq.js'
 
 export default function linq(t: Assert) {
     t.test('constructor', t => {
@@ -95,6 +95,23 @@ export default function linq(t: Assert) {
         t.deepEqual(Array.from(reverse), [3, 2, 1]);
     });
 
+    t.test('groupBy', t => {
+        const grouped = numArr.groupBy(x => x % 2 === 0 ? 'even' : 'odd');
+        expectType<ISequence<INumberKeySequence<'even' | 'odd'>>>(grouped);
+        const basic = grouped.map(g => ({ key: g.key, val: g.toArray() }));
+        t.deepEqual(Array.from(basic), [
+            {
+                key: 'odd',
+                val: [1, 3]
+            }, {
+                key: 'even',
+                val: [2]
+            }
+        ]);
+        // check repeatability:
+        t.equals(grouped.map(g => ({ key: g.key, val: g.toArray() })).count(), 2);
+    });
+
     t.test('sum', t => {
         t.test('numbers', t => {
             t.equals(numArr.sum(), 1 + 2 + 3);
@@ -125,5 +142,5 @@ export default function linq(t: Assert) {
             .where(x => x % 4 === 0)    // 8, 4
 
         t.deepEqual(Array.from(e2e), [8, 4]);
-    })
+    });
 }

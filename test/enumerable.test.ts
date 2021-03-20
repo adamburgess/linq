@@ -19,5 +19,5 @@ export default function enumerable(t: Assert) {
         let count = 0;
         for (const _ of empty) count++;
         t.equals(count, 0);
-    })
+    });
 }
