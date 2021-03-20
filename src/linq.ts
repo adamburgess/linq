@@ -19,9 +19,9 @@ export interface ISequence<T> extends Iterable<T> {
     count(): number
 
     /**
-     * Converts this sequence to an array.
-     * Note: If you are using this Sequence in a for..of loop, you do _not_ need this.
-     *       You can use the sequence directly.
+     * Converts this sequence to an array.  
+     * Note: If you are using this Sequence in a for..of loop, you do _not_ need this --
+     *       you can use the sequence directly.
     */
     toArray(): T[]
 }
