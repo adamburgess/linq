@@ -26,6 +26,11 @@ export interface ISequence<T> extends Iterable<T> {
      *       you can use the sequence directly.
     */
     toArray(): T[]
+
+    /**
+     * Converts this sequence to a Map.
+     */
+    toMap<TKey, TElement>(keySelector: (arg: T) => TKey, elementSelector: (arg: T) => TElement): Map<TKey, TElement>;
 }
 
 export interface INumberSequence extends ISequence<number> {
@@ -189,6 +194,18 @@ class Sequence<T> implements ISequence<T> {
         return value / count;
     }
 
+    toArray() {
+        return Array.from(this);
+    }
+
+    toMap<TKey, TElement>(keySelector: (arg: T) => TKey, elementSelector: (arg: T) => TElement) {
+        const map = new Map<TKey, TElement>();
+        for (const e of this.iterable) {
+            map.set(keySelector(e), elementSelector(e));
+        }
+        return map;
+    }
+
     // debug
     // *[Symbol.iterator]() {
     //     for (const x of this.iterable) {
@@ -196,10 +213,6 @@ class Sequence<T> implements ISequence<T> {
     //         yield x;
     //     }
     // }
-
-    toArray() {
-        return Array.from(this);
-    }
 
     [Symbol.iterator]() {
         return this.iterable[Symbol.iterator]();
