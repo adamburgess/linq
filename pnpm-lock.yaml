@@ -1,5 +1,5 @@
 devDependencies:
-  '@adamburgess/nr': 1.0.1
+  '@adamburgess/nr': 1.0.2
   '@types/node': 14.14.35
   '@types/sinon': 9.0.11
   '@typescript-eslint/eslint-plugin': 4.18.0_2985e040dee0c1f2d424d9c331603c0e
@@ -16,11 +16,11 @@ devDependencies:
   zora: 4.0.2
 lockfileVersion: 5.2
 packages:
-  /@adamburgess/nr/1.0.1:
+  /@adamburgess/nr/1.0.2:
     dev: true
     hasBin: true
     resolution:
-      integrity: sha512-nk3JVjDsCuDIY/uzCx5byS1XIRd+LJArmP+Vk+B2ll6j2OOM1SOWXQhV2oGh2A1brlF/HELBx/gAo7P8T44B7Q==
+      integrity: sha512-I7ckI9M4E/4XHUx8mbEi6TmOz02m1RqGBdpmuvPllagKfr2T2PvZuOCfy8Fk3s+YvKYJcDy4y6toRp17DkpD9w==
   /@babel/code-frame/7.12.11:
     dependencies:
       '@babel/highlight': 7.13.10
@@ -2111,7 +2111,7 @@ packages:
     resolution:
       integrity: sha512-dSJlPNzWOVJxLcgItXSAPPszatQ7SJctQQthuFfkRxyrhciMzH5GIdTYJYwpw/vx9DMbwRKocVJgoyj8UX2NUw==
 specifiers:
-  '@adamburgess/nr': ^1.0.1
+  '@adamburgess/nr': ^1.0.2
   '@types/node': ^14.14.35
   '@types/sinon': ^9.0.11
   '@typescript-eslint/eslint-plugin': ^4.18.0
