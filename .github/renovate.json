@@ -8,5 +8,6 @@
           "packageNames": ["node"],
           "enabled": false
         }
-    ]
+    ],
+    "prHourlyLimit": 999
 }
