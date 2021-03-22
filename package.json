@@ -17,7 +17,6 @@
         "linq",
         "iterator"
     ],
-    "jest": {},
     "author": "Adam Burgess",
     "license": "MIT",
     "bugs": {
