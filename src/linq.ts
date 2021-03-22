@@ -33,6 +33,25 @@ export interface ISequence<T> extends Iterable<T> {
      * Converts this sequence to a Map.
      */
     toMap<TKey, TElement>(keySelector: (arg: T) => TKey, elementSelector: (arg: T) => TElement): Map<TKey, TElement>;
+
+    /**
+     * Get the first element in the sequence.
+     * Will throw if empty!
+     */
+    first(): T;
+
+    /**
+     * Get the first element in the sequence.
+     * If empty, returns undefined.
+     */
+    firstOrDefault(): T | undefined;
+    /**
+     * Get the first element in the sequence  
+     * Returns a default value if empty
+     * @param defaultIfEmpty The default value to return.
+     */
+    firstOrDefault<TDefault = T>(defaultIfEmpty: TDefault): T | TDefault;
+    firstOrDefault<TDefault = T>(defaultIfEmpty?: TDefault): T | TDefault | undefined;
 }
 
 export interface INumberSequence extends ISequence<number> {
@@ -177,6 +196,22 @@ class Sequence<T> implements ISequence<T> {
             map.set(keySelector(e), elementSelector(e));
         }
         return map;
+    }
+
+    first() {
+        const iterator = this.iterable[Symbol.iterator]();
+        const result = iterator.next();
+        if (result.done) throw new Error('Sequence was empty');
+        return result.value;
+    }
+
+    firstOrDefault(): T | undefined
+    firstOrDefault<TDefault = T>(defaultIfEmpty: TDefault): T | TDefault
+    firstOrDefault<TDefault = T>(defaultIfEmpty?: TDefault): T | TDefault | undefined {
+        const iterator = this.iterable[Symbol.iterator]();
+        const result = iterator.next();
+        if (result.done) return defaultIfEmpty;
+        return result.value;
     }
 
     // debug
