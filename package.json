@@ -10,7 +10,7 @@
         "publish": "nr publish:build && nr publish:copy && cd publish && npm publish --dry-run",
         "publish:__GO__": "nr publish && cd publish && npm publish --access=public",
         "build:dev": "esbuild --log-level=warning src/*.ts test/*.ts --platform=node --sourcemap --outdir=dist-dev",
-        "test": "c8 --r lcov -- pta dist-dev/test/*.test.js",
+        "test": "c8 --r lcov --r text -- pta dist-dev/test/*.test.js",
         "bt": "nr build:dev && nr test && tsc",
         "watch": "nodemon -w src -w test -e ts -x nr -- bt"
     },

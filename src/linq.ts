@@ -55,6 +55,28 @@ export interface ISequence<T> extends Iterable<T> {
      * If empty or no matches, returns undefined.
      */
     firstOrDefault(predicate: (arg: T) => any): T | undefined;
+
+    /**
+     * Get the _only_ element in the sequence.
+     * Will throw if empty or more than one element! Use defaultIfEmpty(default).single() if no throw is wanted.
+     */
+    single(): T
+    /**
+     * Get the _only_ element in the sequence that matches a condition.
+     * Will throw if empty or more than one element! Use defaultIfEmpty(default).single() if no throw is wanted.
+     */
+    single(predicate: (arg: T) => any): T;
+
+    /**
+     * Get the _only_ element in the sequence.
+     * Returns undefined if empty or more than one element.
+     */
+    singleOrDefault(): T | undefined
+    /**
+     * Get the _only_ element in the sequence that matches a condition.
+     * @returns undefined if empty or more than one element.
+     */
+    singleOrDefault(predicate: (arg: T) => any): T | undefined;
 }
 
 export interface INumberSequence extends ISequence<number> {
@@ -222,6 +244,34 @@ class Sequence<T> implements ISequence<T> {
         return result.value;
     }
 
+    single(): T
+    single(predicate: (arg: T) => any): T
+    single(predicate?: (arg: T) => any): T {
+        if (predicate) return (this.where(predicate) as unknown as Sequence<T>).single();
+
+        const iterator = this.iterable[Symbol.iterator]();
+        const result1 = iterator.next();
+        if (result1.done) throw new Error('Sequence was empty');
+        const result2 = iterator.next();
+        if (!result2.done) throw new Error('Sequence had 2 or more elements');
+
+        return result1.value;
+    }
+
+    singleOrDefault(): T | undefined
+    singleOrDefault(predicate: (arg: T) => any): T | undefined
+    singleOrDefault(predicate?: (arg: T) => any): T | undefined {
+        if (predicate) return (this.where(predicate) as unknown as Sequence<T>).singleOrDefault();
+
+        const iterator = this.iterable[Symbol.iterator]();
+        const result1 = iterator.next();
+        if (result1.done) return undefined;
+        const result2 = iterator.next();
+        if (!result2.done) return undefined;
+
+        return result1.value;
+    }
+    
     // debug
     // *[Symbol.iterator]() {
     //     for (const x of this.iterable) {
