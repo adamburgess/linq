@@ -29,8 +29,8 @@ export default function linq(t: Assert) {
     const rangeArr = from(Enumerable.range(0, 3));
     expectType<ISequence<number>>(rangeArr);
 
-    const emptyArr = from([] as unknown[]);
-    expectType<ISequence<unknown>>(emptyArr);
+    const emptyArr = from([] as string[]);
+    expectType<ISequence<string>>(emptyArr);
 
     t.test('count', t => {
         t.equals(numArr.count(), 3);
@@ -127,6 +127,20 @@ export default function linq(t: Assert) {
                 }
             ]);
         });
+    });
+
+    t.test('first', t => {
+        t.equals(numArr.first(), 1);
+        t.throws(() => emptyArr.first());
+        t.equals(numArr.first(x => x === 2), 2);
+        t.throws(() => numArr.first(x => x === 999));
+    });
+
+    t.test('firstOrDefault', t => {
+        t.equals(numArr.firstOrDefault(), 1);
+        t.equals(emptyArr.firstOrDefault(), undefined);
+        t.equals(numArr.firstOrDefault(x => x === 2), 2);
+        t.equals(numArr.firstOrDefault(x => x === 999), undefined);
     });
 
     t.test('toArray', t => {
