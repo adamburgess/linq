@@ -11,6 +11,10 @@ extends:
     - 'eslint:recommended'
     - 'plugin:@typescript-eslint/recommended'
     - 'plugin:@typescript-eslint/recommended-requiring-type-checking'
+ignorePatterns:
+    - dist
+    - dist-dev
+    - dist-cjs
 rules:
     '@typescript-eslint/restrict-template-expressions': off
     'no-constant-condition':
