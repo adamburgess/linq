@@ -25,6 +25,9 @@
         "type": "git",
         "url": "git+https://github.com/adamburgess/linq.git"
     },
+    "engines": {
+      "node": ">=14"
+    },
     "keywords": [
         "linq",
         "iterator"
