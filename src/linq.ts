@@ -1,3 +1,5 @@
+import { reverse } from './enumerable.js'
+
 export interface ISequence<T> extends Iterable<T> {
     /** Map each element to another */
     map<TResult>(f: (arg: T) => TResult): TypedISequence<TResult>
@@ -61,17 +63,6 @@ function wrappedIterator<T, TOut = T>(parentIterable: Iterable<T>, f: (iterator:
     }
     return iterable;
 }
-function wrappedIterable<T, TOut = T>(parentIterable: Iterable<T>, f: (iterable: Iterable<T>) => () => IteratorResult<TOut>) {
-    const iterable: Iterable<TOut> = {
-        [Symbol.iterator]: () => {
-            const next = f(parentIterable);
-            return {
-                next
-            };
-        }
-    }
-    return iterable;
-}
 
 class Sequence<T> implements ISequence<T> {
     constructor(protected iterable: Iterable<T>) {
@@ -114,25 +105,7 @@ class Sequence<T> implements ISequence<T> {
     }
 
     reverse() {
-        const reversed = wrappedIterable(this.iterable, iterable => {
-            const items = Array.from(iterable);
-            let position = items.length;
-
-            return () => {
-                if (position === 0) {
-                    return {
-                        done: true
-                    } as IteratorReturnResult<T>;
-                } else {
-                    return {
-                        done: false,
-                        value: items[--position]
-                    }
-                }
-            }
-        });
-
-        return new Sequence(reversed) as unknown as TypedISequence<T>;
+        return new Sequence(reverse(this.iterable)) as unknown as TypedISequence<T>;
     }
 
     groupBy<TKey, TProject = T>(keySelector: (arg: T) => TKey): ISequence<TypedIKeySequence<TKey, TProject>>
