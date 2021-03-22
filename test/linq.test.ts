@@ -28,6 +28,7 @@ export default function linq(t: Assert) {
     const anyArr = unionArr as ISequence<any>;
     const rangeArr = from(Enumerable.range(0, 3));
     expectType<ISequence<number>>(rangeArr);
+    const singleton = from([1]);
 
     const emptyArr = from([] as string[]);
     expectType<ISequence<string>>(emptyArr);
@@ -141,6 +142,22 @@ export default function linq(t: Assert) {
         t.equals(emptyArr.firstOrDefault(), undefined);
         t.equals(numArr.firstOrDefault(x => x === 2), 2);
         t.equals(numArr.firstOrDefault(x => x === 999), undefined);
+    });
+
+    t.test('single', t => {
+        t.equals(singleton.single(), 1);
+        t.throws(() => emptyArr.single());
+        t.throws(() => numArr.single());
+        t.equals(numArr.single(x => x === 2), 2);
+        t.throws(() => numArr.single(x => true));
+    });
+
+    t.test('singleOrDefault', t => {
+        t.equals(singleton.singleOrDefault(), 1);
+        t.equals(emptyArr.singleOrDefault(), undefined);
+        t.equals(numArr.singleOrDefault(), undefined);
+        t.equals(numArr.singleOrDefault(x => x === 2), 2);
+        t.equals(numArr.singleOrDefault(x => true), undefined);
     });
 
     t.test('toArray', t => {
