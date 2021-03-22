@@ -2,8 +2,8 @@ devDependencies:
   '@adamburgess/nr': 1.0.2
   '@types/node': 14.14.35
   '@types/sinon': 9.0.11
-  '@typescript-eslint/eslint-plugin': 4.18.0_40b4f00a4112c0f6b80272eef8830285
-  '@typescript-eslint/parser': 4.18.0_9d890308e4195dcc36141948bab26100
+  '@typescript-eslint/eslint-plugin': 4.19.0_f23409962389c943644c93a80824cb97
+  '@typescript-eslint/parser': 4.19.0_9d890308e4195dcc36141948bab26100
   c8: 7.6.0
   delay: 5.0.0
   esbuild: 0.9.6
@@ -153,11 +153,11 @@ packages:
     dev: true
     resolution:
       integrity: sha512-dIPoZ3g5gcx9zZEszaxLSVTvMReD3xxyyDnQUjA6IYDG9Ba2AV0otMPs+77sG9ojB4Qr2N2Vk5RnKeuA0X/0bg==
-  /@typescript-eslint/eslint-plugin/4.18.0_40b4f00a4112c0f6b80272eef8830285:
+  /@typescript-eslint/eslint-plugin/4.19.0_f23409962389c943644c93a80824cb97:
     dependencies:
-      '@typescript-eslint/experimental-utils': 4.18.0_9d890308e4195dcc36141948bab26100
-      '@typescript-eslint/parser': 4.18.0_9d890308e4195dcc36141948bab26100
-      '@typescript-eslint/scope-manager': 4.18.0
+      '@typescript-eslint/experimental-utils': 4.19.0_9d890308e4195dcc36141948bab26100
+      '@typescript-eslint/parser': 4.19.0_9d890308e4195dcc36141948bab26100
+      '@typescript-eslint/scope-manager': 4.19.0
       debug: 4.3.1
       eslint: 7.22.0
       functional-red-black-tree: 1.0.1
@@ -177,13 +177,13 @@ packages:
       typescript:
         optional: true
     resolution:
-      integrity: sha512-Lzkc/2+7EoH7+NjIWLS2lVuKKqbEmJhtXe3rmfA8cyiKnZm3IfLf51irnBcmow8Q/AptVV0XBZmBJKuUJTe6cQ==
-  /@typescript-eslint/experimental-utils/4.18.0_9d890308e4195dcc36141948bab26100:
+      integrity: sha512-CRQNQ0mC2Pa7VLwKFbrGVTArfdVDdefS+gTw0oC98vSI98IX5A8EVH4BzJ2FOB0YlCmm8Im36Elad/Jgtvveaw==
+  /@typescript-eslint/experimental-utils/4.19.0_9d890308e4195dcc36141948bab26100:
     dependencies:
       '@types/json-schema': 7.0.7
-      '@typescript-eslint/scope-manager': 4.18.0
-      '@typescript-eslint/types': 4.18.0
-      '@typescript-eslint/typescript-estree': 4.18.0_typescript@4.3.0-dev.20210322
+      '@typescript-eslint/scope-manager': 4.19.0
+      '@typescript-eslint/types': 4.19.0
+      '@typescript-eslint/typescript-estree': 4.19.0_typescript@4.3.0-dev.20210322
       eslint: 7.22.0
       eslint-scope: 5.1.1
       eslint-utils: 2.1.0
@@ -194,12 +194,12 @@ packages:
       eslint: '*'
       typescript: '*'
     resolution:
-      integrity: sha512-92h723Kblt9JcT2RRY3QS2xefFKar4ZQFVs3GityOKWQYgtajxt/tuXIzL7sVCUlM1hgreiV5gkGYyBpdOwO6A==
-  /@typescript-eslint/parser/4.18.0_9d890308e4195dcc36141948bab26100:
+      integrity: sha512-9/23F1nnyzbHKuoTqFN1iXwN3bvOm/PRIXSBR3qFAYotK/0LveEOHr5JT1WZSzcD6BESl8kPOG3OoDRKO84bHA==
+  /@typescript-eslint/parser/4.19.0_9d890308e4195dcc36141948bab26100:
     dependencies:
-      '@typescript-eslint/scope-manager': 4.18.0
-      '@typescript-eslint/types': 4.18.0
-      '@typescript-eslint/typescript-estree': 4.18.0_typescript@4.3.0-dev.20210322
+      '@typescript-eslint/scope-manager': 4.19.0
+      '@typescript-eslint/types': 4.19.0
+      '@typescript-eslint/typescript-estree': 4.19.0_typescript@4.3.0-dev.20210322
       debug: 4.3.1
       eslint: 7.22.0
       typescript: 4.3.0-dev.20210322
@@ -213,26 +213,26 @@ packages:
       typescript:
         optional: true
     resolution:
-      integrity: sha512-W3z5S0ZbecwX3PhJEAnq4mnjK5JJXvXUDBYIYGoweCyWyuvAKfGHvzmpUzgB5L4cRBb+cTu9U/ro66dx7dIimA==
-  /@typescript-eslint/scope-manager/4.18.0:
+      integrity: sha512-/uabZjo2ZZhm66rdAu21HA8nQebl3lAIDcybUoOxoI7VbZBYavLIwtOOmykKCJy+Xq6Vw6ugkiwn8Js7D6wieA==
+  /@typescript-eslint/scope-manager/4.19.0:
     dependencies:
-      '@typescript-eslint/types': 4.18.0
-      '@typescript-eslint/visitor-keys': 4.18.0
+      '@typescript-eslint/types': 4.19.0
+      '@typescript-eslint/visitor-keys': 4.19.0
     dev: true
     engines:
       node: ^8.10.0 || ^10.13.0 || >=11.10.1
     resolution:
-      integrity: sha512-olX4yN6rvHR2eyFOcb6E4vmhDPsfdMyfQ3qR+oQNkAv8emKKlfxTWUXU5Mqxs2Fwe3Pf1BoPvrwZtwngxDzYzQ==
-  /@typescript-eslint/types/4.18.0:
+      integrity: sha512-GGy4Ba/hLXwJXygkXqMzduqOMc+Na6LrJTZXJWVhRrSuZeXmu8TAnniQVKgj8uTRKe4igO2ysYzH+Np879G75g==
+  /@typescript-eslint/types/4.19.0:
     dev: true
     engines:
       node: ^8.10.0 || ^10.13.0 || >=11.10.1
     resolution:
-      integrity: sha512-/BRociARpj5E+9yQ7cwCF/SNOWwXJ3qhjurMuK2hIFUbr9vTuDeu476Zpu+ptxY2kSxUHDGLLKy+qGq2sOg37A==
-  /@typescript-eslint/typescript-estree/4.18.0_typescript@4.3.0-dev.20210322:
+      integrity: sha512-A4iAlexVvd4IBsSTNxdvdepW0D4uR/fwxDrKUa+iEY9UWvGREu2ZyB8ylTENM1SH8F7bVC9ac9+si3LWNxcBuA==
+  /@typescript-eslint/typescript-estree/4.19.0_typescript@4.3.0-dev.20210322:
     dependencies:
-      '@typescript-eslint/types': 4.18.0
-      '@typescript-eslint/visitor-keys': 4.18.0
+      '@typescript-eslint/types': 4.19.0
+      '@typescript-eslint/visitor-keys': 4.19.0
       debug: 4.3.1
       globby: 11.0.3
       is-glob: 4.0.1
@@ -248,16 +248,16 @@ packages:
       typescript:
         optional: true
     resolution:
-      integrity: sha512-wt4xvF6vvJI7epz+rEqxmoNQ4ZADArGQO9gDU+cM0U5fdVv7N+IAuVoVAoZSOZxzGHBfvE3XQMLdy+scsqFfeg==
-  /@typescript-eslint/visitor-keys/4.18.0:
+      integrity: sha512-3xqArJ/A62smaQYRv2ZFyTA+XxGGWmlDYrsfZG68zJeNbeqRScnhf81rUVa6QG4UgzHnXw5VnMT5cg75dQGDkA==
+  /@typescript-eslint/visitor-keys/4.19.0:
     dependencies:
-      '@typescript-eslint/types': 4.18.0
+      '@typescript-eslint/types': 4.19.0
       eslint-visitor-keys: 2.0.0
     dev: true
     engines:
       node: ^8.10.0 || ^10.13.0 || >=11.10.1
     resolution:
-      integrity: sha512-Q9t90JCvfYaN0OfFUgaLqByOfz8yPeTAdotn/XYNm5q9eHax90gzdb+RJ6E9T5s97Kv/UHWKERTmqA0jTKAEHw==
+      integrity: sha512-aGPS6kz//j7XLSlgpzU2SeTqHPsmRYxFztj2vPuMMFJXZudpRSehE3WCV+BaxwZFvfAqMoSd86TEuM0PQ59E/A==
   /abbrev/1.1.1:
     dev: true
     resolution:
@@ -2114,8 +2114,8 @@ specifiers:
   '@adamburgess/nr': ^1.0.2
   '@types/node': ^14.14.35
   '@types/sinon': ^9.0.11
-  '@typescript-eslint/eslint-plugin': ^4.18.0
-  '@typescript-eslint/parser': ^4.18.0
+  '@typescript-eslint/eslint-plugin': ^4.19.0
+  '@typescript-eslint/parser': ^4.19.0
   c8: ^7.6.0
   delay: ^5.0.0
   esbuild: ^0.9.6
