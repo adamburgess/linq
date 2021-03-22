@@ -1,0 +1,15 @@
+{
+    "include": ["src"],
+    "compilerOptions": {
+        "module": "esnext",
+        "target": "esnext",
+        "strict": true,
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
+        "lib": ["esnext"],
+        "declaration": true,
+        "emitDeclarationOnly": true,
+        "outDir": "dist",
+        "moduleResolution": "node"
+    }
+}

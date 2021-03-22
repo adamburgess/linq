@@ -3,12 +3,20 @@
     "version": "0.0.1",
     "description": "A linq library.",
     "scripts": {
-        "test": "c8 --r lcov -- pta dist/test/*.test.js",
-        "build": "rm -rf dist && esbuild --log-level=warning src/*.ts src/**/*.ts test/*.ts --platform=node --sourcemap --outdir=dist",
-        "bt": "nr build && nr test && tsc",
+        "tsd:esm": "tsc --build tsconfig-publish-esm.json", 
+        "build:esm": "esbuild src/*.ts src/**/*.ts --platform=node --outdir=dist",
+        "publish:build": "rm -rf dist dist-cjs && nr build:esm && nr tsd:esm",
+        "publish:copy": "rm -rf publish && mkdir -p publish && cp -r dist/* package.json LICENSE README.md publish && node scripts/publish",
+        "publish": "nr publish:build && nr publish:copy && cd publish && npm publish --dry-run",
+        "publish:__GO__": "nr publish && cd publish && npm publish --access=public",
+        "build:dev": "esbuild --log-level=warning src/*.ts src/**/*.ts test/*.ts --platform=node --sourcemap --outdir=dist-dev",
+        "test": "c8 --r lcov -- pta dist-dev/test/*.test.js",
+        "bt": "nr build:dev && nr test && tsc",
         "watch": "nodemon -w src -w test -e ts -x nr -- bt"
     },
     "type": "module",
+    "types": "linq.d.ts",
+    "main": "linq.js",
     "repository": {
         "type": "git",
         "url": "git+https://github.com/adamburgess/linq.git"
