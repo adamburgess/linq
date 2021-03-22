@@ -114,7 +114,7 @@ class Sequence<T> implements ISequence<T> {
     }
 
     reverse() {
-        const reversed = wrappedIterable(this.iterable, function (iterable) {
+        const reversed = wrappedIterable(this.iterable, iterable => {
             const items = Array.from(iterable);
             let position = items.length;
 
@@ -137,7 +137,7 @@ class Sequence<T> implements ISequence<T> {
 
     groupBy<TKey, TProject = T>(keySelector: (arg: T) => TKey): ISequence<TypedIKeySequence<TKey, TProject>>
     groupBy<TKey, TProject = T>(keySelector: (arg: T) => TKey, elementSelector?: (arg: T) => TProject): ISequence<TypedIKeySequence<TKey, TProject>> {
-        const grouped = wrappedIterator<T, TypedIKeySequence<TKey, TProject>>(this.iterable, function (iterator) {
+        const grouped = wrappedIterator<T, TypedIKeySequence<TKey, TProject>>(this.iterable, iterator => {
             const map = new Map<TKey, TProject[]>();
             while (true) {
                 const n = iterator.next();
