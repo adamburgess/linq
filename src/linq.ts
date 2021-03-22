@@ -36,9 +36,14 @@ export interface ISequence<T> extends Iterable<T> {
 
     /**
      * Get the first element in the sequence.
-     * Will throw if empty!
+     * Will throw if empty! Use defaultIfEmpty(default).first() if no throw is wanted.
      */
     first(): T;
+    /**
+     * Get the first element in the sequence that matches a condition.
+     * Will throw if empty!
+     */
+    first(predicate: (arg: T) => any): T;
 
     /**
      * Get the first element in the sequence.
@@ -46,12 +51,10 @@ export interface ISequence<T> extends Iterable<T> {
      */
     firstOrDefault(): T | undefined;
     /**
-     * Get the first element in the sequence  
-     * Returns a default value if empty
-     * @param defaultIfEmpty The default value to return.
+     * Get the first element in the sequence that matches a condition.
+     * If empty or no matches, returns undefined.
      */
-    firstOrDefault<TDefault = T>(defaultIfEmpty: TDefault): T | TDefault;
-    firstOrDefault<TDefault = T>(defaultIfEmpty?: TDefault): T | TDefault | undefined;
+    firstOrDefault(predicate: (arg: T) => any): T | undefined;
 }
 
 export interface INumberSequence extends ISequence<number> {
@@ -198,7 +201,11 @@ class Sequence<T> implements ISequence<T> {
         return map;
     }
 
-    first() {
+    first(): T
+    first(predicate: (arg: T) => any): T
+    first(predicate?: (arg: T) => any): T {
+        if (predicate) return (this.where(predicate) as unknown as Sequence<T>).first();
+
         const iterator = this.iterable[Symbol.iterator]();
         const result = iterator.next();
         if (result.done) throw new Error('Sequence was empty');
@@ -206,11 +213,12 @@ class Sequence<T> implements ISequence<T> {
     }
 
     firstOrDefault(): T | undefined
-    firstOrDefault<TDefault = T>(defaultIfEmpty: TDefault): T | TDefault
-    firstOrDefault<TDefault = T>(defaultIfEmpty?: TDefault): T | TDefault | undefined {
+    firstOrDefault(predicate: (arg: T) => any): T | undefined;
+    firstOrDefault(predicate?: (arg: T) => any): T | undefined {
+        if (predicate) return (this.where(predicate) as unknown as Sequence<T>).firstOrDefault();
+
         const iterator = this.iterable[Symbol.iterator]();
         const result = iterator.next();
-        if (result.done) return defaultIfEmpty;
         return result.value;
     }
 
