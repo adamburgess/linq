@@ -31,6 +31,7 @@ jobs:
         run: nr build:dev
       - name: run tests
         run: nr test
+        shell: 'script -q -e -c "bash {0}"'
       - name: check types
         run: tsc
       - uses: codecov/codecov-action@v1
