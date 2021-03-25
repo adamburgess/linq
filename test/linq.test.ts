@@ -190,7 +190,7 @@ export default function linq(t: Assert) {
         t.throws(() => emptyArr.single());
         t.throws(() => numArr.single());
         t.equals(numArr.single(x => x === 2), 2);
-        t.throws(() => numArr.single(x => true));
+        t.throws(() => numArr.single(_ => true));
     });
 
     t.test('singleOrDefault', t => {
@@ -198,7 +198,7 @@ export default function linq(t: Assert) {
         t.equals(emptyArr.singleOrDefault(), undefined);
         t.equals(numArr.singleOrDefault(), undefined);
         t.equals(numArr.singleOrDefault(x => x === 2), 2);
-        t.equals(numArr.singleOrDefault(x => true), undefined);
+        t.equals(numArr.singleOrDefault(_ => true), undefined);
     });
 
     t.test('toArray', t => {
