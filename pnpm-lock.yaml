@@ -2,17 +2,17 @@ devDependencies:
   '@adamburgess/nr': 1.0.2
   '@types/node': 14.14.35
   '@types/sinon': 9.0.11
-  '@typescript-eslint/eslint-plugin': 4.19.0_f23409962389c943644c93a80824cb97
-  '@typescript-eslint/parser': 4.19.0_9d890308e4195dcc36141948bab26100
+  '@typescript-eslint/eslint-plugin': 4.19.0_b7e791d23d86c61acd1843c04e895fb7
+  '@typescript-eslint/parser': 4.19.0_1d701c8724f8d5b75cd6bdea4d263270
   c8: 7.6.0
   delay: 5.0.0
-  esbuild: 0.9.6
+  esbuild: 0.9.7
   eslint: 7.22.0
   nodemon: 2.0.7
-  pta: 0.2.1
+  pta: 0.2.2
   sinon: 10.0.0
   source-map-support: 0.5.19
-  typescript: 4.3.0-dev.20210322
+  typescript: 4.3.0-dev.20210324
   zora: 4.0.2
 lockfileVersion: 5.2
 packages:
@@ -153,19 +153,19 @@ packages:
     dev: true
     resolution:
       integrity: sha512-dIPoZ3g5gcx9zZEszaxLSVTvMReD3xxyyDnQUjA6IYDG9Ba2AV0otMPs+77sG9ojB4Qr2N2Vk5RnKeuA0X/0bg==
-  /@typescript-eslint/eslint-plugin/4.19.0_f23409962389c943644c93a80824cb97:
+  /@typescript-eslint/eslint-plugin/4.19.0_b7e791d23d86c61acd1843c04e895fb7:
     dependencies:
-      '@typescript-eslint/experimental-utils': 4.19.0_9d890308e4195dcc36141948bab26100
-      '@typescript-eslint/parser': 4.19.0_9d890308e4195dcc36141948bab26100
+      '@typescript-eslint/experimental-utils': 4.19.0_1d701c8724f8d5b75cd6bdea4d263270
+      '@typescript-eslint/parser': 4.19.0_1d701c8724f8d5b75cd6bdea4d263270
       '@typescript-eslint/scope-manager': 4.19.0
       debug: 4.3.1
       eslint: 7.22.0
       functional-red-black-tree: 1.0.1
       lodash: 4.17.21
       regexpp: 3.1.0
-      semver: 7.3.4
-      tsutils: 3.21.0_typescript@4.3.0-dev.20210322
-      typescript: 4.3.0-dev.20210322
+      semver: 7.3.5
+      tsutils: 3.21.0_typescript@4.3.0-dev.20210324
+      typescript: 4.3.0-dev.20210324
     dev: true
     engines:
       node: ^10.12.0 || >=12.0.0
@@ -178,12 +178,12 @@ packages:
         optional: true
     resolution:
       integrity: sha512-CRQNQ0mC2Pa7VLwKFbrGVTArfdVDdefS+gTw0oC98vSI98IX5A8EVH4BzJ2FOB0YlCmm8Im36Elad/Jgtvveaw==
-  /@typescript-eslint/experimental-utils/4.19.0_9d890308e4195dcc36141948bab26100:
+  /@typescript-eslint/experimental-utils/4.19.0_1d701c8724f8d5b75cd6bdea4d263270:
     dependencies:
       '@types/json-schema': 7.0.7
       '@typescript-eslint/scope-manager': 4.19.0
       '@typescript-eslint/types': 4.19.0
-      '@typescript-eslint/typescript-estree': 4.19.0_typescript@4.3.0-dev.20210322
+      '@typescript-eslint/typescript-estree': 4.19.0_typescript@4.3.0-dev.20210324
       eslint: 7.22.0
       eslint-scope: 5.1.1
       eslint-utils: 2.1.0
@@ -195,14 +195,14 @@ packages:
       typescript: '*'
     resolution:
       integrity: sha512-9/23F1nnyzbHKuoTqFN1iXwN3bvOm/PRIXSBR3qFAYotK/0LveEOHr5JT1WZSzcD6BESl8kPOG3OoDRKO84bHA==
-  /@typescript-eslint/parser/4.19.0_9d890308e4195dcc36141948bab26100:
+  /@typescript-eslint/parser/4.19.0_1d701c8724f8d5b75cd6bdea4d263270:
     dependencies:
       '@typescript-eslint/scope-manager': 4.19.0
       '@typescript-eslint/types': 4.19.0
-      '@typescript-eslint/typescript-estree': 4.19.0_typescript@4.3.0-dev.20210322
+      '@typescript-eslint/typescript-estree': 4.19.0_typescript@4.3.0-dev.20210324
       debug: 4.3.1
       eslint: 7.22.0
-      typescript: 4.3.0-dev.20210322
+      typescript: 4.3.0-dev.20210324
     dev: true
     engines:
       node: ^10.12.0 || >=12.0.0
@@ -229,16 +229,16 @@ packages:
       node: ^8.10.0 || ^10.13.0 || >=11.10.1
     resolution:
       integrity: sha512-A4iAlexVvd4IBsSTNxdvdepW0D4uR/fwxDrKUa+iEY9UWvGREu2ZyB8ylTENM1SH8F7bVC9ac9+si3LWNxcBuA==
-  /@typescript-eslint/typescript-estree/4.19.0_typescript@4.3.0-dev.20210322:
+  /@typescript-eslint/typescript-estree/4.19.0_typescript@4.3.0-dev.20210324:
     dependencies:
       '@typescript-eslint/types': 4.19.0
       '@typescript-eslint/visitor-keys': 4.19.0
       debug: 4.3.1
       globby: 11.0.3
       is-glob: 4.0.1
-      semver: 7.3.4
-      tsutils: 3.21.0_typescript@4.3.0-dev.20210322
-      typescript: 4.3.0-dev.20210322
+      semver: 7.3.5
+      tsutils: 3.21.0_typescript@4.3.0-dev.20210324
+      typescript: 4.3.0-dev.20210324
     dev: true
     engines:
       node: ^10.12.0 || >=12.0.0
@@ -344,10 +344,10 @@ packages:
       node: '>= 8'
     resolution:
       integrity: sha512-mM8522psRCqzV+6LhomX5wgp25YVibjh8Wj23I5RPkPppSVSjyKD2A2mBJmWGa+KN7f2D6LNh9jkBCeyLktzjg==
-  /arg/4.1.3:
+  /arg/5.0.0:
     dev: true
     resolution:
-      integrity: sha512-58S9QDqG0Xx27YwPSt9fJxivjYl432YCwfDMfZ+71RAqUrZef7LrKQZ3LHLOwCS4FLNBplP533Zx895SeOCHvA==
+      integrity: sha512-4P8Zm2H+BRS+c/xX1LrHw0qKpEhdlZjLCgWy+d78T9vqa2Z2SiD2wMrYuWIAFy5IZUD7nnNXroRttz+0RzlrzQ==
   /argparse/1.0.10:
     dependencies:
       sprintf-js: 1.0.3
@@ -645,6 +645,12 @@ packages:
       node: '>=0.3.1'
     resolution:
       integrity: sha512-58lmxKSA4BNyLz+HHMUzlOEpg09FV+ev6ZMe3vJihgdxzgcwZ8VoEEPmALCZG9LmqfVoNMMKpttIYTVG6uDY7A==
+  /diff/5.0.0:
+    dev: true
+    engines:
+      node: '>=0.3.1'
+    resolution:
+      integrity: sha512-/VTCrvm5Z0JGty/BWHljh+BAiw3IK+2j87NGMu8Nwc/f48WoDAC395uomO9ZD117ZOBaHmkX1oyLvkVM/aIT3w==
   /dir-glob/3.0.1:
     dependencies:
       path-type: 4.0.0
@@ -695,12 +701,12 @@ packages:
       node: '>=8.6'
     resolution:
       integrity: sha512-yjNnPr315/FjS4zIsUxYguYUPP2e1NK4d7E7ZOLiyYCcbFBiTMyID+2wvm2w6+pZ/odMA7cRkjhsPbltwBOrLg==
-  /esbuild/0.9.6:
+  /esbuild/0.9.7:
     dev: true
     hasBin: true
     requiresBuild: true
     resolution:
-      integrity: sha512-F6vASxU0wT/Davt9aj2qtDwDNSkQxh9VbyO56M7PDWD+D/Vgq/rmUDGDQo7te76W5auauVojjnQr/wTu3vpaUA==
+      integrity: sha512-VtUf6aQ89VTmMLKrWHYG50uByMF4JQlVysb8dmg6cOgW8JnFCipmz7p+HNBl+RR3LLCuBxFGVauAe2wfnF9bLg==
   /escalade/3.1.1:
     dev: true
     engines:
@@ -781,7 +787,7 @@ packages:
       optionator: 0.9.1
       progress: 2.0.3
       regexpp: 3.1.0
-      semver: 7.3.4
+      semver: 7.3.5
       strip-ansi: 6.0.0
       strip-json-comments: 3.1.1
       table: 6.0.7
@@ -1567,17 +1573,17 @@ packages:
     dev: true
     resolution:
       integrity: sha512-77DZwxQmxKnu3aR542U+X8FypNzbfJ+C5XQDk3uWjWxn6151aIMGthWYRXTqT1E5oJvg+ljaa2OJi+VfvCOQ8w==
-  /pta/0.2.1:
+  /pta/0.2.2:
     dependencies:
-      arg: 4.1.3
-      diff: 4.0.2
+      arg: 5.0.0
+      diff: 5.0.0
       fast-glob: 3.2.5
       kleur: 4.1.4
       zora: 4.0.2
     dev: true
     hasBin: true
     resolution:
-      integrity: sha512-nYJEQzxQFYZCHYadAY8ESH+xGUoLtu8JCh+girSch597tKlw6UeiZJLVmvocVjRb3IDI46/JX+u3A6r3jwvsYw==
+      integrity: sha512-wxuf1R00DoB3+ejXrRJRbHU3ixUBojJH1Afc2CTflsLUX/XUkVTY9b6NL/MyB1GEIxy4hmvEhx+IHZuIBXVimA==
   /pump/3.0.0:
     dependencies:
       end-of-stream: 1.4.4
@@ -1709,7 +1715,7 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-b39TBaTSfV6yBrapU89p5fKekE2m/NwnDocOVruQFS1/veMgdzuPcnOM34M6CwxW8jH/lxEa5rBoDeUwu5HHTw==
-  /semver/7.3.4:
+  /semver/7.3.5:
     dependencies:
       lru-cache: 6.0.0
     dev: true
@@ -1717,7 +1723,7 @@ packages:
       node: '>=10'
     hasBin: true
     resolution:
-      integrity: sha512-tCfb2WLjqFAtXn4KEdxIhalnRtoKFN7nAwj0B3ZXCbQloV2tq5eDbcTmT68JJD3nRJq24/XgxtQKFIpQdtvmVw==
+      integrity: sha512-PoeGJYh8HK4BTO/a9Tf6ZG3veo/A7ZVsYrSA6J8ny9nb3B1VrpkuN+z9OE5wfE5p6H4LchYZsegiQgbJD94ZFQ==
   /shebang-command/2.0.0:
     dependencies:
       shebang-regex: 3.0.0
@@ -1906,10 +1912,10 @@ packages:
     dev: true
     resolution:
       integrity: sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==
-  /tsutils/3.21.0_typescript@4.3.0-dev.20210322:
+  /tsutils/3.21.0_typescript@4.3.0-dev.20210324:
     dependencies:
       tslib: 1.14.1
-      typescript: 4.3.0-dev.20210322
+      typescript: 4.3.0-dev.20210324
     dev: true
     engines:
       node: '>= 6'
@@ -1949,13 +1955,13 @@ packages:
     dev: true
     resolution:
       integrity: sha512-zdu8XMNEDepKKR+XYOXAVPtWui0ly0NtohUscw+UmaHiAWT8hrV1rr//H6V+0DvJ3OQ19S979M0laLfX8rm82Q==
-  /typescript/4.3.0-dev.20210322:
+  /typescript/4.3.0-dev.20210324:
     dev: true
     engines:
       node: '>=4.2.0'
     hasBin: true
     resolution:
-      integrity: sha512-uXL/XfoI8FJwmAL2w+eKJhU3NLYpPgAf4EWICxzmva1SDlufogoR/GbLfdN67KX5hWYVVPm5UXC/pUNRXpPPcQ==
+      integrity: sha512-bno/sHDGLofSyD5JCLIK0TDl7F4omBmg67ymaLPEJcYZJPJB0CNq1rwOMwIhrPl6TMZPwICp5ye3z38Mvuo08Q==
   /undefsafe/2.0.3:
     dependencies:
       debug: 2.6.9
@@ -2118,11 +2124,11 @@ specifiers:
   '@typescript-eslint/parser': ^4.19.0
   c8: ^7.6.0
   delay: ^5.0.0
-  esbuild: ^0.9.6
+  esbuild: ^0.9.7
   eslint: ^7.22.0
   nodemon: ^2.0.7
-  pta: ^0.2.1
+  pta: ^0.2.2
   sinon: ^10.0.0
   source-map-support: ^0.5.19
-  typescript: ^4.3.0-dev.20210322
+  typescript: ^4.3.0-dev.20210324
   zora: ^4.0.2
