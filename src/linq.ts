@@ -19,6 +19,11 @@ export interface ISequence<T> extends Iterable<T> {
     /** Project each element to get a key, and group all items, each projected onto another type. */
     groupBy<TKey, TProject = T>(keySelector: (arg: T) => TKey, elementSelector?: (arg: T) => TProject): ISequence<TypedIKeySequence<TKey, TProject>>
 
+    /** Sort the array in ascending order */
+    orderBy(comparator: IComparator<T>): OrderedSequence<T>
+    /** Sort the array in descending order */
+    orderByDescending(comparator: IComparator<T>): OrderedSequence<T>
+
     /** Counts the number of elements in the sequence */
     count(): number
 
@@ -185,6 +190,14 @@ class Sequence<T> implements ISequence<T> {
         return new Sequence(grouped);
     }
 
+    orderBy(comparator: IComparator<T>) {
+        return new OrderedSequence(this.iterable, [comparator]);
+    }
+
+    orderByDescending(comparator: IComparator<T>) {
+        return new OrderedSequence(this.iterable, [x => -comparator(x)]);
+    }
+
     count() {
         let count = 0;
         for (const _ of this.iterable) count++;
@@ -271,7 +284,7 @@ class Sequence<T> implements ISequence<T> {
 
         return result1.value;
     }
-    
+
     // debug
     // *[Symbol.iterator]() {
     //     for (const x of this.iterable) {
@@ -286,8 +299,39 @@ class Sequence<T> implements ISequence<T> {
 }
 
 class KeySequence<TKey, TElement> extends Sequence<TElement> implements IKeySequence<TKey, TElement> {
-    constructor(protected iterable: Iterable<TElement>, public readonly key: TKey) {
+    constructor(iterable: Iterable<TElement>, public readonly key: TKey) {
         super(iterable);
+    }
+}
+
+type IComparator<T> = (arg: T) => number
+
+class OrderedSequence<T> extends Sequence<T> {
+    constructor(iterable: Iterable<T>, protected comparators: IComparator<T>[]) {
+        super(iterable);
+    }
+
+    thenBy(comparator: IComparator<T>) {
+        return new OrderedSequence<T>(this.iterable, [...this.comparators, comparator]);
+    }
+
+    thenByDescending(comparator: IComparator<T>) {
+        return new OrderedSequence<T>(this.iterable, [...this.comparators, x => -comparator(x)]);
+    }
+
+    [Symbol.iterator]() {
+        const elements = Array.from(this.iterable);
+        elements.sort((a, b) => {
+            for (const compare of this.comparators) {
+                const result = compare(a) - compare(b);
+                // if non zero, the compare functions were not the same
+                // thus, we return.
+                if (result !== 0) return result;
+            }
+            // all comparators were the same, so keep the same order.
+            return 0;
+        });
+        return elements[Symbol.iterator]();
     }
 }
 
