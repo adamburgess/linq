@@ -19,10 +19,15 @@ export interface ISequence<T> extends Iterable<T> {
     /** Project each element to get a key, and group all items, each projected onto another type. */
     groupBy<TKey, TProject = T>(keySelector: (arg: T) => TKey, elementSelector?: (arg: T) => TProject): ISequence<TypedIKeySequence<TKey, TProject>>
 
-    /** Sort the array in ascending order */
-    orderBy(comparator: IComparator<T>): OrderedSequence<T>
-    /** Sort the array in descending order */
-    orderByDescending(comparator: IComparator<T>): OrderedSequence<T>
+    /** Sort the array in ascending order of the selector */
+    orderBy(keySelector: (arg: T) => string | number): TypedIOrderedSequence<T>;
+    /** Sort the array in ascending order of the selector, with a custom comparer */
+    orderBy<TKey>(keySelector: (arg: T) => TKey, comparer: ICompare<TKey>): TypedIOrderedSequence<T>
+
+    /** Sort the array in descending order of the selector */
+    orderByDescending(keySelector: (arg: T) => string | number): TypedIOrderedSequence<T>;
+    /** Sort the array in descending order of the selector, with a custom comparer */
+    orderByDescending<TKey>(keySelector: (arg: T) => TKey, comparer: ICompare<TKey>): TypedIOrderedSequence<T>
 
     /** Counts the number of elements in the sequence */
     count(): number
@@ -94,10 +99,23 @@ export interface IKeySequence<TKey, TElement> extends ISequence<TElement> {
 }
 export type INumberKeySequence<TKey> = IKeySequence<TKey, number> & INumberSequence;
 
+export interface IOrderedSequence<T> extends ISequence<T> {
+    /** Next, sort the array in ascending order of the selector */
+    thenBy(keySelector: (arg: T) => string | number): TypedIOrderedSequence<T>;
+    /** Next, sort the array in ascending order of the selector, with a custom comparer */
+    thenBy<TKey>(keySelector: (arg: T) => TKey, comparer: ICompare<TKey>): TypedIOrderedSequence<T>
+
+    /** Next, sort the array in descending order of the selector */
+    thenByDescending(keySelector: (arg: T) => string | number): TypedIOrderedSequence<T>;
+    /** Next, sort the array in descending order of the selector, with a custom comparer */
+    thenByDescending<TKey>(keySelector: (arg: T) => TKey, comparer: ICompare<TKey>): TypedIOrderedSequence<T>
+}
+export type INumberOrderedSequence<T> = IOrderedSequence<T> & INumberSequence;
+
 // disable Distributive Conditional Types
 export type TypedISequence<T> = [T] extends [number] ? INumberSequence : ISequence<T>;
 export type TypedIKeySequence<TKey, TElement> = [TElement] extends [number] ? INumberKeySequence<TKey> : IKeySequence<TKey, TElement>;
-
+export type TypedIOrderedSequence<T> = [T] extends [number] ? INumberOrderedSequence<T> : IOrderedSequence<T>;
 export type SequenceTypes<T> = T extends ISequence<infer Y> ? Y : never;
 
 function wrappedIterator<T, TOut = T>(parentIterable: Iterable<T>, f: (iterator: Iterator<T>) => () => IteratorResult<TOut>) {
@@ -190,12 +208,16 @@ class Sequence<T> implements ISequence<T> {
         return new Sequence(grouped);
     }
 
-    orderBy(comparator: IComparator<T>) {
-        return new OrderedSequence(this.iterable, [comparator]);
+    orderBy<TKey>(selector: (arg: T) => TKey, comparer?: ICompare<TKey>) {
+        return new OrderedSequence(this.iterable, [{
+            selector, comparer: (comparer as ICompare<unknown>) ?? defaultComparer, ascending: true
+        }]) as unknown as TypedIOrderedSequence<T>;
     }
 
-    orderByDescending(comparator: IComparator<T>) {
-        return new OrderedSequence(this.iterable, [x => -comparator(x)]);
+    orderByDescending<TKey>(selector: (arg: T) => TKey, comparer?: ICompare<TKey>) {
+        return new OrderedSequence(this.iterable, [{
+            selector, comparer: (comparer as ICompare<unknown>) ?? defaultComparer, ascending: false
+        }]) as unknown as TypedIOrderedSequence<T>;
     }
 
     count() {
@@ -254,7 +276,7 @@ class Sequence<T> implements ISequence<T> {
 
         const iterator = this.iterable[Symbol.iterator]();
         const result = iterator.next();
-        return result.value;
+        return result.value as unknown as T | undefined;
     }
 
     single(): T
@@ -304,26 +326,38 @@ class KeySequence<TKey, TElement> extends Sequence<TElement> implements IKeySequ
     }
 }
 
-type IComparator<T> = (arg: T) => number
+type ICompare<T> = (a: T, b: T) => number
+type SelectorComparer<T> = {
+    selector: (arg: T) => unknown,
+    comparer: ICompare<unknown>,
+    ascending: boolean
+}
 
-class OrderedSequence<T> extends Sequence<T> {
-    constructor(iterable: Iterable<T>, protected comparators: IComparator<T>[]) {
+const defaultComparer: ICompare<any> = (a: any, b: any) => a > b ? 1 : a < b ? -1 : 0;
+
+class OrderedSequence<T> extends Sequence<T> implements IOrderedSequence<T> {
+    constructor(iterable: Iterable<T>, protected sc: SelectorComparer<T>[]) {
         super(iterable);
     }
 
-    thenBy(comparator: IComparator<T>) {
-        return new OrderedSequence<T>(this.iterable, [...this.comparators, comparator]);
+    thenBy<TKey>(selector: (arg: T) => TKey, comparer?: ICompare<TKey>) {
+        return new OrderedSequence(this.iterable, [...this.sc, {
+            selector, comparer: (comparer as ICompare<unknown>) ?? defaultComparer, ascending: true
+        }]) as unknown as TypedIOrderedSequence<T>;
     }
 
-    thenByDescending(comparator: IComparator<T>) {
-        return new OrderedSequence<T>(this.iterable, [...this.comparators, x => -comparator(x)]);
+    thenByDescending<TKey>(selector: (arg: T) => TKey, comparer?: ICompare<TKey>) {
+        return new OrderedSequence(this.iterable, [...this.sc, {
+            selector, comparer: (comparer as ICompare<unknown>) ?? defaultComparer, ascending: false
+        }]) as unknown as TypedIOrderedSequence<T>
     }
 
     [Symbol.iterator]() {
         const elements = Array.from(this.iterable);
         elements.sort((a, b) => {
-            for (const compare of this.comparators) {
-                const result = compare(a) - compare(b);
+            for (const compare of this.sc) {
+                let result = compare.comparer(compare.selector(a), compare.selector(b));
+                if (!compare.ascending) result = -result;
                 // if non zero, the compare functions were not the same
                 // thus, we return.
                 if (result !== 0) return result;
