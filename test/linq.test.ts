@@ -130,6 +130,47 @@ export default function linq(t: Assert) {
         });
     });
 
+    t.test('orderBy', t => {
+        const numArr = from([1, 3, 2, 0]);
+        const sorted = numArr.orderBy(x => x);
+        t.deepEqual(Array.from(sorted), [0, 1, 2, 3]);
+        const descending = numArr.orderByDescending(x => x);
+        t.deepEqual(Array.from(descending), [3, 2, 1, 0]);
+        t.test('stable', t => {
+            const allArr = from([1, 1, 1]);
+            t.deepEqual(Array.from(allArr.orderBy(x => x)), [1, 1, 1]);
+            t.deepEqual(Array.from(allArr.orderByDescending(x => x)), [1, 1, 1]);
+        });
+        t.test('custom comparator', t => {
+            const arbitraryArr = from([{ x: 2 }, { x: 3 }, { x: 1 }]);
+            const ordered = arbitraryArr.orderBy(x => x, (a, b) => a.x - b.x);
+            t.deepEqual(Array.from(ordered), [{ x: 1 }, { x: 2 }, { x: 3 }]);
+        });
+    });
+    t.test('orderBy.thenBy', t => {
+        // order by length, then alphabetical
+        const strArr = from([
+            'zzzzzz',
+            'doreme',
+            'test',
+            'the longest'
+        ]);
+        const sorted = strArr.orderBy(x => x.length).thenBy(x => x);
+        t.deepEqual(Array.from(sorted), [
+            'test',
+            'doreme',
+            'zzzzzz',
+            'the longest'
+        ]);
+        const sorted2 = strArr.orderBy(x => x.length).thenByDescending(x => x);
+        t.deepEqual(Array.from(sorted2), [
+            'test',
+            'zzzzzz',
+            'doreme',
+            'the longest'
+        ]);
+    });
+
     t.test('first', t => {
         t.equals(numArr.first(), 1);
         t.throws(() => emptyArr.first());
