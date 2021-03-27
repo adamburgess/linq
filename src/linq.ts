@@ -1,4 +1,4 @@
-import { groupBy, map, reverse, where } from './enumerable.js'
+import { groupBy, map, reverse, take, where } from './enumerable.js'
 
 export interface ISequence<T> extends Iterable<T> {
     /** Map each element to another */
@@ -28,6 +28,9 @@ export interface ISequence<T> extends Iterable<T> {
     orderByDescending(keySelector: (arg: T) => string | number): TypedIOrderedSequence<T>;
     /** Sort the array in descending order of the selector, with a custom comparer */
     orderByDescending<TKey>(keySelector: (arg: T) => TKey, comparer: ICompare<TKey>): TypedIOrderedSequence<T>
+
+    /** Take a maximum amount of elements */
+    take(count: number): TypedISequence<T>;
 
     /** Counts the number of elements in the sequence */
     count(): number
@@ -152,6 +155,10 @@ class Sequence<T> implements ISequence<T> {
         return new OrderedSequence(this.iterable, [{
             selector, comparer: (comparer as ICompare<unknown>) ?? defaultComparer, ascending: false
         }]) as unknown as TypedIOrderedSequence<T>;
+    }
+
+    take(count: number) {
+        return new Sequence(take(this.iterable, count)) as unknown as TypedISequence<T>;
     }
 
     count() {

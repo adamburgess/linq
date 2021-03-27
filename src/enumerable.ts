@@ -1,6 +1,6 @@
 export function createLazyGenerator<T>(generator: () => Generator<T>): Iterable<T> {
     return {
-        [Symbol.iterator]: () => {
+        [Symbol.iterator]() {
             return generator()[Symbol.iterator]();
         }
     };
@@ -59,16 +59,28 @@ export function groupBy<T, TKey, TValue>(input: Iterable<T>, keySelector: (arg: 
     return {
         [Symbol.iterator]() {
             const map = new Map<TKey, TValue[]>();
-            for(const x of input) {
+            for (const x of input) {
                 const key = keySelector(x);
                 const value = elementSelector ? elementSelector(x) : (x as unknown as TValue);
                 const bucket = map.get(key);
-                if(bucket) bucket.push(value);
+                if (bucket) bucket.push(value);
                 else map.set(key, [value]);
             }
             return map[Symbol.iterator]();
         }
     };
+}
+
+export function take<T>(input: Iterable<T>, count: number) {
+    function* take() {
+        let i = 0;
+        for (const x of input) {
+            i++;
+            if (i < count) yield x;
+            else return;
+        }
+    }
+    return createLazyGenerator(take);
 }
 
 const Enumerable = {
@@ -78,6 +90,7 @@ const Enumerable = {
     map,
     where,
     groupBy,
+    take,
 };
 
 export default Enumerable;
