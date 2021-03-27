@@ -83,6 +83,17 @@ export function take<T>(input: Iterable<T>, count: number) {
     return createLazyGenerator(take);
 }
 
+export function skip<T>(input: Iterable<T>, count: number) {
+    function* skip() {
+        let i = 0;
+        for (const x of input) {
+            i++;
+            if (i > count) yield x;
+        }
+    }
+    return createLazyGenerator(skip);
+}
+
 const Enumerable = {
     empty,
     range,
@@ -91,6 +102,7 @@ const Enumerable = {
     where,
     groupBy,
     take,
+    skip,
 };
 
 export default Enumerable;
