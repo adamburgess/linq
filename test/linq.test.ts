@@ -183,6 +183,12 @@ export default function linq(t: Assert) {
         const actual = longRange.skip(6).toArray();
         t.deepEqual(actual, expected);
     });
+
+    t.test('takeWhile', t => {
+        const expected = [1, 2, 3, 4];
+        const actual = longRange.takeWhile(x => x <= 4).toArray();
+        t.deepEqual(actual, expected);
+    });
     t.test('first', t => {
         t.equals(numArr.first(), 1);
         t.throws(() => emptyArr.first());

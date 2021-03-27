@@ -87,7 +87,7 @@ export function takeWhile<T>(input: Iterable<T>, predicate: (arg: T) => boolean)
     function* takeWhile() {
         for (const x of input) {
             if (predicate(x)) yield x;
-            return;
+            else return;
         }
     }
     return createLazyGenerator(takeWhile);
