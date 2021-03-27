@@ -28,7 +28,7 @@ export default function linq(t: Assert) {
     const anyArr = unionArr as ISequence<any>;
     const rangeArr = from(Enumerable.range(0, 3));
     expectType<ISequence<number>>(rangeArr);
-    const longRange = from(Enumerable.range(0, 10));
+    const longRange = from(Enumerable.range(1, 10));
     const singleton = from([1]);
 
     const emptyArr = from([] as string[]);
@@ -173,7 +173,7 @@ export default function linq(t: Assert) {
     });
 
     t.test('take', t => {
-        const expected = [0, 1, 2, 3];
+        const expected = [1, 2, 3, 4];
         const actual = longRange.take(4).toArray();
         t.deepEqual(actual, expected);
     });
