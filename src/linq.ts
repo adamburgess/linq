@@ -1,4 +1,4 @@
-import { reverse } from './enumerable.js'
+import { groupBy, map, reverse, where } from './enumerable.js'
 
 export interface ISequence<T> extends Iterable<T> {
     /** Map each element to another */
@@ -118,57 +118,18 @@ export type TypedIKeySequence<TKey, TElement> = [TElement] extends [number] ? IN
 export type TypedIOrderedSequence<T> = [T] extends [number] ? INumberOrderedSequence<T> : IOrderedSequence<T>;
 export type SequenceTypes<T> = T extends ISequence<infer Y> ? Y : never;
 
-function wrappedIterator<T, TOut = T>(parentIterable: Iterable<T>, f: (iterator: Iterator<T>) => () => IteratorResult<TOut>) {
-    const iterable: Iterable<TOut> = {
-        [Symbol.iterator]: () => {
-            const parentIterator = parentIterable[Symbol.iterator]();
-            const next = f(parentIterator);
-            return {
-                next
-            };
-        }
-    }
-    return iterable;
-}
-
 class Sequence<T> implements ISequence<T> {
     constructor(protected iterable: Iterable<T>) {
     }
 
     map<TResult>(f: (arg: T) => TResult): TypedISequence<TResult> {
-        const mapped = wrappedIterator(this.iterable, iterable => {
-            return () => {
-                const next = iterable.next();
-                if (next.done) {
-                    return next;
-                } else {
-                    return {
-                        value: f(next.value)
-                    };
-                }
-            }
-        });
-
-        return new Sequence(mapped) as unknown as TypedISequence<TResult>;
+        return new Sequence(map(this.iterable, f)) as unknown as TypedISequence<TResult>;
     }
 
     where<TResult = T>(f: (arg: T | TResult) => arg is TResult): TypedISequence<TResult>
     where<TResult extends T>(f: (arg: T | TResult) => boolean): TypedISequence<TResult>
     where<TResult extends T>(f: (arg: T | TResult) => any): TypedISequence<TResult> {
-        const whered = wrappedIterator(this.iterable, iterator => {
-            return () => {
-                while (true) {
-                    const next = iterator.next();
-                    if (next.done) return next;
-
-                    if (f(next.value)) {
-                        return next as unknown as IteratorYieldResult<TResult>;
-                    }
-                }
-            }
-        });
-
-        return new Sequence(whered) as unknown as TypedISequence<TResult>;
+        return new Sequence(where(this.iterable, f)) as unknown as TypedISequence<TResult>;
     }
 
     reverse() {
@@ -177,35 +138,8 @@ class Sequence<T> implements ISequence<T> {
 
     groupBy<TKey, TProject = T>(keySelector: (arg: T) => TKey): ISequence<TypedIKeySequence<TKey, TProject>>
     groupBy<TKey, TProject = T>(keySelector: (arg: T) => TKey, elementSelector?: (arg: T) => TProject): ISequence<TypedIKeySequence<TKey, TProject>> {
-        const grouped = wrappedIterator<T, TypedIKeySequence<TKey, TProject>>(this.iterable, iterator => {
-            const map = new Map<TKey, TProject[]>();
-            while (true) {
-                const n = iterator.next();
-                if (n.done) break;
-                const item = n.value;
-                const key = keySelector(item);
-                const element = elementSelector ? elementSelector(item) : (item as unknown as TProject);
-                const bucket = map.get(key);
-                if (bucket === undefined) map.set(key, [element]);
-                else bucket.push(element);
-            }
-
-            // now, since we have collected everything, create an output sequence.
-            // we could nearly return the Map directly, but we'll take control for now.
-            const mapIterator = map[Symbol.iterator]();
-
-            return () => {
-                const result = mapIterator.next();
-                if (result.done) return result;
-
-                const [key, value] = result.value;
-                return {
-                    value: new KeySequence(value, key) as unknown as TypedIKeySequence<TKey, TProject>
-                };
-            };
-        });
-
-        return new Sequence(grouped);
+        return new Sequence(groupBy(this.iterable, keySelector, elementSelector))
+            .map(kv => new KeySequence(kv[1], kv[0])) as unknown as ISequence<TypedIKeySequence<TKey, TProject>>;
     }
 
     orderBy<TKey>(selector: (arg: T) => TKey, comparer?: ICompare<TKey>) {
