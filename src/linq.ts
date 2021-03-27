@@ -56,6 +56,9 @@ export interface ISequence<T> extends Iterable<T> {
      */
     toMap<TKey, TElement>(keySelector: (arg: T) => TKey, elementSelector: (arg: T) => TElement): Map<TKey, TElement>;
 
+    /** Converts this sequence into an object */
+    toObject<TKey extends PropertyKey, TElement>(keySelector: (arg: T) => TKey, elementSelector: (arg: T) => TElement): Record<TKey, TElement>;
+
     /**
      * Get the first element in the sequence.
      * Will throw if empty! Use defaultIfEmpty(default).first() if no throw is wanted.
@@ -218,6 +221,14 @@ class Sequence<T> implements ISequence<T> {
             map.set(keySelector(e), elementSelector(e));
         }
         return map;
+    }
+
+    toObject<TKey extends PropertyKey, TElement>(keySelector: (arg: T) => TKey, elementSelector: (arg: T) => TElement) {
+        const record = {} as Record<TKey, TElement>;
+        for (const x of this.iterable) {
+            record[keySelector(x)] = elementSelector(x);
+        }
+        return record;
     }
 
     first(): T
