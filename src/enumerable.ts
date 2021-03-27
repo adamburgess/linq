@@ -104,6 +104,20 @@ export function skip<T>(input: Iterable<T>, count: number) {
     return createLazyGenerator(skip);
 }
 
+export function skipWhile<T>(input: Iterable<T>, predicate: (arg: T) => boolean) {
+    function* skipWhile() {
+        let skipping = true;
+        for (const x of input) {
+            if (skipping) {
+                if (predicate(x)) continue;
+                skipping = false;
+            }
+            yield x;
+        }
+    }
+    return createLazyGenerator(skipWhile);
+}
+
 const Enumerable = {
     empty,
     range,
@@ -114,6 +128,7 @@ const Enumerable = {
     take,
     takeWhile,
     skip,
+    skipWhile,
 };
 
 export default Enumerable;

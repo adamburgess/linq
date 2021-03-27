@@ -1,4 +1,4 @@
-import { groupBy, map, reverse, skip, take, takeWhile, where } from './enumerable.js'
+import { groupBy, map, reverse, skip, skipWhile, take, takeWhile, where } from './enumerable.js'
 
 export interface ISequence<T> extends Iterable<T> {
     /** Map each element to another */
@@ -37,6 +37,9 @@ export interface ISequence<T> extends Iterable<T> {
 
     /** Skip a number of elements before letting the rest through */
     skip(count: number): TypedISequence<T>;
+
+    /** Skip elements while the predicate is true, then take the rest */
+    skipWhile(predicate: (arg: T) => boolean): TypedISequence<T>;
 
     /** Counts the number of elements in the sequence */
     count(): number
@@ -173,6 +176,10 @@ class Sequence<T> implements ISequence<T> {
 
     skip(count: number) {
         return new Sequence(skip(this.iterable, count)) as unknown as TypedISequence<T>;
+    }
+
+    skipWhile(predicate: (arg: T) => boolean): TypedISequence<T> {
+        return new Sequence(skipWhile(this.iterable, predicate)) as unknown as TypedISequence<T>;
     }
 
     count() {
