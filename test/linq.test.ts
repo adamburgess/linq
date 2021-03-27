@@ -189,6 +189,13 @@ export default function linq(t: Assert) {
         const actual = longRange.takeWhile(x => x <= 4).toArray();
         t.deepEqual(actual, expected);
     });
+
+    t.test('skipWhile', t => {
+        const expected = [4, 5, 6, 7, 8, 9, 10];
+        const actual = longRange.skipWhile(x => x < 4).toArray();
+        t.deepEqual(actual, expected);
+    });
+
     t.test('first', t => {
         t.equals(numArr.first(), 1);
         t.throws(() => emptyArr.first());
