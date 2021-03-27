@@ -83,6 +83,16 @@ export function take<T>(input: Iterable<T>, count: number) {
     return createLazyGenerator(take);
 }
 
+export function takeWhile<T>(input: Iterable<T>, predicate: (arg: T) => boolean) {
+    function* takeWhile() {
+        for (const x of input) {
+            if (predicate(x)) yield x;
+            return;
+        }
+    }
+    return createLazyGenerator(takeWhile);
+}
+
 export function skip<T>(input: Iterable<T>, count: number) {
     function* skip() {
         let i = 0;
@@ -102,6 +112,7 @@ const Enumerable = {
     where,
     groupBy,
     take,
+    takeWhile,
     skip,
 };
 
