@@ -177,6 +177,12 @@ export default function linq(t: Assert) {
         const actual = longRange.take(4).toArray();
         t.deepEqual(actual, expected);
     });
+
+    t.test('skip', t => {
+        const expected = [7, 8, 9, 10];
+        const actual = longRange.skip(6).toArray();
+        t.deepEqual(actual, expected);
+    });
     t.test('first', t => {
         t.equals(numArr.first(), 1);
         t.throws(() => emptyArr.first());
