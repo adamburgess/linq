@@ -76,7 +76,7 @@ export function take<T>(input: Iterable<T>, count: number) {
         let i = 0;
         for (const x of input) {
             if (i < count) yield x;
-            else return;
+            else break;
             i++;
         }
     }
@@ -87,7 +87,7 @@ export function takeWhile<T>(input: Iterable<T>, predicate: (arg: T) => boolean)
     function* takeWhile() {
         for (const x of input) {
             if (predicate(x)) yield x;
-            else return;
+            else break;
         }
     }
     return createLazyGenerator(takeWhile);
