@@ -217,6 +217,17 @@ export default function linq(t: Assert) {
         t.deepEqual(Array.from(actual), Array.from(expected));
     });
 
+    t.test('toObject', t => {
+        const expected = {
+            do: 'do',
+            re: 're',
+            mi: 'mi'
+        };
+        const actual = strArr.toObject(x => x, x => x);
+        expectType<Record<string, string>>(actual);
+        t.deepEqual(actual, expected);
+    });
+
     t.test('sum', t => {
         t.test('numbers', t => {
             t.equals(numArr.sum(), 1 + 2 + 3);
