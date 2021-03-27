@@ -1,17 +1,9 @@
-export function createLazyGenerator<T, TOut = T>(source: Iterable<T>, generator: (input: Iterable<T>) => Generator<TOut>): Iterable<TOut> {
+export function createLazyGenerator<T>(generator: () => Generator<T>): Iterable<T> {
     return {
         [Symbol.iterator]: () => {
-            return generator(source)[Symbol.iterator]();
-        }
-    };
-}
-
-function createLazyGenerator2<TOut>(generator: () => Generator<TOut>): Iterable<TOut> {
-    return {
-        [Symbol.iterator]() {
             return generator()[Symbol.iterator]();
         }
-    }
+    };
 }
 
 export function* empty<T = unknown>(): Generator<T> {
@@ -27,7 +19,7 @@ export function range(start: number, count: number): Iterable<number> {
             i++;
         }
     }
-    return createLazyGenerator2(range);
+    return createLazyGenerator(range);
 }
 
 export function reverse<T>(input: Iterable<T>) {
@@ -40,7 +32,7 @@ export function reverse<T>(input: Iterable<T>) {
             yield items[--position];
         }
     }
-    return createLazyGenerator(input, reverse);
+    return createLazyGenerator(reverse);
 }
 
 export function map<T, TOut>(input: Iterable<T>, convert: (arg: T) => TOut) {
@@ -49,7 +41,7 @@ export function map<T, TOut>(input: Iterable<T>, convert: (arg: T) => TOut) {
             yield convert(x);
         }
     }
-    return createLazyGenerator(input, map);
+    return createLazyGenerator(map);
 }
 
 export function where<T>(input: Iterable<T>, predicate: (arg: T) => any) {
@@ -58,7 +50,7 @@ export function where<T>(input: Iterable<T>, predicate: (arg: T) => any) {
             if (predicate(x)) yield x;
         }
     }
-    return createLazyGenerator(input, where);
+    return createLazyGenerator(where);
 }
 
 export function groupBy<T, TKey>(input: Iterable<T>, keySelector: (arg: T) => TKey): Iterable<[TKey, T[]]>
@@ -80,9 +72,12 @@ export function groupBy<T, TKey, TValue>(input: Iterable<T>, keySelector: (arg: 
 }
 
 const Enumerable = {
-    range,
     empty,
-    reverse
+    range,
+    reverse,
+    map,
+    where,
+    groupBy,
 };
 
 export default Enumerable;
