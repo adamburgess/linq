@@ -75,9 +75,9 @@ export function take<T>(input: Iterable<T>, count: number) {
     function* take() {
         let i = 0;
         for (const x of input) {
-            i++;
             if (i < count) yield x;
             else return;
+            i++;
         }
     }
     return createLazyGenerator(take);
