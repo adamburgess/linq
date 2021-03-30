@@ -68,7 +68,7 @@ Special additions for number sequences:
 
 or: why use this one?
 
-###  linq.js (on npm: linq)
+### [linq.js](https://github.com/mihaifm/linq) (on npm: linq)
 
 ✔️ Has _everything_.
 ❌ Except iterator support.
@@ -77,14 +77,14 @@ or: why use this one?
 ❌ 35KB minified/6.6KB brotlied
 
 
-### iterare
+### [iterare](https://github.com/felixfbecker/iterare)
 
 ⚠️ Really doesn't have enough methods to be general purpose. It is missing: Group, Order, Count, First, Last, Distinct. Subjectively, I use all of these.
 ⚠️ Supports ES iterators, but doesn't support repeatable/lazy ES iterators
 ✔️ Very popular.
 ✔️ 3,744 bytes minified/1,068 bytes brotlied
 
-### fromfrom
+### [fromfrom](https://github.com/tomi/fromfrom)
 
 ✔️ Has it all: Yep, it just does.
 ✔️ Supports ES iterators, including lazy/repeatable. (Nice!)
@@ -92,14 +92,14 @@ or: why use this one?
 ✔️ 4,221 bytes minified/1,347 bytes brotlied
 ✅ Great name.
 
-### @siderite/linqer
+### [@siderite/linqer](https://github.com/Siderite/LInQer)
 
 ✔️ Supports ES iterators, including lazy/repeatable.
 ✔️ Has it all
 ❌ Typings that _aren't generic_. Useless.
 ❌ 21kb minified, 4,790 bytes brotlied. It has a slim library, but it isn't UMD! Can't use it in bundlers.
 
-### @adamburgess/linq
+### [@adamburgess/linq](https://github.com/adamburgess/linq)
 
 ✔️ Supports ES iterators, including lazy/repeatable.
 ⚠️ Has a lot of stuff. Working to get parity with fromfrom.
