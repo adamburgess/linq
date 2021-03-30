@@ -92,14 +92,6 @@ or: why use this one?
 ✔️ 4,221 bytes minified/1,347 bytes brotlied  
 ✅ Great name.  
 
-### [@siderite/linqer](https://github.com/Siderite/LInQer)
-
-✔️ Has it all  
-✔️ Supports ES iterators, including lazy/repeatable.  
-⚠️ Not very popular  
-❌ Typings that _aren't generic_. Useless.  
-❌ 21kb minified, 4,790 bytes brotlied. It has a slim library, but it isn't UMD! Can't use it in bundlers.  
-
 ### [@adamburgess/linq](https://github.com/adamburgess/linq)
 
 ✔️ Supports ES iterators, including lazy/repeatable.  
@@ -107,6 +99,10 @@ or: why use this one?
 ✔️ Excellent typing, if I do say so myself. Has a couple features that other libraries don't have.  
 ❌ 1 user. Hah.  
 ✔️ 3,975 bytes minified/1,070 bytes brotlied (just behind iterare with way more features)  
+
+Others not considered:
+
+❌ [@siderite/linqer](https://github.com/Siderite/LInQer): 5kb brotlied, and the typings _aren't generic_. For that reason, useless. Has similar features to fromfrom.
 
 ## Performance
 
