@@ -94,8 +94,8 @@ or: why use this one?
 
 ### [@siderite/linqer](https://github.com/Siderite/LInQer)
 
-✔️ Supports ES iterators, including lazy/repeatable.  
 ✔️ Has it all  
+✔️ Supports ES iterators, including lazy/repeatable.  
 ⚠️ Not very popular  
 ❌ Typings that _aren't generic_. Useless.  
 ❌ 21kb minified, 4,790 bytes brotlied. It has a slim library, but it isn't UMD! Can't use it in bundlers.  
