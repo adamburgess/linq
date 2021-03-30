@@ -70,45 +70,45 @@ or: why use this one?
 
 ### [linq.js](https://github.com/mihaifm/linq) (on npm: linq)
 
-✔️ Has _everything_.
-❌ Except iterator support.
-✔️ Extremely popular.
-⚠️ Types could be improved: toObject is not typed
-❌ 35KB minified/6.6KB brotlied
+✔️ Has _everything_.  
+❌ Except iterator support.  
+✔️ Extremely popular.  
+⚠️ Types could be improved: toObject is not typed  
+❌ 35KB minified/6.6KB brotlied  
 
 
 ### [iterare](https://github.com/felixfbecker/iterare)
 
-⚠️ Really doesn't have enough methods to be general purpose. It is missing: Group, Order, Count, First, Last, Distinct. Subjectively, I use all of these.
-⚠️ Supports ES iterators, but doesn't support repeatable/lazy ES iterators
-✔️ Very popular.
-✔️ 3,744 bytes minified/1,068 bytes brotlied
+⚠️ Really doesn't have enough methods to be general purpose. It is missing: Group, Order, Count, First, Last, Distinct. Subjectively, I use all of these.  
+⚠️ Supports ES iterators, but doesn't support repeatable/lazy ES iterators  
+✔️ Very popular.  
+✔️ 3,744 bytes minified/1,068 bytes brotlied  
 
 ### [fromfrom](https://github.com/tomi/fromfrom)
 
-✔️ Has it all: Yep, it just does.
-✔️ Supports ES iterators, including lazy/repeatable. (Nice!)
-⚠️ Not very popular, but hey, this library is awesome.
-✔️ 4,221 bytes minified/1,347 bytes brotlied
-✅ Great name.
+✔️ Has it all: Yep, it just does.  
+✔️ Supports ES iterators, including lazy/repeatable. (Nice!)  
+⚠️ Not very popular, but hey, this library is awesome.  
+✔️ 4,221 bytes minified/1,347 bytes brotlied  
+✅ Great name.  
 
 ### [@siderite/linqer](https://github.com/Siderite/LInQer)
 
-✔️ Supports ES iterators, including lazy/repeatable.
-✔️ Has it all
-❌ Typings that _aren't generic_. Useless.
-❌ 21kb minified, 4,790 bytes brotlied. It has a slim library, but it isn't UMD! Can't use it in bundlers.
+✔️ Supports ES iterators, including lazy/repeatable.  
+✔️ Has it all  
+❌ Typings that _aren't generic_. Useless.  
+❌ 21kb minified, 4,790 bytes brotlied. It has a slim library, but it isn't UMD! Can't use it in bundlers.  
 
 ### [@adamburgess/linq](https://github.com/adamburgess/linq)
 
-✔️ Supports ES iterators, including lazy/repeatable.
-⚠️ Has a lot of stuff. Working to get parity with fromfrom.
-✔️ Excellent typing, if I do say so myself. Has a couple features that other libraries don't have.
-❌ 1 user. Hah.
-✔️ 3,975 bytes minified/1,070 bytes brotlied (just behind iterare with way more features)
+✔️ Supports ES iterators, including lazy/repeatable.  
+⚠️ Has a lot of stuff. Working to get parity with fromfrom.  
+✔️ Excellent typing, if I do say so myself. Has a couple features that other libraries don't have.  
+❌ 1 user. Hah.  
+✔️ 3,975 bytes minified/1,070 bytes brotlied (just behind iterare with way more features)  
 
 ## Performance
 
-It's probably slow.
-It uses iterators for everything.
-If you want performance, maybe use iterare. Their readme puts performance front and center.
+It's probably slow.  
+It uses iterators for everything.  
+If you want performance, maybe use iterare. Their readme puts performance front and center.  
