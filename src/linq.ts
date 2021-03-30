@@ -2,6 +2,8 @@ import { groupBy, map, reverse, skip, skipWhile, take, takeWhile, where } from '
 
 type Predicate<T> = (arg: T) => any
 
+const ErrBecauseEmpty = (x: string) => 'Sequence was empty, cannot ' + x;
+
 interface BaseSequence<T> extends Iterable<T> {
     /** Map each element to another */
     map<TResult>(f: (arg: T) => TResult): Sequence<TResult>
@@ -115,8 +117,14 @@ interface BaseSequence<T> extends Iterable<T> {
     none(predicate: Predicate<T>): boolean
 }
 type NumberSequence<T> = BaseSequence<T> & {
+    /** Sums every number in the sequence. If empty, returns 0. */
     sum(): number
+    /** Averages the sequence. If empty, throws. */
     average(): number
+    /** Finds the maximum in the sequence. If empty, throws. */
+    max(): number
+    /** Finds the minimum in the sequence. If empty, throws. */
+    min(): number
 }
 interface BaseKeySequence<TKey, TElement> extends BaseSequence<TElement> {
     readonly key: TKey;
@@ -215,7 +223,30 @@ class SequenceKlass<T> implements BaseSequence<T> {
             value += x as unknown as number;
             count++;
         }
+        if (count === 0) throw new Error(ErrBecauseEmpty('average'));
         return value / count;
+    }
+
+    min() {
+        // in types we make sure min is only allowed on number types.
+        let val: number | undefined = undefined;
+        for (const x of this.iterable as unknown as Iterable<number>) {
+            if (val === undefined) val = x;
+            else if (x < val) val = x;
+        }
+        if (val === undefined) throw new Error(ErrBecauseEmpty('min'));
+        return val;
+    }
+
+    max() {
+        // in types we make sure max is only allowed on number types.
+        let val: number | undefined = undefined;
+        for (const x of this.iterable as unknown as Iterable<number>) {
+            if (val === undefined) val = x;
+            else if (x > val) val = x;
+        }
+        if (val === undefined) throw new Error(ErrBecauseEmpty('max'));
+        return val;
     }
 
     all(predicate: Predicate<T>) {
@@ -263,7 +294,7 @@ class SequenceKlass<T> implements BaseSequence<T> {
 
         const iterator = this.iterable[Symbol.iterator]();
         const result = iterator.next();
-        if (result.done) throw new Error('Sequence was empty');
+        if (result.done) throw new Error(ErrBecauseEmpty('first'));
         return result.value;
     }
 
@@ -284,9 +315,9 @@ class SequenceKlass<T> implements BaseSequence<T> {
 
         const iterator = this.iterable[Symbol.iterator]();
         const result1 = iterator.next();
-        if (result1.done) throw new Error('Sequence was empty');
+        if (result1.done) throw new Error(ErrBecauseEmpty('single'));
         const result2 = iterator.next();
-        if (!result2.done) throw new Error('Sequence had 2 or more elements');
+        if (!result2.done) throw new Error('Sequence had more than 1 element, cannot single');
 
         return result1.value;
     }

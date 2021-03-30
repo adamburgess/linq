@@ -31,13 +31,14 @@ export default function linq(t: Assert) {
     const longRange = from(Enumerable.range(1, 10));
     const singleton = from([1]);
 
-    const emptyArr = from([] as string[]);
-    expectType<Sequence<string>>(emptyArr);
+    const emptyStrArr = from([] as string[]);
+    expectType<Sequence<string>>(emptyStrArr);
+    const emptyNumArr = from([] as number[]);
 
     t.test('count', t => {
         t.equals(numArr.count(), 3);
         t.equals(rangeArr.count(), 3);
-        t.equals(emptyArr.count(), 0);
+        t.equals(emptyStrArr.count(), 0);
     });
 
     t.test('select', t => {
@@ -198,21 +199,21 @@ export default function linq(t: Assert) {
 
     t.test('first', t => {
         t.equals(numArr.first(), 1);
-        t.throws(() => emptyArr.first());
+        t.throws(() => emptyStrArr.first());
         t.equals(numArr.first(x => x === 2), 2);
         t.throws(() => numArr.first(x => x === 999));
     });
 
     t.test('firstOrDefault', t => {
         t.equals(numArr.firstOrDefault(), 1);
-        t.equals(emptyArr.firstOrDefault(), undefined);
+        t.equals(emptyStrArr.firstOrDefault(), undefined);
         t.equals(numArr.firstOrDefault(x => x === 2), 2);
         t.equals(numArr.firstOrDefault(x => x === 999), undefined);
     });
 
     t.test('single', t => {
         t.equals(singleton.single(), 1);
-        t.throws(() => emptyArr.single());
+        t.throws(() => emptyStrArr.single());
         t.throws(() => numArr.single());
         t.equals(numArr.single(x => x === 2), 2);
         t.throws(() => numArr.single(_ => true));
@@ -220,7 +221,7 @@ export default function linq(t: Assert) {
 
     t.test('singleOrDefault', t => {
         t.equals(singleton.singleOrDefault(), 1);
-        t.equals(emptyArr.singleOrDefault(), undefined);
+        t.equals(emptyStrArr.singleOrDefault(), undefined);
         t.equals(numArr.singleOrDefault(), undefined);
         t.equals(numArr.singleOrDefault(x => x === 2), 2);
         t.equals(numArr.singleOrDefault(_ => true), undefined);
@@ -267,12 +268,25 @@ export default function linq(t: Assert) {
     t.test('average', t => {
         t.test('numbers', t => {
             t.equal(numArr.average(), (1 + 2 + 3) / 3);
+            t.throws(() => emptyNumArr.average());
         });
         t.test('strings', t => {
             // @ts-expect-error average should not be on strArr's type
             // eslint-disable-next-line @typescript-eslint/no-unsafe-call
             strArr.average();
-        })
+        });
+    });
+
+    t.test('max', t => {
+        const numArr = from([2, 1, 10, 4]);
+        t.equal(numArr.max(), 10);
+        t.throws(() => emptyNumArr.max());
+    });
+
+    t.test('min', t => {
+        const numArr = from([2, 1, 10, 4]);
+        t.equal(numArr.min(), 1);
+        t.throws(() => emptyNumArr.min());
     });
 
     t.test('all', t => {
