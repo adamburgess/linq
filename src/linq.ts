@@ -1,7 +1,5 @@
 import { groupBy, map, reverse, skip, skipWhile, take, takeWhile, where } from './enumerable.js'
 
-type Predicate<T> = (arg: T) => any
-
 const ErrBecauseEmpty = (x: string) => 'Sequence was empty, cannot ' + x;
 
 interface BaseSequence<T> extends Iterable<T> {
@@ -13,7 +11,7 @@ interface BaseSequence<T> extends Iterable<T> {
     /** Filters with a boolean predicate */
     where<TResult extends T>(f: (arg: T | TResult) => boolean): Sequence<TResult>
     /** Filters with a predicate that must return a truthy value */
-    where<TResult extends T>(f: Predicate<T | TResult>): Sequence<TResult>
+    where<TResult extends T>(f: (arg: T | TResult) => any): Sequence<TResult>
 
     /** Reverses the sequence. */
     reverse(): Sequence<T>
@@ -37,13 +35,13 @@ interface BaseSequence<T> extends Iterable<T> {
     take(count: number): Sequence<T>;
 
     /** Take elements while the predicate is true, then skips the rest */
-    takeWhile(predicate: Predicate<T>): Sequence<T>;
+    takeWhile(predicate: (arg: T) => any): Sequence<T>;
 
     /** Skip a number of elements before letting the rest through */
     skip(count: number): Sequence<T>;
 
     /** Skip elements while the predicate is true, then take the rest */
-    skipWhile(predicate: Predicate<T>): Sequence<T>;
+    skipWhile(predicate: (arg: T) => any): Sequence<T>;
 
     /** Counts the number of elements in the sequence */
     count(): number
@@ -72,7 +70,7 @@ interface BaseSequence<T> extends Iterable<T> {
      * Get the first element in the sequence that matches a condition.
      * Will throw if empty!
      */
-    first(predicate: Predicate<T>): T;
+    first(predicate: (arg: T) => any): T;
 
     /**
      * Get the first element in the sequence.
@@ -83,7 +81,7 @@ interface BaseSequence<T> extends Iterable<T> {
      * Get the first element in the sequence that matches a condition.
      * If empty or no matches, returns undefined.
      */
-    firstOrDefault(predicate: Predicate<T>): T | undefined;
+    firstOrDefault(predicate: (arg: T) => any): T | undefined;
 
     /**
      * Get the _only_ element in the sequence.
@@ -94,7 +92,7 @@ interface BaseSequence<T> extends Iterable<T> {
      * Get the _only_ element in the sequence that matches a condition.
      * Will throw if empty or more than one element! Use defaultIfEmpty(default).single() if no throw is wanted.
      */
-    single(predicate: Predicate<T>): T;
+    single(predicate: (arg: T) => any): T;
 
     /**
      * Get the _only_ element in the sequence.
@@ -105,16 +103,16 @@ interface BaseSequence<T> extends Iterable<T> {
      * Get the _only_ element in the sequence that matches a condition.
      * @returns undefined if empty or more than one element.
      */
-    singleOrDefault(predicate: Predicate<T>): T | undefined;
+    singleOrDefault(predicate: (arg: T) => any): T | undefined;
 
     /** True if all elements pass the predicate */
-    all(predicate: Predicate<T>): boolean
+    all(predicate: (arg: T) => any): boolean
 
     /** True if any elements pass the predicate */
-    any(predicate: Predicate<T>): boolean
+    any(predicate: (arg: T) => any): boolean
 
     /** True if no elements pass the predicate */
-    none(predicate: Predicate<T>): boolean
+    none(predicate: (arg: T) => any): boolean
 }
 type NumberSequence<T> = BaseSequence<T> & {
     /** Sums every number in the sequence. If empty, returns 0. */
@@ -249,21 +247,21 @@ class SequenceKlass<T> implements BaseSequence<T>, NumberSequence<T> {
         return val;
     }
 
-    all(predicate: Predicate<T>) {
+    all(predicate: (arg: T) => any) {
         for (const x of this.iterable) {
             if (!predicate(x)) return false;
         }
         return true;
     }
 
-    any(predicate: Predicate<T>) {
+    any(predicate: (arg: T) => any) {
         for (const x of this.iterable) {
             if (predicate(x)) return true;
         }
         return false;
     }
 
-    none(predicate: Predicate<T>) {
+    none(predicate: (arg: T) => any) {
         return !this.any(predicate);
     }
 
