@@ -211,6 +211,23 @@ export default function linq(t: Assert) {
         t.deepEqual(from(a).prepend(b).toArray(), expected);
     });
 
+    t.test('distinct', t => {
+        const duplicate = [1, 2, 3, 2];
+        const expected = [1, 2, 3];
+        t.deepEqual(from(duplicate).distinct().toArray(), expected);
+        const objectDuplicates = from([
+            { id: 5, foo: 'first' },
+            { id: 5, foo: 'second' },
+            { id: 6, foo: 'other' }
+        ]);
+        t.deepEqual(objectDuplicates.distinct().count(), 3);
+        t.deepEqual(objectDuplicates.distinct(x => x.id).toArray(), [
+            { id: 5, foo: 'first' },
+            { id: 6, foo: 'other' }
+        ]);
+
+    });
+
     t.test('first', t => {
         t.equals(numArr.first(), 1);
         t.throws(() => emptyStrArr.first());

@@ -135,6 +135,20 @@ export function concat<T>(a: Iterable<T>, b: Iterable<T>): Iterable<T> {
     return createLazyGenerator(concat);
 }
 
+export function distinct<T, TKey = T>(input: Iterable<T>, keySelector?: (arg: T) => TKey) {
+    function* distinct() {
+        const set = new Set<T | TKey>();
+        for (const x of input) {
+            const key = keySelector ? keySelector(x) : x;
+            if (!set.has(key)) {
+                set.add(key)
+                yield x;
+            }
+        }
+    }
+    return createLazyGenerator(distinct);
+}
+
 const Enumerable = {
     empty,
     range,
@@ -148,6 +162,7 @@ const Enumerable = {
     skip,
     skipWhile,
     concat,
+    distinct,
 };
 
 export default Enumerable;

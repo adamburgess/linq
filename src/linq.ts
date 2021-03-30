@@ -1,4 +1,4 @@
-import { concat, groupBy, map, reverse, skip, skipWhile, take, takeWhile, where } from './enumerable.js'
+import { concat, distinct, groupBy, map, reverse, skip, skipWhile, take, takeWhile, where } from './enumerable.js'
 
 const ErrBecauseEmpty = (x: string) => 'Sequence was empty, cannot ' + x;
 
@@ -49,6 +49,11 @@ interface BaseSequence<T> extends Iterable<T> {
     /** Prepend another iterable to the start */
     prepend(iterable: Iterable<T>): Sequence<T>
 
+    /** Get all distinct elements of the sequence using strict equality. First value wins. */
+    distinct(): Sequence<T>;
+    /** Get all distinct elements of the sequence, mapping each element to a key that will be used for strict equality. First value wins. */
+    distinct(keySelector: (arg: T) => unknown): Sequence<T>
+
     /** Counts the number of elements in the sequence */
     count(): number
 
@@ -59,78 +64,40 @@ interface BaseSequence<T> extends Iterable<T> {
     */
     toArray(): T[]
 
-    /**
-     * Converts this sequence to a Map.
-     */
+    /** Converts this sequence to a Map. */
     toMap<TKey, TElement>(keySelector: (arg: T) => TKey, elementSelector: (arg: T) => TElement): Map<TKey, TElement>;
 
     /** Converts this sequence into an object */
     toObject<TKey extends PropertyKey, TElement>(keySelector: (arg: T) => TKey, elementSelector: (arg: T) => TElement): Record<TKey, TElement>;
 
-    /**
-     * Get the first element in the sequence.
-     * Will throw if empty! Use firstOrDefault if no throw is wanted.
-     */
+    /** Get the first element in the sequence. Will throw if empty! Use firstOrDefault if no throw is wanted. */
     first(): T;
-    /**
-     * Get the first element in the sequence that matches a condition.
-     * Will throw if empty! Use firstOrDefault if no throw is wanted.
-     */
+    /** Get the first element in the sequence that matches a condition. Will throw if empty! Use firstOrDefault if no throw is wanted. */
     first(predicate: (arg: T) => any): T;
 
-    /**
-     * Get the first element in the sequence.
-     * If empty, returns undefined.
-     */
+    /** Get the first element in the sequence. If empty, returns undefined. */
     firstOrDefault(): T | undefined;
-    /**
-     * Get the first element in the sequence that matches a condition.
-     * If empty or no matches, returns undefined.
-     */
+    /** Get the first element in the sequence that matches a condition. If empty or no matches, returns undefined. */
     firstOrDefault(predicate: (arg: T) => any): T | undefined;
 
-    /**
-     * Get the _only_ element in the sequence.
-     * Will throw if empty or more than one element! Use singleOrDefault if no throw is wanted.
-     */
+    /** Get the _only_ element in the sequence. Will throw if empty or more than one element! Use singleOrDefault if no throw is wanted. */
     single(): T
-    /**
-     * Get the _only_ element in the sequence that matches a condition.
-     * Will throw if empty or more than one element! Use singleOrDefault if no throw is wanted.
-     */
+    /** Get the _only_ element in the sequence that matches a condition. Will throw if empty or more than one element! Use singleOrDefault if no throw is wanted. */
     single(predicate: (arg: T) => any): T;
 
-    /**
-     * Get the _only_ element in the sequence.
-     * Returns undefined if empty or more than one element.
-     */
+    /** Get the _only_ element in the sequence. Returns undefined if empty or more than one element. */
     singleOrDefault(): T | undefined
-    /**
-     * Get the _only_ element in the sequence that matches a condition.
-     * @returns undefined if empty or more than one element.
-     */
+    /** Get the _only_ element in the sequence that matches a condition. Returns undefined if empty or more than one element. */
     singleOrDefault(predicate: (arg: T) => any): T | undefined;
 
-    /**
-     * Get the last element in the sequence.
-     * Will throw if empty! Use lastOrDefault if no throw is wanted.
-     */
+    /** Get the last element in the sequence. Will throw if empty! Use lastOrDefault if no throw is wanted. */
     last(): T;
-    /**
-     * Get the last element in the sequence that matches a condition.
-     * Will throw if empty! Use lastOrDefault if no throw is wanted.
-     */
+    /** Get the last element in the sequence that matches a condition. Will throw if empty! Use lastOrDefault if no throw is wanted. */
     last(predicate: (arg: T) => any): T;
 
-    /**
-     * Get the last element in the sequence.
-     * If empty, returns undefined.
-     */
+    /** Get the last element in the sequence. If empty, returns undefined. */
     lastOrDefault(): T | undefined;
-    /**
-     * Get the last element in the sequence that matches a condition.
-     * If empty or no matches, returns undefined.
-     */
+    /** Get the last element in the sequence that matches a condition. If empty or no matches, returns undefined. */
     lastOrDefault(predicate: (arg: T) => any): T | undefined;
 
     /** True if all elements pass the predicate */
@@ -153,6 +120,7 @@ type NumberSequence<T> = BaseSequence<T> & {
     min(): number
 }
 interface BaseKeySequence<TKey, TElement> extends BaseSequence<TElement> {
+    /** The key that this set was grouped by */
     readonly key: TKey;
 }
 interface BaseOrderedSequence<T> extends BaseSequence<T> {
@@ -232,6 +200,10 @@ class SequenceKlass<T> implements BaseSequence<T>, NumberSequence<T> {
 
     prepend(iterable: Iterable<T>) {
         return new SequenceKlass(concat(iterable, this.it));
+    }
+
+    distinct(keySelector?: (arg: T) => unknown) {
+        return new SequenceKlass(distinct(this.it, keySelector));
     }
 
     count() {
