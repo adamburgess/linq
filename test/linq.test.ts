@@ -2,7 +2,7 @@ import 'source-map-support/register.js'
 import { Assert } from 'zora'
 import { expectType } from './helpers.js'
 import Enumerable from '../src/enumerable.js'
-import from, { IKeySequence, INumberKeySequence, INumberSequence, ISequence, SequenceTypes } from '../src/linq.js'
+import from, { IKeySequence, NumberSequence, BaseSequence, SequenceTypes, KeySequence } from '../src/linq.js'
 
 export default function linq(t: Assert) {
     t.test('constructor', t => {
@@ -18,21 +18,21 @@ export default function linq(t: Assert) {
     });
 
     const numArr = from([1, 2, 3]);
-    expectType<ISequence<number>>(numArr);
+    expectType<BaseSequence<number>>(numArr);
     const strArr = from(['do', 're', 'mi']);
-    expectType<ISequence<string>>(strArr);
+    expectType<BaseSequence<string>>(strArr);
     const symbol = Symbol('Symbol');
     const unionArr = from(['truthy', false, true, 0, 1, 2, symbol]);
     unionArr.where(x => x === 1);
-    expectType<ISequence<string | number | boolean | symbol>>(unionArr);
-    const anyArr = unionArr as ISequence<any>;
+    expectType<BaseSequence<string | number | boolean | symbol>>(unionArr);
+    const anyArr = unionArr as BaseSequence<any>;
     const rangeArr = from(Enumerable.range(0, 3));
-    expectType<ISequence<number>>(rangeArr);
+    expectType<BaseSequence<number>>(rangeArr);
     const longRange = from(Enumerable.range(1, 10));
     const singleton = from([1]);
 
     const emptyArr = from([] as string[]);
-    expectType<ISequence<string>>(emptyArr);
+    expectType<BaseSequence<string>>(emptyArr);
 
     t.test('count', t => {
         t.equals(numArr.count(), 3);
@@ -55,7 +55,7 @@ export default function linq(t: Assert) {
                 expectType<number>(x);
                 return x % 2 === 1
             });
-            expectType<ISequence<number>>(odd);
+            expectType<BaseSequence<number>>(odd);
             t.deepEqual(Array.from(odd), [1, 3]);
             const even = numArr.where(x => x % 2 === 0);
             t.deepEqual(Array.from(even), [2]);
@@ -72,12 +72,12 @@ export default function linq(t: Assert) {
                     return typeof x === 'number';
                 }
                 const numbers = unionArr.where(isNumber);
-                expectType<INumberSequence>(numbers);
+                expectType<NumberSequence<number>>(numbers);
                 t.deepEqual(Array.from(numbers), [0, 1, 2]);
             });
             t.test('explicit', t => {
                 const numbers = anyArr.where<number>(x => typeof x === 'number');
-                expectType<INumberSequence>(numbers);
+                expectType<NumberSequence<number>>(numbers);
                 t.deepEqual(Array.from(numbers), [0, 1, 2]);
             });
             t.test('implicit, weird', t => {
@@ -86,7 +86,7 @@ export default function linq(t: Assert) {
                     return true;
                 }
                 const marvelous = unionArr.where(isMarvelous);
-                expectType<ISequence<Marvelous>>(marvelous);
+                expectType<BaseSequence<Marvelous>>(marvelous);
                 t.ok(true);
             });
         });
@@ -100,7 +100,7 @@ export default function linq(t: Assert) {
     t.test('groupBy', t => {
         t.test('with key selector only', t => {
             const grouped = numArr.groupBy(x => x % 2 === 0 ? 'even' : 'odd');
-            expectType<ISequence<INumberKeySequence<'even' | 'odd'>>>(grouped);
+            expectType<BaseSequence<KeySequence<'even' | 'odd', number>>>(grouped);
             const basic = grouped.map(g => ({ key: g.key, val: g.toArray() }));
             t.deepEqual(Array.from(basic), [
                 {
@@ -117,7 +117,7 @@ export default function linq(t: Assert) {
 
         t.test('with both', t => {
             const grouped = numArr.groupBy(x => x % 2 === 0 ? 'even' : 'odd', x => x.toString());
-            expectType<ISequence<IKeySequence<'even' | 'odd', string>>>(grouped);
+            expectType<BaseSequence<IKeySequence<'even' | 'odd', string>>>(grouped);
             const basic = grouped.map(g => ({ key: g.key, val: g.toArray() }));
             t.deepEqual(Array.from(basic), [
                 {

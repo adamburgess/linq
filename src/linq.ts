@@ -1,45 +1,47 @@
 import { groupBy, map, reverse, skip, skipWhile, take, takeWhile, where } from './enumerable.js'
 
-export interface ISequence<T> extends Iterable<T> {
+type Predicate<T> = (arg: T) => any
+
+export interface BaseSequence<T> extends Iterable<T> {
     /** Map each element to another */
-    map<TResult>(f: (arg: T) => TResult): TypedISequence<TResult>
+    map<TResult>(f: (arg: T) => TResult): Sequence<TResult>
 
     /** Filters with a TS type assertion ('is'), narrowing to that type */
-    where<TResult = T>(f: (arg: T | TResult) => arg is TResult): TypedISequence<TResult>
+    where<TResult = T>(f: (arg: T | TResult) => arg is TResult): Sequence<TResult>
     /** Filters with a boolean predicate */
-    where<TResult extends T>(f: (arg: T | TResult) => boolean): TypedISequence<TResult>
+    where<TResult extends T>(f: (arg: T | TResult) => boolean): Sequence<TResult>
     /** Filters with a predicate that must return a truthy value */
-    where<TResult extends T>(f: (arg: T | TResult) => any): TypedISequence<TResult>
+    where<TResult extends T>(f: Predicate<T | TResult>): Sequence<TResult>
 
     /** Reverses the sequence. */
-    reverse(): TypedISequence<T>
+    reverse(): Sequence<T>
 
     /** Project each element to get a key, and group all items by that key. */
-    groupBy<TKey, TProject = T>(keySelector: (arg: T) => TKey): ISequence<TypedIKeySequence<TKey, TProject>>
+    groupBy<TKey, TProject = T>(keySelector: (arg: T) => TKey): BaseSequence<KeySequence<TKey, TProject>>
     /** Project each element to get a key, and group all items, each projected onto another type. */
-    groupBy<TKey, TProject = T>(keySelector: (arg: T) => TKey, elementSelector?: (arg: T) => TProject): ISequence<TypedIKeySequence<TKey, TProject>>
+    groupBy<TKey, TProject = T>(keySelector: (arg: T) => TKey, elementSelector?: (arg: T) => TProject): BaseSequence<KeySequence<TKey, TProject>>
 
     /** Sort the array in ascending order of the selector */
-    orderBy(keySelector: (arg: T) => string | number): TypedIOrderedSequence<T>;
+    orderBy(keySelector: (arg: T) => string | number): OrderedSequence<T>;
     /** Sort the array in ascending order of the selector, with a custom comparer */
-    orderBy<TKey>(keySelector: (arg: T) => TKey, comparer: ICompare<TKey>): TypedIOrderedSequence<T>
+    orderBy<TKey>(keySelector: (arg: T) => TKey, comparer: ICompare<TKey>): OrderedSequence<T>
 
     /** Sort the array in descending order of the selector */
-    orderByDescending(keySelector: (arg: T) => string | number): TypedIOrderedSequence<T>;
+    orderByDescending(keySelector: (arg: T) => string | number): OrderedSequence<T>;
     /** Sort the array in descending order of the selector, with a custom comparer */
-    orderByDescending<TKey>(keySelector: (arg: T) => TKey, comparer: ICompare<TKey>): TypedIOrderedSequence<T>
+    orderByDescending<TKey>(keySelector: (arg: T) => TKey, comparer: ICompare<TKey>): OrderedSequence<T>
 
     /** Take a maximum amount of elements */
-    take(count: number): TypedISequence<T>;
+    take(count: number): Sequence<T>;
 
     /** Take elements while the predicate is true, then skips the rest */
-    takeWhile(predicate: (arg: T) => boolean): TypedISequence<T>;
+    takeWhile(predicate: Predicate<T>): Sequence<T>;
 
     /** Skip a number of elements before letting the rest through */
-    skip(count: number): TypedISequence<T>;
+    skip(count: number): Sequence<T>;
 
     /** Skip elements while the predicate is true, then take the rest */
-    skipWhile(predicate: (arg: T) => boolean): TypedISequence<T>;
+    skipWhile(predicate: Predicate<T>): Sequence<T>;
 
     /** Counts the number of elements in the sequence */
     count(): number
@@ -68,7 +70,7 @@ export interface ISequence<T> extends Iterable<T> {
      * Get the first element in the sequence that matches a condition.
      * Will throw if empty!
      */
-    first(predicate: (arg: T) => any): T;
+    first(predicate: Predicate<T>): T;
 
     /**
      * Get the first element in the sequence.
@@ -79,7 +81,7 @@ export interface ISequence<T> extends Iterable<T> {
      * Get the first element in the sequence that matches a condition.
      * If empty or no matches, returns undefined.
      */
-    firstOrDefault(predicate: (arg: T) => any): T | undefined;
+    firstOrDefault(predicate: Predicate<T>): T | undefined;
 
     /**
      * Get the _only_ element in the sequence.
@@ -90,7 +92,7 @@ export interface ISequence<T> extends Iterable<T> {
      * Get the _only_ element in the sequence that matches a condition.
      * Will throw if empty or more than one element! Use defaultIfEmpty(default).single() if no throw is wanted.
      */
-    single(predicate: (arg: T) => any): T;
+    single(predicate: Predicate<T>): T;
 
     /**
      * Get the _only_ element in the sequence.
@@ -101,88 +103,93 @@ export interface ISequence<T> extends Iterable<T> {
      * Get the _only_ element in the sequence that matches a condition.
      * @returns undefined if empty or more than one element.
      */
-    singleOrDefault(predicate: (arg: T) => any): T | undefined;
-}
+    singleOrDefault(predicate: Predicate<T>): T | undefined;
 
-export interface INumberSequence extends ISequence<number> {
+    /** True if all elements pass the predicate */
+    all(predicate: Predicate<T>): boolean
+
+    /** True if any elements pass the predicate */
+    any(predicate: Predicate<T>): boolean
+
+    /** True if no elements pass the predicate */
+    none(predicate: Predicate<T>): boolean
+}
+export type NumberSequence<T> = BaseSequence<T> & {
     sum(): number
     average(): number
 }
-
-export interface IKeySequence<TKey, TElement> extends ISequence<TElement> {
+export interface IKeySequence<TKey, TElement> extends BaseSequence<TElement> {
     readonly key: TKey;
 }
-export type INumberKeySequence<TKey> = IKeySequence<TKey, number> & INumberSequence;
-
-export interface IOrderedSequence<T> extends ISequence<T> {
+export interface BaseOrderedSequence<T> extends BaseSequence<T> {
     /** Next, sort the array in ascending order of the selector */
-    thenBy(keySelector: (arg: T) => string | number): TypedIOrderedSequence<T>;
+    thenBy(keySelector: (arg: T) => string | number): OrderedSequence<T>;
     /** Next, sort the array in ascending order of the selector, with a custom comparer */
-    thenBy<TKey>(keySelector: (arg: T) => TKey, comparer: ICompare<TKey>): TypedIOrderedSequence<T>
+    thenBy<TKey>(keySelector: (arg: T) => TKey, comparer: ICompare<TKey>): OrderedSequence<T>
 
     /** Next, sort the array in descending order of the selector */
-    thenByDescending(keySelector: (arg: T) => string | number): TypedIOrderedSequence<T>;
+    thenByDescending(keySelector: (arg: T) => string | number): OrderedSequence<T>;
     /** Next, sort the array in descending order of the selector, with a custom comparer */
-    thenByDescending<TKey>(keySelector: (arg: T) => TKey, comparer: ICompare<TKey>): TypedIOrderedSequence<T>
+    thenByDescending<TKey>(keySelector: (arg: T) => TKey, comparer: ICompare<TKey>): OrderedSequence<T>
 }
-export type INumberOrderedSequence<T> = IOrderedSequence<T> & INumberSequence;
 
 // disable Distributive Conditional Types
-export type TypedISequence<T> = [T] extends [number] ? INumberSequence : ISequence<T>;
-export type TypedIKeySequence<TKey, TElement> = [TElement] extends [number] ? INumberKeySequence<TKey> : IKeySequence<TKey, TElement>;
-export type TypedIOrderedSequence<T> = [T] extends [number] ? INumberOrderedSequence<T> : IOrderedSequence<T>;
-export type SequenceTypes<T> = T extends ISequence<infer Y> ? Y : never;
+export type Sequence<T> = [T] extends [number] ? NumberSequence<T> : BaseSequence<T>;
+export type KeySequence<TKey, TElement> = IKeySequence<TKey, TElement> & Sequence<TElement>;
+export type OrderedSequence<T> = BaseOrderedSequence<T> & Sequence<T>;
 
-class Sequence<T> implements ISequence<T> {
+export type SequenceTypes<T> = T extends BaseSequence<infer Y> ? Y : never;
+
+class SequenceKlass<T> implements BaseSequence<T> {
     constructor(protected iterable: Iterable<T>) {
     }
 
-    map<TResult>(f: (arg: T) => TResult): TypedISequence<TResult> {
-        return new Sequence(map(this.iterable, f)) as unknown as TypedISequence<TResult>;
+    map<TResult>(f: (arg: T) => TResult): Sequence<TResult> {
+        return new SequenceKlass(map(this.iterable, f)) as unknown as Sequence<TResult>;
     }
 
-    where<TResult = T>(f: (arg: T | TResult) => arg is TResult): TypedISequence<TResult>
-    where<TResult extends T>(f: (arg: T | TResult) => boolean): TypedISequence<TResult>
-    where<TResult extends T>(f: (arg: T | TResult) => any): TypedISequence<TResult> {
-        return new Sequence(where(this.iterable, f)) as unknown as TypedISequence<TResult>;
+    where<TResult = T>(f: (arg: T | TResult) => arg is TResult): Sequence<TResult>
+    where<TResult extends T>(f: (arg: T | TResult) => boolean): Sequence<TResult>
+    where<TResult extends T>(f: (arg: T | TResult) => any): Sequence<TResult> {
+        return new SequenceKlass(where(this.iterable, f)) as unknown as Sequence<TResult>;
     }
 
     reverse() {
-        return new Sequence(reverse(this.iterable)) as unknown as TypedISequence<T>;
+        return new SequenceKlass(reverse(this.iterable)) as unknown as Sequence<T>;
     }
 
-    groupBy<TKey, TProject = T>(keySelector: (arg: T) => TKey): ISequence<TypedIKeySequence<TKey, TProject>>
-    groupBy<TKey, TProject = T>(keySelector: (arg: T) => TKey, elementSelector?: (arg: T) => TProject): ISequence<TypedIKeySequence<TKey, TProject>> {
-        return new Sequence(groupBy(this.iterable, keySelector, elementSelector))
-            .map(kv => new KeySequence(kv[1], kv[0])) as unknown as ISequence<TypedIKeySequence<TKey, TProject>>;
+    groupBy<TKey, TProject = T>(keySelector: (arg: T) => TKey): BaseSequence<KeySequence<TKey, TProject>>
+    groupBy<TKey, TProject = T>(keySelector: (arg: T) => TKey, elementSelector?: (arg: T) => TProject): BaseSequence<KeySequence<TKey, TProject>> {
+        return new SequenceKlass(groupBy(this.iterable, keySelector, elementSelector))
+            .map(kv => new KeySequenceKlass(kv[1], kv[0])) as unknown as BaseSequence<KeySequence<TKey, TProject>>;
     }
 
     orderBy<TKey>(selector: (arg: T) => TKey, comparer?: ICompare<TKey>) {
-        return new OrderedSequence(this.iterable, [{
+        return new OrderedSequenceKlass(this.iterable, [{
             selector, comparer: (comparer as ICompare<unknown>) ?? defaultComparer, ascending: true
-        }]) as unknown as TypedIOrderedSequence<T>;
+        }]) as unknown as OrderedSequence<T>;
     }
 
     orderByDescending<TKey>(selector: (arg: T) => TKey, comparer?: ICompare<TKey>) {
-        return new OrderedSequence(this.iterable, [{
+        return new OrderedSequenceKlass(this.iterable, [{
             selector, comparer: (comparer as ICompare<unknown>) ?? defaultComparer, ascending: false
-        }]) as unknown as TypedIOrderedSequence<T>;
+        }]) as unknown as OrderedSequence<T>;
     }
 
     take(count: number) {
-        return new Sequence(take(this.iterable, count)) as unknown as TypedISequence<T>;
+        return new SequenceKlass(take(this.iterable, count)) as unknown as Sequence<T>;
     }
 
-    takeWhile(predicate: (arg: T) => boolean): TypedISequence<T> {
-        return new Sequence(takeWhile(this.iterable, predicate)) as unknown as TypedISequence<T>;
+    takeWhile(predicate: (arg: T) => boolean): Sequence<T> {
+        return new SequenceKlass(takeWhile(this.iterable, predicate)) as unknown as Sequence<T>;
     }
 
     skip(count: number) {
-        return new Sequence(skip(this.iterable, count)) as unknown as TypedISequence<T>;
+        return new SequenceKlass(skip(this.iterable, count)) as unknown as Sequence<T>;
     }
 
-    skipWhile(predicate: (arg: T) => boolean): TypedISequence<T> {
-        return new Sequence(skipWhile(this.iterable, predicate)) as unknown as TypedISequence<T>;
+    skipWhile(predicate: (arg: T) => boolean): Sequence<T> {
+        return new SequenceKlass(skipWhile(this.iterable, predicate)) as unknown as Sequence<T>;
     }
 
     count() {
@@ -211,6 +218,24 @@ class Sequence<T> implements ISequence<T> {
         return value / count;
     }
 
+    all(predicate: Predicate<T>) {
+        for (const x of this.iterable) {
+            if (!predicate(x)) return false;
+        }
+        return true;
+    }
+
+    any(predicate: Predicate<T>) {
+        for (const x of this.iterable) {
+            if (predicate(x)) return true;
+        }
+        return false;
+    }
+
+    none(predicate: Predicate<T>) {
+        return !this.any(predicate);
+    }
+
     toArray() {
         return Array.from(this);
     }
@@ -234,7 +259,7 @@ class Sequence<T> implements ISequence<T> {
     first(): T
     first(predicate: (arg: T) => any): T
     first(predicate?: (arg: T) => any): T {
-        if (predicate) return (this.where(predicate) as unknown as Sequence<T>).first();
+        if (predicate) return this.where(predicate).first();
 
         const iterator = this.iterable[Symbol.iterator]();
         const result = iterator.next();
@@ -245,7 +270,7 @@ class Sequence<T> implements ISequence<T> {
     firstOrDefault(): T | undefined
     firstOrDefault(predicate: (arg: T) => any): T | undefined;
     firstOrDefault(predicate?: (arg: T) => any): T | undefined {
-        if (predicate) return (this.where(predicate) as unknown as Sequence<T>).firstOrDefault();
+        if (predicate) return this.where(predicate).firstOrDefault();
 
         const iterator = this.iterable[Symbol.iterator]();
         const result = iterator.next();
@@ -255,7 +280,7 @@ class Sequence<T> implements ISequence<T> {
     single(): T
     single(predicate: (arg: T) => any): T
     single(predicate?: (arg: T) => any): T {
-        if (predicate) return (this.where(predicate) as unknown as Sequence<T>).single();
+        if (predicate) return this.where(predicate).single();
 
         const iterator = this.iterable[Symbol.iterator]();
         const result1 = iterator.next();
@@ -269,7 +294,7 @@ class Sequence<T> implements ISequence<T> {
     singleOrDefault(): T | undefined
     singleOrDefault(predicate: (arg: T) => any): T | undefined
     singleOrDefault(predicate?: (arg: T) => any): T | undefined {
-        if (predicate) return (this.where(predicate) as unknown as Sequence<T>).singleOrDefault();
+        if (predicate) return this.where(predicate).singleOrDefault();
 
         const iterator = this.iterable[Symbol.iterator]();
         const result1 = iterator.next();
@@ -293,7 +318,7 @@ class Sequence<T> implements ISequence<T> {
     }
 }
 
-class KeySequence<TKey, TElement> extends Sequence<TElement> implements IKeySequence<TKey, TElement> {
+class KeySequenceKlass<TKey, TElement> extends SequenceKlass<TElement> implements IKeySequence<TKey, TElement> {
     constructor(iterable: Iterable<TElement>, public readonly key: TKey) {
         super(iterable);
     }
@@ -308,21 +333,21 @@ type SelectorComparer<T> = {
 
 const defaultComparer: ICompare<any> = (a: any, b: any) => a > b ? 1 : a < b ? -1 : 0;
 
-class OrderedSequence<T> extends Sequence<T> implements IOrderedSequence<T> {
+class OrderedSequenceKlass<T> extends SequenceKlass<T> implements BaseOrderedSequence<T> {
     constructor(iterable: Iterable<T>, protected sc: SelectorComparer<T>[]) {
         super(iterable);
     }
 
     thenBy<TKey>(selector: (arg: T) => TKey, comparer?: ICompare<TKey>) {
-        return new OrderedSequence(this.iterable, [...this.sc, {
+        return new OrderedSequenceKlass(this.iterable, [...this.sc, {
             selector, comparer: (comparer as ICompare<unknown>) ?? defaultComparer, ascending: true
-        }]) as unknown as TypedIOrderedSequence<T>;
+        }]) as unknown as OrderedSequence<T>;
     }
 
     thenByDescending<TKey>(selector: (arg: T) => TKey, comparer?: ICompare<TKey>) {
-        return new OrderedSequence(this.iterable, [...this.sc, {
+        return new OrderedSequenceKlass(this.iterable, [...this.sc, {
             selector, comparer: (comparer as ICompare<unknown>) ?? defaultComparer, ascending: false
-        }]) as unknown as TypedIOrderedSequence<T>
+        }]) as unknown as OrderedSequence<T>
     }
 
     [Symbol.iterator]() {
@@ -342,11 +367,14 @@ class OrderedSequence<T> extends Sequence<T> implements IOrderedSequence<T> {
     }
 }
 
-type Test = Sequence<number> extends INumberSequence ? true : false;
-// Test should be true!
+type HasSum = 'sum' extends keyof Sequence<number> ? true : false
+type DoesntHaveSum = 'sum' extends keyof Sequence<string> ? false : true
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+type Passes = HasSum & DoesntHaveSum
+// Passes should be true!
 
-export function from<T>(arg: Iterable<T>): TypedISequence<T> {
-    return new Sequence(arg) as unknown as TypedISequence<T>;
+export function from<T>(arg: Iterable<T>): Sequence<T> {
+    return new SequenceKlass(arg) as unknown as Sequence<T>;
 }
 
 export default from;
