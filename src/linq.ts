@@ -19,9 +19,9 @@ interface BaseSequence<T> extends Iterable<T> {
     reverse(): Sequence<T>
 
     /** Project each element to get a key, and group all items by that key. */
-    groupBy<TKey, TProject = T>(keySelector: (arg: T) => TKey): BaseSequence<KeySequence<TKey, TProject>>
+    groupBy<TKey, TProject = T>(keySelector: (arg: T) => TKey): Sequence<KeySequence<TKey, TProject>>
     /** Project each element to get a key, and group all items, each projected onto another type. */
-    groupBy<TKey, TProject = T>(keySelector: (arg: T) => TKey, elementSelector?: (arg: T) => TProject): BaseSequence<KeySequence<TKey, TProject>>
+    groupBy<TKey, TProject = T>(keySelector: (arg: T) => TKey, elementSelector?: (arg: T) => TProject): Sequence<KeySequence<TKey, TProject>>
 
     /** Sort the array in ascending order of the selector */
     orderBy(keySelector: (arg: T) => string | number): OrderedSequence<T>;
@@ -148,56 +148,56 @@ export type OrderedSequence<T> = BaseOrderedSequence<T> & Sequence<T>;
 
 export type SequenceTypes<T> = T extends BaseSequence<infer Y> ? Y : never;
 
-class SequenceKlass<T> implements BaseSequence<T> {
+class SequenceKlass<T> implements BaseSequence<T>, NumberSequence<T> {
     constructor(protected iterable: Iterable<T>) {
     }
 
     map<TResult>(f: (arg: T) => TResult): Sequence<TResult> {
-        return new SequenceKlass(map(this.iterable, f)) as unknown as Sequence<TResult>;
+        return new SequenceKlass(map(this.iterable, f));
     }
 
     where<TResult = T>(f: (arg: T | TResult) => arg is TResult): Sequence<TResult>
     where<TResult extends T>(f: (arg: T | TResult) => boolean): Sequence<TResult>
     where<TResult extends T>(f: (arg: T | TResult) => any): Sequence<TResult> {
-        return new SequenceKlass(where(this.iterable, f)) as unknown as Sequence<TResult>;
+        return new SequenceKlass(where(this.iterable, f) as unknown as Iterable<TResult>);
     }
 
     reverse() {
-        return new SequenceKlass(reverse(this.iterable)) as unknown as Sequence<T>;
+        return new SequenceKlass(reverse(this.iterable));
     }
 
-    groupBy<TKey, TProject = T>(keySelector: (arg: T) => TKey): BaseSequence<KeySequence<TKey, TProject>>
-    groupBy<TKey, TProject = T>(keySelector: (arg: T) => TKey, elementSelector?: (arg: T) => TProject): BaseSequence<KeySequence<TKey, TProject>> {
+    groupBy<TKey, TProject = T>(keySelector: (arg: T) => TKey): Sequence<KeySequence<TKey, TProject>>
+    groupBy<TKey, TProject = T>(keySelector: (arg: T) => TKey, elementSelector?: (arg: T) => TProject) {
         return new SequenceKlass(groupBy(this.iterable, keySelector, elementSelector))
-            .map(kv => new KeySequenceKlass(kv[1], kv[0])) as unknown as BaseSequence<KeySequence<TKey, TProject>>;
+            .map(kv => new KeySequenceKlass(kv[1], kv[0]));
     }
 
     orderBy<TKey>(selector: (arg: T) => TKey, comparer?: ICompare<TKey>) {
         return new OrderedSequenceKlass(this.iterable, [{
             selector, comparer: (comparer as ICompare<unknown>) ?? defaultComparer, ascending: true
-        }]) as unknown as OrderedSequence<T>;
+        }]);
     }
 
     orderByDescending<TKey>(selector: (arg: T) => TKey, comparer?: ICompare<TKey>) {
         return new OrderedSequenceKlass(this.iterable, [{
             selector, comparer: (comparer as ICompare<unknown>) ?? defaultComparer, ascending: false
-        }]) as unknown as OrderedSequence<T>;
+        }]);
     }
 
     take(count: number) {
-        return new SequenceKlass(take(this.iterable, count)) as unknown as Sequence<T>;
+        return new SequenceKlass(take(this.iterable, count));
     }
 
     takeWhile(predicate: (arg: T) => boolean): Sequence<T> {
-        return new SequenceKlass(takeWhile(this.iterable, predicate)) as unknown as Sequence<T>;
+        return new SequenceKlass(takeWhile(this.iterable, predicate));
     }
 
     skip(count: number) {
-        return new SequenceKlass(skip(this.iterable, count)) as unknown as Sequence<T>;
+        return new SequenceKlass(skip(this.iterable, count));
     }
 
     skipWhile(predicate: (arg: T) => boolean): Sequence<T> {
-        return new SequenceKlass(skipWhile(this.iterable, predicate)) as unknown as Sequence<T>;
+        return new SequenceKlass(skipWhile(this.iterable, predicate));
     }
 
     count() {
