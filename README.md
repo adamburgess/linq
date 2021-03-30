@@ -80,7 +80,7 @@ or: why use this one?
 
 ✔️ Has _everything_.  
 ❌ Except iterator support.  
-✔️ Fairly popular.  
+✔️ Very popular.  
 ⚠️ Types could be improved: toObject is not typed  
 ❌ 35KB minified/6.6KB brotlied  
 
