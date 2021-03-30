@@ -108,6 +108,18 @@ interface BaseSequence<T> extends Iterable<T> {
 
     /** True if no elements pass the predicate */
     none(predicate: (arg: T) => any): boolean
+
+    /** Projects each element to a number and sums the sequence. If empty, returns 0. */
+    sum(f: (arg: T) => number): number;
+
+    /** Projects each element to a number and averages the sequence. If empty, throws. */
+    average(f: (arg: T) => number): number;
+
+    /** Projects each element to a number and finds the min of the sequence. If empty, throws. */
+    max(f: (arg: T) => number): number;
+
+    /** Projects each element to a number and finds the max of the sequence. If empty, throws. */
+    min(f: (arg: T) => number): number;
 }
 type NumberSequence<T> = BaseSequence<T> & {
     /** Sums every number in the sequence. If empty, returns 0. */
@@ -212,47 +224,49 @@ class SequenceKlass<T> implements BaseSequence<T>, NumberSequence<T> {
         return count;
     }
 
-    sum() {
+    sum(f?: (arg: T) => number) {
         // in types we make sure sum is only allowed on number types.
         let value = 0;
         for (const x of this.it) {
-            value += x as unknown as number;
+            value += f ? f(x) : x as unknown as number;
         }
         return value;
     }
 
-    average() {
+    average(f?: (arg: T) => number) {
         // in types we make sure average is only allowed on number types.
         let value = 0;
         let count = 0;
         for (const x of this.it) {
-            value += x as unknown as number;
+            value += f ? f(x) : x as unknown as number;
             count++;
         }
         if (count === 0) throw new Error(ErrBecauseEmpty('average'));
         return value / count;
     }
 
-    min() {
+    min(f?: (arg: T) => number) {
         // in types we make sure min is only allowed on number types.
-        let val: number | undefined = undefined;
-        for (const x of this.it as unknown as Iterable<number>) {
-            if (val === undefined) val = x;
-            else if (x < val) val = x;
+        let min: number | undefined = undefined;
+        for (const x of this.it) {
+            const val = f ? f(x) : x as unknown as number;
+            if (min === undefined) min = val;
+            else if (val < min) min = val;
         }
-        if (val === undefined) throw new Error(ErrBecauseEmpty('min'));
-        return val;
+        if (min === undefined) throw new Error(ErrBecauseEmpty('min'));
+        return min;
     }
 
-    max() {
+    max(f?: (arg: T) => number) {
         // in types we make sure max is only allowed on number types.
-        let val: number | undefined = undefined;
-        for (const x of this.it as unknown as Iterable<number>) {
-            if (val === undefined) val = x;
-            else if (x > val) val = x;
+        let max: number | undefined = undefined;
+        for (const x of this.it) {
+            const val = f ? f(x) : x as unknown as number;
+            if (max === undefined) max = val;
+            else if (val > max) max = val;
         }
-        if (val === undefined) throw new Error(ErrBecauseEmpty('max'));
-        return val;
+        if (max === undefined) throw new Error(ErrBecauseEmpty('max'));
+        return max;
     }
 
     all(predicate: (arg: T) => any) {

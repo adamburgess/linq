@@ -306,31 +306,39 @@ export default function linq(t: Assert) {
             // @ts-expect-error sum should not be on strArr's type
             // eslint-disable-next-line @typescript-eslint/no-unsafe-call
             strArr.sum();
+
+            t.deepEqual(strArr.sum(x => x.length), 6);
         });
     });
 
     t.test('average', t => {
         t.test('numbers', t => {
-            t.equal(numArr.average(), (1 + 2 + 3) / 3);
+            t.equals(numArr.average(), (1 + 2 + 3) / 3);
             t.throws(() => emptyNumArr.average());
         });
         t.test('strings', t => {
             // @ts-expect-error average should not be on strArr's type
             // eslint-disable-next-line @typescript-eslint/no-unsafe-call
             strArr.average();
+
+            t.equals(strArr.average(x => x.length), 2);
         });
     });
 
     t.test('max', t => {
         const numArr = from([2, 1, 10, 4]);
-        t.equal(numArr.max(), 10);
+        t.equals(numArr.max(), 10);
         t.throws(() => emptyNumArr.max());
+        const strNumArr = from(['1', '54', '34']);
+        t.equals(strNumArr.max(x => parseInt(x, 10)), 54);
     });
 
     t.test('min', t => {
         const numArr = from([2, 1, 10, 4]);
-        t.equal(numArr.min(), 1);
+        t.equals(numArr.min(), 1);
         t.throws(() => emptyNumArr.min());
+        const strNumArr = from(['1', '-34', '54', '34']);
+        t.equals(strNumArr.min(x => parseInt(x, 10)), -34);
     });
 
     t.test('all', t => {
