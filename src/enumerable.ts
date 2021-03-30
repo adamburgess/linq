@@ -22,6 +22,15 @@ export function range(start: number, count: number): Iterable<number> {
     return createLazyGenerator(range);
 }
 
+export function repeat<T>(input: Iterable<T>, count: number) {
+    function* repeat() {
+        for (let start = 0; (start < count) || (count < 0); start++) {
+            yield* input;
+        }
+    }
+    return createLazyGenerator(repeat);
+}
+
 export function reverse<T>(input: Iterable<T>) {
     function* reverse() {
         // collect everything
@@ -121,6 +130,7 @@ export function skipWhile<T>(input: Iterable<T>, predicate: (arg: T) => boolean)
 const Enumerable = {
     empty,
     range,
+    repeat,
     reverse,
     map,
     where,
