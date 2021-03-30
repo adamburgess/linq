@@ -96,6 +96,7 @@ or: why use this one?
 
 ✔️ Supports ES iterators, including lazy/repeatable.  
 ✔️ Has it all  
+⚠️ Not very popular  
 ❌ Typings that _aren't generic_. Useless.  
 ❌ 21kb minified, 4,790 bytes brotlied. It has a slim library, but it isn't UMD! Can't use it in bundlers.  
 
