@@ -2,7 +2,7 @@ import { groupBy, map, reverse, skip, skipWhile, take, takeWhile, where } from '
 
 type Predicate<T> = (arg: T) => any
 
-export interface BaseSequence<T> extends Iterable<T> {
+interface BaseSequence<T> extends Iterable<T> {
     /** Map each element to another */
     map<TResult>(f: (arg: T) => TResult): Sequence<TResult>
 
@@ -114,14 +114,14 @@ export interface BaseSequence<T> extends Iterable<T> {
     /** True if no elements pass the predicate */
     none(predicate: Predicate<T>): boolean
 }
-export type NumberSequence<T> = BaseSequence<T> & {
+type NumberSequence<T> = BaseSequence<T> & {
     sum(): number
     average(): number
 }
-export interface IKeySequence<TKey, TElement> extends BaseSequence<TElement> {
+interface BaseKeySequence<TKey, TElement> extends BaseSequence<TElement> {
     readonly key: TKey;
 }
-export interface BaseOrderedSequence<T> extends BaseSequence<T> {
+interface BaseOrderedSequence<T> extends BaseSequence<T> {
     /** Next, sort the array in ascending order of the selector */
     thenBy(keySelector: (arg: T) => string | number): OrderedSequence<T>;
     /** Next, sort the array in ascending order of the selector, with a custom comparer */
@@ -135,7 +135,7 @@ export interface BaseOrderedSequence<T> extends BaseSequence<T> {
 
 // disable Distributive Conditional Types
 export type Sequence<T> = [T] extends [number] ? NumberSequence<T> : BaseSequence<T>;
-export type KeySequence<TKey, TElement> = IKeySequence<TKey, TElement> & Sequence<TElement>;
+export type KeySequence<TKey, TElement> = BaseKeySequence<TKey, TElement> & Sequence<TElement>;
 export type OrderedSequence<T> = BaseOrderedSequence<T> & Sequence<T>;
 
 export type SequenceTypes<T> = T extends BaseSequence<infer Y> ? Y : never;
@@ -318,7 +318,7 @@ class SequenceKlass<T> implements BaseSequence<T> {
     }
 }
 
-class KeySequenceKlass<TKey, TElement> extends SequenceKlass<TElement> implements IKeySequence<TKey, TElement> {
+class KeySequenceKlass<TKey, TElement> extends SequenceKlass<TElement> implements BaseKeySequence<TKey, TElement> {
     constructor(iterable: Iterable<TElement>, public readonly key: TKey) {
         super(iterable);
     }
