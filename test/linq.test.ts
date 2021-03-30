@@ -227,6 +227,19 @@ export default function linq(t: Assert) {
         t.equals(numArr.singleOrDefault(_ => true), undefined);
     });
 
+    t.test('last', t => {
+        t.equals(numArr.last(), 3);
+        t.throws(() => emptyNumArr.last());
+        t.equals(numArr.last(x => x <= 2), 2);
+        t.throws(() => numArr.last(x => x === 999));
+    });
+
+    t.test('lastOrDefault', t => {
+        t.equals(numArr.lastOrDefault(), 3);
+        t.equals(emptyNumArr.lastOrDefault(), undefined);
+        t.equals(numArr.lastOrDefault(x => x <= 2), 2);
+    });
+
     t.test('toArray', t => {
         t.deepEqual(Array.from(numArr), [1, 2, 3]);
         t.deepEqual(numArr.toArray(), [1, 2, 3]);

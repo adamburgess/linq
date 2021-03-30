@@ -63,12 +63,12 @@ interface BaseSequence<T> extends Iterable<T> {
 
     /**
      * Get the first element in the sequence.
-     * Will throw if empty! Use defaultIfEmpty(default).first() if no throw is wanted.
+     * Will throw if empty! Use firstOrDefault if no throw is wanted.
      */
     first(): T;
     /**
      * Get the first element in the sequence that matches a condition.
-     * Will throw if empty!
+     * Will throw if empty! Use firstOrDefault if no throw is wanted.
      */
     first(predicate: (arg: T) => any): T;
 
@@ -85,12 +85,12 @@ interface BaseSequence<T> extends Iterable<T> {
 
     /**
      * Get the _only_ element in the sequence.
-     * Will throw if empty or more than one element! Use defaultIfEmpty(default).single() if no throw is wanted.
+     * Will throw if empty or more than one element! Use singleOrDefault if no throw is wanted.
      */
     single(): T
     /**
      * Get the _only_ element in the sequence that matches a condition.
-     * Will throw if empty or more than one element! Use defaultIfEmpty(default).single() if no throw is wanted.
+     * Will throw if empty or more than one element! Use singleOrDefault if no throw is wanted.
      */
     single(predicate: (arg: T) => any): T;
 
@@ -104,6 +104,28 @@ interface BaseSequence<T> extends Iterable<T> {
      * @returns undefined if empty or more than one element.
      */
     singleOrDefault(predicate: (arg: T) => any): T | undefined;
+
+    /**
+     * Get the last element in the sequence.
+     * Will throw if empty! Use lastOrDefault if no throw is wanted.
+     */
+    last(): T;
+    /**
+     * Get the last element in the sequence that matches a condition.
+     * Will throw if empty! Use lastOrDefault if no throw is wanted.
+     */
+    last(predicate: (arg: T) => any): T;
+
+    /**
+     * Get the last element in the sequence.
+     * If empty, returns undefined.
+     */
+    lastOrDefault(): T | undefined;
+    /**
+     * Get the last element in the sequence that matches a condition.
+     * If empty or no matches, returns undefined.
+     */
+    lastOrDefault(predicate: (arg: T) => any): T | undefined;
 
     /** True if all elements pass the predicate */
     all(predicate: (arg: T) => any): boolean
@@ -332,6 +354,31 @@ class SequenceKlass<T> implements BaseSequence<T>, NumberSequence<T> {
         if (!result2.done) return undefined;
 
         return result1.value;
+    }
+
+    last(): T
+    last(predicate: (arg: T) => any): T
+    last(predicate?: (arg: T) => any): T {
+        if (predicate) return this.where(predicate).last();
+
+        let stored: T | undefined = undefined;
+        for(const x of this.iterable) {
+            stored = x;
+        }
+        if(stored === undefined) throw new Error(ErrBecauseEmpty('last'));
+        return stored;
+    }
+
+    lastOrDefault(): T | undefined
+    lastOrDefault(predicate: (arg: T) => any): T | undefined;
+    lastOrDefault(predicate?: (arg: T) => any): T | undefined {
+        if (predicate) return this.where(predicate).lastOrDefault();
+
+        let stored: T | undefined = undefined;
+        for(const x of this.iterable) {
+            stored = x;
+        }
+        return stored;
     }
 
     // debug
