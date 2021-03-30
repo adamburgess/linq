@@ -90,7 +90,7 @@ or: why use this one?
 ✔️ Supports ES iterators, including lazy/repeatable. (Nice!)  
 ⚠️ Not very popular, but hey, this library is awesome.  
 ✔️ 4,221 bytes minified/1,347 bytes brotlied  
-✅ Great name.  
+✅ Great name. `import { from } from 'fromfrom'`  
 
 ### [@adamburgess/linq](https://github.com/adamburgess/linq)
 
