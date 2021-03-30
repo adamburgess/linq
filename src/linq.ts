@@ -1,4 +1,4 @@
-import { groupBy, map, reverse, skip, skipWhile, take, takeWhile, where } from './enumerable.js'
+import { concat, groupBy, map, reverse, skip, skipWhile, take, takeWhile, where } from './enumerable.js'
 
 const ErrBecauseEmpty = (x: string) => 'Sequence was empty, cannot ' + x;
 
@@ -42,6 +42,12 @@ interface BaseSequence<T> extends Iterable<T> {
 
     /** Skip elements while the predicate is true, then take the rest */
     skipWhile(predicate: (arg: T) => any): Sequence<T>;
+
+    /** Append another iterable to the end */
+    append(iterable: Iterable<T>): Sequence<T>
+
+    /** Prepend another iterable to the start */
+    prepend(iterable: Iterable<T>): Sequence<T>
 
     /** Counts the number of elements in the sequence */
     count(): number
@@ -220,6 +226,14 @@ class SequenceKlass<T> implements BaseSequence<T>, NumberSequence<T> {
         return new SequenceKlass(skipWhile(this.it, predicate));
     }
 
+    append(iterable: Iterable<T>) {
+        return new SequenceKlass(concat(this.it, iterable));
+    }
+
+    prepend(iterable: Iterable<T>) {
+        return new SequenceKlass(concat(iterable, this.it));
+    }
+
     count() {
         let count = 0;
         for (const _ of this.it) count++;
@@ -362,10 +376,10 @@ class SequenceKlass<T> implements BaseSequence<T>, NumberSequence<T> {
         if (predicate) return this.where(predicate).last();
 
         let stored: T | undefined = undefined;
-        for(const x of this.it) {
+        for (const x of this.it) {
             stored = x;
         }
-        if(stored === undefined) throw new Error(ErrBecauseEmpty('last'));
+        if (stored === undefined) throw new Error(ErrBecauseEmpty('last'));
         return stored;
     }
 
@@ -375,7 +389,7 @@ class SequenceKlass<T> implements BaseSequence<T>, NumberSequence<T> {
         if (predicate) return this.where(predicate).lastOrDefault();
 
         let stored: T | undefined = undefined;
-        for(const x of this.it) {
+        for (const x of this.it) {
             stored = x;
         }
         return stored;

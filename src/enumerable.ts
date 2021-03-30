@@ -127,6 +127,14 @@ export function skipWhile<T>(input: Iterable<T>, predicate: (arg: T) => boolean)
     return createLazyGenerator(skipWhile);
 }
 
+export function concat<T>(a: Iterable<T>, b: Iterable<T>): Iterable<T> {
+    function* concat() {
+        yield* a;
+        yield* b;
+    }
+    return createLazyGenerator(concat);
+}
+
 const Enumerable = {
     empty,
     range,
@@ -139,6 +147,7 @@ const Enumerable = {
     takeWhile,
     skip,
     skipWhile,
+    concat,
 };
 
 export default Enumerable;

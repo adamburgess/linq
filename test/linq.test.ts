@@ -197,6 +197,20 @@ export default function linq(t: Assert) {
         t.deepEqual(actual, expected);
     });
 
+    t.test('append', t => {
+        const expected = [1, 2, 3, 4, 5, 6];
+        const a = [1, 2, 3];
+        const b = [4, 5, 6];
+        t.deepEqual(from(a).append(b).toArray(), expected);
+    });
+
+    t.test('prepend', t => {
+        const expected = [4, 5, 6, 1, 2, 3];
+        const a = [1, 2, 3];
+        const b = [4, 5, 6];
+        t.deepEqual(from(a).prepend(b).toArray(), expected);
+    });
+
     t.test('first', t => {
         t.equals(numArr.first(), 1);
         t.throws(() => emptyStrArr.first());
