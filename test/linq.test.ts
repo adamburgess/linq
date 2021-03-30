@@ -1,7 +1,7 @@
 import 'source-map-support/register.js'
 import { Assert } from 'zora'
 import { expectType } from './helpers.js'
-import Enumerable from '../src/enumerable.js'
+import Enumerable, { createLazyGenerator } from '../src/enumerable.js'
 import from, { SequenceTypes, KeySequence, Sequence } from '../src/linq.js'
 
 export default function linq(t: Assert) {
@@ -273,6 +273,61 @@ export default function linq(t: Assert) {
             // eslint-disable-next-line @typescript-eslint/no-unsafe-call
             strArr.average();
         })
+    });
+
+    t.test('all', t => {
+        t.truthy(numArr.all(x => x >= 0 && x <= 5));
+        t.falsy(numArr.all(x => x >= 2));
+        // confirm all stops short
+        let finished = false;
+        const input = from(createLazyGenerator<number>(function* () {
+            yield 1;
+            yield 2;
+            yield 3;
+            finished = true;
+        }));
+        // goes through the entire generator and sets finished to true.
+        t.truthy(input.all(_ => true));
+        t.truthy(finished);
+        finished = false;
+        // goes through 1, 2, and 3 but then exits, thus does finish the generator.
+        t.falsy(input.all(x => x < 3));
+        t.falsy(finished);
+    });
+
+    t.test('any', t => {
+        t.truthy(numArr.any(x => x === 2));
+        t.falsy(numArr.any(x => x === 999));
+        // confirm any stops short
+        let finished = false;
+        const input = from(createLazyGenerator<number>(function* () {
+            yield 1;
+            yield 2;
+            yield 3;
+            finished = true;
+        }));
+        t.truthy(input.any(x => x === 3));
+        t.falsy(finished);
+        t.falsy(input.any(x => x === 999));
+        t.truthy(finished);
+    });
+
+    t.test('none', t => {
+        t.truthy(numArr.none(x => x === 500));
+        t.falsy(numArr.none(x => x === 2));
+        // confirm none stops short
+        let finished = false;
+        const input = from(createLazyGenerator<number>(function* () {
+            yield 1;
+            yield 2;
+            yield 3;
+            finished = true;
+        }));
+        t.truthy(input.none(x => x === 999));
+        t.truthy(finished);
+        finished = false;
+        t.falsy(input.none(x => x === 3));
+        t.falsy(finished);
     });
 
     t.test('e2e', t => {
