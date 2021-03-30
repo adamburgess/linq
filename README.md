@@ -68,21 +68,21 @@ Special additions for number sequences:
 
 or: why use this one?
 
-### [linq.js](https://github.com/mihaifm/linq) (on npm: linq)
-
-✔️ Has _everything_.  
-❌ Except iterator support.  
-✔️ Extremely popular.  
-⚠️ Types could be improved: toObject is not typed  
-❌ 35KB minified/6.6KB brotlied  
-
-
 ### [iterare](https://github.com/felixfbecker/iterare)
 
 ⚠️ Really doesn't have enough methods to be general purpose. It is missing: Group, Order, Count, First, Last, Distinct. Subjectively, I use all of these.  
 ⚠️ Supports ES iterators, but doesn't support repeatable/lazy ES iterators  
-✔️ Very popular.  
+✔️ Extremely popular.  
 ✔️ 3,744 bytes minified/1,068 bytes brotlied  
+
+
+### [linq.js](https://github.com/mihaifm/linq) (on npm: linq)
+
+✔️ Has _everything_.  
+❌ Except iterator support.  
+✔️ Fairly popular.  
+⚠️ Types could be improved: toObject is not typed  
+❌ 35KB minified/6.6KB brotlied  
 
 ### [fromfrom](https://github.com/tomi/fromfrom)
 
