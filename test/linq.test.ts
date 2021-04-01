@@ -2,7 +2,7 @@ import 'source-map-support/register.js'
 import { Assert } from 'zora'
 import { expectType } from './helpers.js'
 import Enumerable, { createLazyGenerator } from '../src/enumerable.js'
-import from, { SequenceTypes, KeySequence, Sequence } from '../src/linq.js'
+import from, { SequenceType, KeySequence, Sequence } from '../src/linq.js'
 
 export default function linq(t: Assert) {
     t.test('constructor', t => {
@@ -83,7 +83,7 @@ export default function linq(t: Assert) {
             });
             t.test('implicit, weird', t => {
                 type Marvelous = { marvelous: 'indeed' }
-                function isMarvelous(x: SequenceTypes<typeof unionArr> | Marvelous): x is Marvelous {
+                function isMarvelous(x: SequenceType<typeof unionArr> | Marvelous): x is Marvelous {
                     return true;
                 }
                 const marvelous = unionArr.where(isMarvelous);
@@ -225,7 +225,13 @@ export default function linq(t: Assert) {
             { id: 5, foo: 'first' },
             { id: 6, foo: 'other' }
         ]);
+    });
 
+    t.test('flat', t => {
+        const arrArr = from([[1, 2], [3, 4]]);
+        t.deepEqual(arrArr.flat().toArray(), [1, 2, 3, 4]);
+        const groupBy = unionArr.groupBy(x => x).flat();
+        t.deepEqual(groupBy.toArray(), unionArr.toArray());
     });
 
     t.test('first', t => {
