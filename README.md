@@ -50,10 +50,12 @@ Completely lazy evaluation.
 1. Average (with projection to number)
 1. Max (with projection to number)
 1. Min (with projection to number)
-<!--
 1. Min By
 1. Max By
--->
+
+Missing:
+
+1. Join
 
 Special additions for number sequences:
 

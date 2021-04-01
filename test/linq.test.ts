@@ -353,6 +353,15 @@ export default function linq(t: Assert) {
         t.equals(strNumArr.min(x => parseInt(x, 10)), -34);
     });
 
+    t.test('xBy', t => {
+        const numArr = from([2, 1, 10, 4]);
+        t.equals(numArr.minBy(x => x), 1);
+        t.equals(numArr.maxBy(x => x), 10);
+        const strArr = from(['zero', 'one', 'fourteen', 'seven']);
+        t.equals(strArr.minBy(x => x.length), 'one');
+        t.equals(strArr.maxBy(x => x.length), 'fourteen');
+    });
+
     t.test('all', t => {
         t.truthy(numArr.all(x => x >= 0 && x <= 5));
         t.falsy(numArr.all(x => x >= 2));

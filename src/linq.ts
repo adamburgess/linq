@@ -123,6 +123,11 @@ interface BaseSequence<T> extends Iterable<T> {
 
     /** Projects each element to a number and finds the max of the sequence. If empty, throws. */
     min(f: (arg: T) => number): number;
+
+    /** Finds the minimum element in the sequence according to a selector. Equivalent (but faster) to orderBy(f).first(). */
+    minBy(f: (arg: T) => number): T;
+    /** Finds the minimum element in the sequence according to a selector. Equivalent (but faster) to orderByDescending(f).first(). */
+    maxBy(f: (arg: T) => number): T;
 }
 interface NumberSequence<T> extends BaseSequence<T> {
     /** Sums every number in the sequence. If empty, returns 0. */
@@ -271,28 +276,37 @@ class SequenceKlass<T> implements BaseSequence<T>, NumberSequence<T>, ArraySeque
         return value / count;
     }
 
-    min(f?: (arg: T) => number) {
-        // in types we make sure min is only allowed on number types.
-        let min: number | undefined = undefined;
+    private mBy(f: ((arg: T) => number) | undefined, isMin: boolean, isBy: false): number;
+    private mBy(f: ((arg: T) => number) | undefined, isMin: boolean, isBy: true): T;
+    private mBy(f: ((arg: T) => number) | undefined, isMin: boolean, isBy: boolean): number | T {
+        let element: T;
+        let current: number | undefined;
         for (const x of this) {
             const val = f ? f(x) : x as unknown as number;
-            if (min === undefined) min = val;
-            else if (val < min) min = val;
+            if (current === undefined || (isMin ? val < current : val > current)) {
+                current = val;
+                element = x;
+            }
         }
-        if (min === undefined) throw new Error(ErrBecauseEmpty('min'));
-        return min;
+        if (current === undefined) throw new Error(ErrBecauseEmpty(isMin ? 'min' : 'max'));
+        if(isBy) return element!;
+        return current;
+    }
+
+    min(f?: (arg: T) => number) {
+        return this.mBy(f, true, false);
     }
 
     max(f?: (arg: T) => number) {
-        // in types we make sure max is only allowed on number types.
-        let max: number | undefined = undefined;
-        for (const x of this) {
-            const val = f ? f(x) : x as unknown as number;
-            if (max === undefined) max = val;
-            else if (val > max) max = val;
-        }
-        if (max === undefined) throw new Error(ErrBecauseEmpty('max'));
-        return max;
+        return this.mBy(f, false, false);
+    }
+
+    minBy(f: (arg: T) => number): T {
+        return this.mBy(f, true, true);
+    }
+
+    maxBy(f: (arg: T) => number): T {
+        return this.mBy(f, false, true);
     }
 
     all(predicate: (arg: T) => any) {
