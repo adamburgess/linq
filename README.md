@@ -118,51 +118,51 @@ Others not considered:
 ⚠️ - doesn't have it, but has a one liner work around  
 ❌ - have to reimplement yourself, and reimplementing would be annoying if done multiple times  
 
-|                                     | @adamburgess/linq |             fromfrom              |              iterare              |              linq.js              |
-|------------------------------------:|:-----------------:|:---------------------------------:|:---------------------------------:|:---------------------------------:|
-|                     Size in bytes (minified) |       3,934       |         4,212 (+7%)         |        3,725  (-5%)        |      35,750 (+808% ❌)       |
-|                     Size in bytes (brotlied) |       1,085       |        1,326 (+22%)         |       1,058   (-2.%)       |      6,655  (+513% ❌)       |
-|                              Arrays |         ✔️         |                 ✔️                 |                 ✔️                 |                 ✔️                 |
-|                           Iterables |         ✔️         |                 ✔️                 |                 ✔️                 |                 ❌                 |
-|                          Generators |         ✔️         |                 ✔️                 |                 ✔️                 |                 ✔️                 |
-|                  Infinite Iterables |         ✔️         |                 ✔️                 |                 ✔️                 |                 ❌                 |
-|                      Lazy Iterables |         ✔️         |                 ✔️                 |                 ❌                 |                 ❌                 |
-|                                 Map |         ✔️         |                 ✔️                 |                 ✔️                 |                 ✔️                 |
-|                               Where |         ✔️         |                 ✔️                 |                 ✔️                 |                 ✔️                 |
-|                             Reverse |         ✔️         |                 ✔️                 |                 ❌                 |                 ✔️                 |
-|                            Group By |         ✔️         |                 ✔️                 |                 ❌                 |                 ✔️                 |
-|                            Order By |         ✔️         |                 ✔️                 |                 ❌                 |                 ✔️                 |
-|                             Then By |         ✔️         |                 ✔️                 |                 ❌                 |                 ✔️                 |
-|                                Take |         ✔️         |                 ✔️                 |                 ✔️                 |                 ✔️                 |
-|                                Skip |         ✔️         |                 ✔️                 | ⚠️[[5]](#user-content-comparison5) |                 ✔️                 |
-|                          Take While |         ✔️         |                 ✔️                 |                 ❌                 |                 ✔️                 |
-|                          Skip While |         ✔️         |                 ✔️                 |                 ❌                 |                 ✔️                 |
-|                              Append |         ✔️         |                 ✔️                 |                 ✔️                 |                 ❌                 |
-|                             Prepend |         ✔️         |                 ✔️                 |                 ❌                 |                 ❌                 |
-|                            Distinct |         ✔️         |                 ✔️                 |                 ❌                 |                 ✔️                 |
-|                                Flat |         ✔️         | ⚠️[[1]](#user-content-comparison1) |                 ✔️                 |                 ✔️                 |
-|                                Join |         ❌         |                 ❌                 |                 ❌                 |                 ✔️                 |
-|                               Count |         ✔️         | ⚠️[[2]](#user-content-comparison2) | ⚠️[[2]](#user-content-comparison2) |                 ✔️                 |
-|                            to Array |         ✔️         |                 ✔️                 |                 ✔️                 |                 ✔️                 |
-|                              To Map |         ✔️         |                 ✔️                 |                 ✔️                 |                 ❌                 |
-|                           to Object |         ✔️         |                 ✔️                 |                 ❌                 |                 ✔️                 |
-|                              to Set |         ❌         |                 ✔️                 |                 ✔️                 | ⚠️[[8]](#user-content-comparison8) |
-|                               First |         ✔️         |                 ✔️                 |                 ✔️                 |                 ✔️                 |
-|                              Single |         ✔️         |                 ❌                 |                 ❌                 |                 ✔️                 |
-|                                Last |         ✔️         |                 ✔️                 |                 ❌                 |                 ✔️                 |
-|                                 All |         ✔️         |                 ✔️                 |                 ✔️                 |                 ✔️                 |
-|                                 Any |         ✔️         |                 ✔️                 |                 ✔️                 |                 ✔️                 |
-|                                None |         ✔️         | ⚠️[[3]](#user-content-comparison3) | ⚠️[[3]](#user-content-comparison3) | ⚠️[[3]](#user-content-comparison3) |
-|                            Contains |         ✔️         |                 ✔️                 | ⚠️[[6]](#user-content-comparison6) |                 ✔️                 |
-|                                 Sum |         ✔️         |                 ✔️                 |                 ❌                 |                 ✔️                 |
-|                             Average |         ✔️         |                 ❌                 |                 ❌                 |                 ✔️                 |
-|                                 Max |         ✔️         |                 ❌                 |                 ❌                 |                 ✔️                 |
-|                                 Min |         ✔️         |                 ❌                 |                 ❌                 |                 ✔️                 |
-|                              Min By |         ✔️         |                 ❌                 |                 ❌                 |                 ✔️                 |
-|                              Max By |         ✔️         |                 ❌                 |                 ❌                 |                 ✔️                 |
-| Sum/Avg/Max/Min fail on non-numbers |         ✔️         | ❌[[4]](#user-content-comparison4) |                ⁿ/ₐ                |                 ❌                 |
-|      Flatten fails on non-iterables |         ✔️         |                ⁿ/ₐ                | ⚠️[[7]](#user-content-comparison7) | ⚠️[[7]](#user-content-comparison7) |
-|                                     |                   |                                   |                                   |                                   |
+|                                     | this one |             fromfrom              |              iterare              |              linq.js              |
+|------------------------------------:|:--------:|:---------------------------------:|:---------------------------------:|:---------------------------------:|
+|            Size in bytes (minified) |  3,934   |            4,212 (+7%)            |           3,725  (-5%)            |         35,750 (+808% ❌)          |
+|            Size in bytes (brotlied) |  1,085   |           1,326 (+22%)            |          1,058   (-2.%)           |         6,655  (+513% ❌)          |
+|                              Arrays |    ✔️     |                 ✔️                 |                 ✔️                 |                 ✔️                 |
+|                           Iterables |    ✔️     |                 ✔️                 |                 ✔️                 |                 ❌                 |
+|                          Generators |    ✔️     |                 ✔️                 |                 ✔️                 |                 ✔️                 |
+|                  Infinite Iterables |    ✔️     |                 ✔️                 |                 ✔️                 |                 ❌                 |
+|                      Lazy Iterables |    ✔️     |                 ✔️                 |                 ❌                 |                 ❌                 |
+|                                 Map |    ✔️     |                 ✔️                 |                 ✔️                 |                 ✔️                 |
+|                               Where |    ✔️     |                 ✔️                 |                 ✔️                 |                 ✔️                 |
+|                             Reverse |    ✔️     |                 ✔️                 |                 ❌                 |                 ✔️                 |
+|                            Group By |    ✔️     |                 ✔️                 |                 ❌                 |                 ✔️                 |
+|                            Order By |    ✔️     |                 ✔️                 |                 ❌                 |                 ✔️                 |
+|                             Then By |    ✔️     |                 ✔️                 |                 ❌                 |                 ✔️                 |
+|                                Take |    ✔️     |                 ✔️                 |                 ✔️                 |                 ✔️                 |
+|                                Skip |    ✔️     |                 ✔️                 | ⚠️[[5]](#user-content-comparison5) |                 ✔️                 |
+|                          Take While |    ✔️     |                 ✔️                 |                 ❌                 |                 ✔️                 |
+|                          Skip While |    ✔️     |                 ✔️                 |                 ❌                 |                 ✔️                 |
+|                              Append |    ✔️     |                 ✔️                 |                 ✔️                 |                 ❌                 |
+|                             Prepend |    ✔️     |                 ✔️                 |                 ❌                 |                 ❌                 |
+|                            Distinct |    ✔️     |                 ✔️                 |                 ❌                 |                 ✔️                 |
+|                                Flat |    ✔️     | ⚠️[[1]](#user-content-comparison1) |                 ✔️                 |                 ✔️                 |
+|                                Join |    ❌     |                 ❌                 |                 ❌                 |                 ✔️                 |
+|                               Count |    ✔️     | ⚠️[[2]](#user-content-comparison2) | ⚠️[[2]](#user-content-comparison2) |                 ✔️                 |
+|                            to Array |    ✔️     |                 ✔️                 |                 ✔️                 |                 ✔️                 |
+|                              To Map |    ✔️     |                 ✔️                 |                 ✔️                 |                 ❌                 |
+|                           to Object |    ✔️     |                 ✔️                 |                 ❌                 |                 ✔️                 |
+|                              to Set |    ❌     |                 ✔️                 |                 ✔️                 | ⚠️[[8]](#user-content-comparison8) |
+|                               First |    ✔️     |                 ✔️                 |                 ✔️                 |                 ✔️                 |
+|                              Single |    ✔️     |                 ❌                 |                 ❌                 |                 ✔️                 |
+|                                Last |    ✔️     |                 ✔️                 |                 ❌                 |                 ✔️                 |
+|                                 All |    ✔️     |                 ✔️                 |                 ✔️                 |                 ✔️                 |
+|                                 Any |    ✔️     |                 ✔️                 |                 ✔️                 |                 ✔️                 |
+|                                None |    ✔️     | ⚠️[[3]](#user-content-comparison3) | ⚠️[[3]](#user-content-comparison3) | ⚠️[[3]](#user-content-comparison3) |
+|                            Contains |    ✔️     |                 ✔️                 | ⚠️[[6]](#user-content-comparison6) |                 ✔️                 |
+|                                 Sum |    ✔️     |                 ✔️                 |                 ❌                 |                 ✔️                 |
+|                             Average |    ✔️     |                 ❌                 |                 ❌                 |                 ✔️                 |
+|                                 Max |    ✔️     |                 ❌                 |                 ❌                 |                 ✔️                 |
+|                                 Min |    ✔️     |                 ❌                 |                 ❌                 |                 ✔️                 |
+|                              Min By |    ✔️     |                 ❌                 |                 ❌                 |                 ✔️                 |
+|                              Max By |    ✔️     |                 ❌                 |                 ❌                 |                 ✔️                 |
+| Sum/Avg/Max/Min fail on non-numbers |    ✔️     | ❌[[4]](#user-content-comparison4) |                ⁿ/ₐ                |                 ❌                 |
+|      Flatten fails on non-iterables |    ✔️     |                ⁿ/ₐ                | ⚠️[[7]](#user-content-comparison7) | ⚠️[[7]](#user-content-comparison7) |
+|                                     |          |                                   |                                   |                                   |
 
 notes:  
 <a name="comparison1"></a>1. Use flatmap with identity.  
