@@ -112,6 +112,61 @@ Others not considered:
 
 ❌ [@siderite/linqer](https://github.com/Siderite/LInQer): 5kb brotlied, and the typings _aren't generic_. For that reason, useless. Has similar features to fromfrom.
 
+## Table comparison to other libraries
+
+✔️ - has it
+⚠️ - doesn't have it, but has an easy work around
+❌ - have to reimplement yourself
+
+|                                     | @adamburgess/linq | fromfrom | iterare | linq.js |
+|------------------------------------:|:-----------------:|:--------:|:-------:|:-------:|
+|                              Arrays |         ✔️         |    ✔️     |    ✔️    |         |
+|                           Iterables |         ✔️         |    ✔️     |    ✔️    |         |
+|                          Generators |         ✔️         |    ✔️     |    ✔️    |         |
+|       Infinite Iterables/Generators |         ✔️         |    ✔️     |         |         |
+|                                 Map |         ✔️         |    ✔️     |    ✔️    |         |
+|                               Where |         ✔️         |    ✔️     |    ✔️    |         |
+|                             Reverse |         ✔️         |    ✔️     |    ❌    |         |
+|                            Group By |         ✔️         |    ✔️     |    ❌    |         |
+|                            Order By |         ✔️         |    ✔️     |    ❌    |         |
+|                             Then By |         ✔️         |    ✔️     |    ❌    |         |
+|                                Take |         ✔️         |    ✔️     |    ✔️    |         |
+|                                Skip |         ✔️         |    ✔️     |  ⚠️[5]   |         |
+|                          Take While |         ✔️         |    ✔️     |    ❌    |         |
+|                          Skip While |         ✔️         |    ✔️     |    ❌    |         |
+|                              Append |         ✔️         |    ✔️     |    ✔️    |         |
+|                             Prepend |         ✔️         |    ✔️     |    ❌    |         |
+|                            Distinct |         ✔️         |    ✔️     |    ❌    |         |
+|                                Flat |         ✔️         |   ⚠️[[1]](#comparison1)   |    ✔️    |         |
+|                                Join |         ❌         |    ❌     |    ❌    |         |
+|                               Count |         ✔️         |   ⚠️[2]   |  ⚠️[2]   |         |
+|                            to Array |         ✔️         |    ✔️     |    ✔️    |         |
+|                              To Map |         ✔️         |    ✔️     |    ✔️    |         |
+|                           to Object |         ✔️         |    ✔️     |    ❌    |         |
+|                              to Set |         ❌         |    ✔️     |    ✔️    |         |
+|                               First |         ✔️         |    ✔️     |    ✔️    |         |
+|                              Single |         ✔️         |    ❌     |    ❌    |         |
+|                                Last |         ✔️         |    ✔️     |    ❌    |         |
+|                                 All |         ✔️         |    ✔️     |    ✔️    |         |
+|                                 Any |         ✔️         |    ✔️     |    ✔️    |         |
+|                                None |         ✔️         |   ⚠️[3]   |  ⚠️[3]   |         |
+|                            Contains |         ✔️         |    ✔️     |  ⚠️[6]   |         |
+|                                 Sum |         ✔️         |    ✔️     |    ❌    |         |
+|                             Average |         ✔️         |    ❌     |    ❌    |         |
+|                                 Max |         ✔️         |    ❌     |    ❌    |         |
+|                                 Min |         ✔️         |    ❌     |    ❌    |         |
+|                              Min By |         ✔️         |    ❌     |    ❌    |         |
+|                              Max By |         ✔️         |    ❌     |    ❌    |         |
+| Sum/Avg/Max/Min fail on non-numbers |         ✔️         |   ❌[4]   |    ❔    |         |
+|                                     |                   |          |         |         |
+
+<a href="#comparison1"></a>[1] use flatmap with identity.
+[2] use forEach with a count.
+[3] use !any
+[4] [there is some typing to prevent Sum on non-numbers, but it actually has no effect.](https://github.com/tomi/fromfrom/blob/3876ae0/src/types.ts#L457)
+[5] use slice
+[6] use find, check for !== undefined
+
 ## Performance
 
 It's probably slow.  
