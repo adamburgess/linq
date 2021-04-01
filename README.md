@@ -120,8 +120,8 @@ Others not considered:
 
 |                                     | @adamburgess/linq |             fromfrom              |              iterare              |              linq.js              |
 |------------------------------------:|:-----------------:|:---------------------------------:|:---------------------------------:|:---------------------------------:|
-|                     Size (minified) |       3,934       |         4,212 (7% larger)         |        3,725  (5% smaller)        |      35,750 (808% larger ❌)       |
-|                     Size (brotlied) |       1,085       |        1,326 (22% larger)         |       1,058   (2.% smaller)       |      6,655  (513% larger ❌)       |
+|                     Size in bytes (minified) |       3,934       |         4,212 (7% larger)         |        3,725  (5% smaller)        |      35,750 (808% larger ❌)       |
+|                     Size in bytes (brotlied) |       1,085       |        1,326 (22% larger)         |       1,058   (2.% smaller)       |      6,655  (513% larger ❌)       |
 |                              Arrays |         ✔️         |                 ✔️                 |                 ✔️                 |                 ✔️                 |
 |                           Iterables |         ✔️         |                 ✔️                 |                 ✔️                 |                 ❌                 |
 |                          Generators |         ✔️         |                 ✔️                 |                 ✔️                 |                 ✔️                 |
