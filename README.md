@@ -163,14 +163,14 @@ Others not considered:
 |                                     |                   |                                   |                                   |                                   |
 
 notes:
-<a name="#comparison1"></a>1. Use flatmap with identity.  
-<a name="#comparison2"></a>2. Use forEach with a count.  
-<a name="#comparison3"></a>3. Use !any  
-<a name="#comparison4"></a>4. [There is some typing to prevent Sum on non-numbers, but it actually has no effect.](https://github.com/tomi/fromfrom/blob/3876ae0/src/types.ts#L457)  
-<a name="#comparison5"></a>5. Use slice  
-<a name="#comparison6"></a>6. Use find, check for !== undefined  
-<a name="#comparison7"></a>7. If used on non-iterables, it returns the element unchanged. This follows how JS's .flat() works. My opinion: Why are you flattening an array of things that aren't arrays? Don't.  
-<a name="#comparison8"></a>8. It's untyped!  
+<a name="comparison1"></a>1. Use flatmap with identity.  
+<a name="comparison2"></a>2. Use forEach with a count.  
+<a name="comparison3"></a>3. Use !any  
+<a name="comparison4"></a>4. [There is some typing to prevent Sum on non-numbers, but it actually has no effect.](https://github.com/tomi/fromfrom/blob/3876ae0/src/types.ts#L457)  
+<a name="comparison5"></a>5. Use slice  
+<a name="comparison6"></a>6. Use find, check for !== undefined  
+<a name="comparison7"></a>7. If used on non-iterables, it returns the element unchanged. This follows how JS's .flat() works. My opinion: Why are you flattening an array of things that aren't arrays? Don't.  
+<a name="comparison8"></a>8. It's untyped!  
 
 ## Performance
 
