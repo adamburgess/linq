@@ -228,10 +228,16 @@ export default function linq(t: Assert) {
     });
 
     t.test('flat', t => {
-        const arrArr = from([[1, 2], [3, 4]]);
-        t.deepEqual(arrArr.flat().toArray(), [1, 2, 3, 4]);
-        const groupBy = unionArr.groupBy(x => x).flat();
-        t.deepEqual(groupBy.toArray(), unionArr.toArray());
+        t.test('on iterables', t => {
+            const arrArr = from([[1, 2], [3, 4]]);
+            t.deepEqual(arrArr.flat().toArray(), [1, 2, 3, 4]);
+            const groupBy = unionArr.groupBy(x => x).flat();
+            t.deepEqual(groupBy.toArray(), unionArr.toArray());
+        });
+        t.test('map then flat', t => {
+            const stringArrArr = from(['1 2', '3, 4']);
+            t.deepEqual(stringArrArr.flat(x => x.split(' ').map(x => parseInt(x, 10))).toArray(), [1, 2, 3, 4]);
+        });
     });
 
     t.test('first', t => {

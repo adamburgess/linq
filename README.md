@@ -32,6 +32,7 @@ Completely lazy evaluation.
 1. Append
 1. Prepend
 1. Distinct
+1. Flat (with projection to sequence)
 
 ### Outputs
 
@@ -60,6 +61,10 @@ Special additions for number sequences:
 1. Average
 1. Max
 1. Min
+
+Special additions for iterable/array sequences:
+
+1. Flat
 
 \* Note: Some transformations/most outputs do not work with infinite sequences, such as Group By and Order By.
 

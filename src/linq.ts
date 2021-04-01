@@ -54,6 +54,9 @@ interface BaseSequence<T> extends Iterable<T> {
     /** Get all distinct elements of the sequence, mapping each element to a key that will be used for strict equality. First value wins. */
     distinct(keySelector: (arg: T) => unknown): Sequence<T>
 
+    /** Project each element to an iterable/array, then flatten the result */
+    flat<TProject>(projector: (input: T) => Iterable<TProject>): Sequence<TProject>;
+
     /** Counts the number of elements in the sequence */
     count(): number
 
@@ -133,6 +136,9 @@ interface NumberSequence<T> extends BaseSequence<T> {
 }
 type UnwrapIterable<T> = [T] extends [Iterable<infer U>] ? U : never;
 interface ArraySequence<T> extends BaseSequence<T> {
+    /** project each element to an iterable/array, then flatten the result */
+    flat<TProject>(projector: (input: T) => Iterable<TProject>): Sequence<TProject>
+    /** flatten the sequence */
     flat(): Sequence<UnwrapIterable<T>>
 }
 
@@ -225,9 +231,17 @@ class SequenceKlass<T> implements BaseSequence<T>, NumberSequence<T>, ArraySeque
         return new SequenceKlass(distinct(this.it, keySelector)) as unknown as Sequence<T>;
     }
 
-    flat() {
-        // e.g. Iterable<string[]> => Iterable<Iterable<string>>
-        return new SequenceKlass(flat(this.it as unknown as Iterable<Iterable<UnwrapIterable<T>>>)) as unknown as Sequence<UnwrapIterable<T>>;
+    flat(): Sequence<UnwrapIterable<T>>
+    flat<TProject>(projector: (input: T) => Iterable<TProject>): Sequence<TProject>
+    flat<TProject>(projector?: (input: T) => Iterable<TProject>): Sequence<TProject> | Sequence<UnwrapIterable<T>> {
+        // Ok. These return types are simply never going to work. Lots of casting here.
+        // Basically, if projector exists, we map that first, otherwise we use the iterator
+        // Then we flatten it. Simple stuff.
+        return new SequenceKlass(
+            flat(
+                (projector ? this.map(projector) : this.it) as unknown as Iterable<Iterable<unknown>>
+            )
+        ) as unknown as Sequence<TProject>;
     }
 
     count() {
