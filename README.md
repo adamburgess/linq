@@ -114,9 +114,9 @@ Others not considered:
 
 ## Table comparison to other libraries
 
-✔️ - has it
-⚠️ - doesn't have it, but has an easy work around
-❌ - have to reimplement yourself
+✔️ - has it  
+⚠️ - doesn't have it, but has a one liner work around  
+❌ - have to reimplement yourself, and reimplementing would be annoying if done multiple times  
 
 |                                     | @adamburgess/linq |       fromfrom       |       iterare        |       linq.js        |
 |------------------------------------:|:-----------------:|:--------------------:|:--------------------:|:--------------------:|
