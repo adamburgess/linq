@@ -172,63 +172,63 @@ class SequenceKlass<T> implements BaseSequence<T>, NumberSequence<T>, ArraySeque
     }
 
     map<TResult>(f: (arg: T) => TResult): Sequence<TResult> {
-        return new SequenceKlass(map(this.it, f)) as unknown as Sequence<TResult>;
+        return new SequenceKlass(map(this, f)) as unknown as Sequence<TResult>;
     }
 
     where<TResult = T>(f: (arg: T | TResult) => arg is TResult): Sequence<TResult>
     where<TResult extends T>(f: (arg: T | TResult) => boolean): Sequence<TResult>
     where<TResult extends T>(f: (arg: T | TResult) => any): Sequence<TResult> {
-        return new SequenceKlass(where(this.it, f) as unknown as Iterable<TResult>) as unknown as Sequence<TResult>;
+        return new SequenceKlass(where(this, f) as unknown as Iterable<TResult>) as unknown as Sequence<TResult>;
     }
 
     reverse() {
-        return new SequenceKlass(reverse(this.it)) as unknown as Sequence<T>;
+        return new SequenceKlass(reverse(this)) as unknown as Sequence<T>;
     }
 
     groupBy<TKey, TProject = T>(keySelector: (arg: T) => TKey): Sequence<KeySequence<TKey, TProject>>
     groupBy<TKey, TProject = T>(keySelector: (arg: T) => TKey, elementSelector?: (arg: T) => TProject) {
-        return new SequenceKlass(groupBy(this.it, keySelector, elementSelector))
+        return new SequenceKlass(groupBy(this, keySelector, elementSelector))
             .map(kv => new KeySequenceKlass(kv[1], kv[0]));
     }
 
     orderBy<TKey>(selector: (arg: T) => TKey, comparer?: ICompare<TKey>) {
-        return new OrderedSequenceKlass(this.it, [{
+        return new OrderedSequenceKlass(this, [{
             selector, comparer: (comparer as ICompare<unknown>) ?? defaultComparer, ascending: true
         }]) as unknown as OrderedSequence<T>;
     }
 
     orderByDescending<TKey>(selector: (arg: T) => TKey, comparer?: ICompare<TKey>) {
-        return new OrderedSequenceKlass(this.it, [{
+        return new OrderedSequenceKlass(this, [{
             selector, comparer: (comparer as ICompare<unknown>) ?? defaultComparer, ascending: false
         }]) as unknown as OrderedSequence<T>;
     }
 
     take(count: number) {
-        return new SequenceKlass(take(this.it, count)) as unknown as Sequence<T>;
+        return new SequenceKlass(take(this, count)) as unknown as Sequence<T>;
     }
 
     takeWhile(predicate: (arg: T) => boolean): Sequence<T> {
-        return new SequenceKlass(takeWhile(this.it, predicate)) as unknown as Sequence<T>;
+        return new SequenceKlass(takeWhile(this, predicate)) as unknown as Sequence<T>;
     }
 
     skip(count: number) {
-        return new SequenceKlass(skip(this.it, count)) as unknown as Sequence<T>;
+        return new SequenceKlass(skip(this, count)) as unknown as Sequence<T>;
     }
 
     skipWhile(predicate: (arg: T) => boolean): Sequence<T> {
-        return new SequenceKlass(skipWhile(this.it, predicate)) as unknown as Sequence<T>;
+        return new SequenceKlass(skipWhile(this, predicate)) as unknown as Sequence<T>;
     }
 
     append(iterable: Iterable<T>) {
-        return new SequenceKlass(concat(this.it, iterable)) as unknown as Sequence<T>;
+        return new SequenceKlass(concat(this, iterable)) as unknown as Sequence<T>;
     }
 
     prepend(iterable: Iterable<T>) {
-        return new SequenceKlass(concat(iterable, this.it)) as unknown as Sequence<T>;
+        return new SequenceKlass(concat(iterable, this)) as unknown as Sequence<T>;
     }
 
     distinct(keySelector?: (arg: T) => unknown) {
-        return new SequenceKlass(distinct(this.it, keySelector)) as unknown as Sequence<T>;
+        return new SequenceKlass(distinct(this, keySelector)) as unknown as Sequence<T>;
     }
 
     flat(): Sequence<UnwrapIterable<T>>
@@ -239,21 +239,21 @@ class SequenceKlass<T> implements BaseSequence<T>, NumberSequence<T>, ArraySeque
         // Then we flatten it. Simple stuff.
         return new SequenceKlass(
             flat(
-                (projector ? this.map(projector) : this.it) as unknown as Iterable<Iterable<unknown>>
+                (projector ? this.map(projector) : this) as unknown as Iterable<Iterable<unknown>>
             )
         ) as unknown as Sequence<TProject>;
     }
 
     count() {
         let count = 0;
-        for (const _ of this.it) count++;
+        for (const _ of this) count++;
         return count;
     }
 
     sum(f?: (arg: T) => number) {
         // in types we make sure sum is only allowed on number types.
         let value = 0;
-        for (const x of this.it) {
+        for (const x of this) {
             value += f ? f(x) : x as unknown as number;
         }
         return value;
@@ -263,7 +263,7 @@ class SequenceKlass<T> implements BaseSequence<T>, NumberSequence<T>, ArraySeque
         // in types we make sure average is only allowed on number types.
         let value = 0;
         let count = 0;
-        for (const x of this.it) {
+        for (const x of this) {
             value += f ? f(x) : x as unknown as number;
             count++;
         }
@@ -274,7 +274,7 @@ class SequenceKlass<T> implements BaseSequence<T>, NumberSequence<T>, ArraySeque
     min(f?: (arg: T) => number) {
         // in types we make sure min is only allowed on number types.
         let min: number | undefined = undefined;
-        for (const x of this.it) {
+        for (const x of this) {
             const val = f ? f(x) : x as unknown as number;
             if (min === undefined) min = val;
             else if (val < min) min = val;
@@ -286,7 +286,7 @@ class SequenceKlass<T> implements BaseSequence<T>, NumberSequence<T>, ArraySeque
     max(f?: (arg: T) => number) {
         // in types we make sure max is only allowed on number types.
         let max: number | undefined = undefined;
-        for (const x of this.it) {
+        for (const x of this) {
             const val = f ? f(x) : x as unknown as number;
             if (max === undefined) max = val;
             else if (val > max) max = val;
@@ -296,14 +296,14 @@ class SequenceKlass<T> implements BaseSequence<T>, NumberSequence<T>, ArraySeque
     }
 
     all(predicate: (arg: T) => any) {
-        for (const x of this.it) {
+        for (const x of this) {
             if (!predicate(x)) return false;
         }
         return true;
     }
 
     any(predicate: (arg: T) => any) {
-        for (const x of this.it) {
+        for (const x of this) {
             if (predicate(x)) return true;
         }
         return false;
@@ -319,7 +319,7 @@ class SequenceKlass<T> implements BaseSequence<T>, NumberSequence<T>, ArraySeque
 
     toMap<TKey, TElement>(keySelector: (arg: T) => TKey, elementSelector: (arg: T) => TElement) {
         const map = new Map<TKey, TElement>();
-        for (const e of this.it) {
+        for (const e of this) {
             map.set(keySelector(e), elementSelector(e));
         }
         return map;
@@ -327,7 +327,7 @@ class SequenceKlass<T> implements BaseSequence<T>, NumberSequence<T>, ArraySeque
 
     toObject<TKey extends PropertyKey, TElement>(keySelector: (arg: T) => TKey, elementSelector: (arg: T) => TElement) {
         const record = {} as Record<TKey, TElement>;
-        for (const x of this.it) {
+        for (const x of this) {
             record[keySelector(x)] = elementSelector(x);
         }
         return record;
@@ -338,7 +338,7 @@ class SequenceKlass<T> implements BaseSequence<T>, NumberSequence<T>, ArraySeque
     first(predicate?: (arg: T) => any): T {
         if (predicate) return this.where(predicate).first();
 
-        const iterator = this.it[Symbol.iterator]();
+        const iterator = this[Symbol.iterator]();
         const result = iterator.next();
         if (result.done) throw new Error(ErrBecauseEmpty('first'));
         return result.value;
@@ -349,7 +349,7 @@ class SequenceKlass<T> implements BaseSequence<T>, NumberSequence<T>, ArraySeque
     firstOrDefault(predicate?: (arg: T) => any): T | undefined {
         if (predicate) return this.where(predicate).firstOrDefault();
 
-        const iterator = this.it[Symbol.iterator]();
+        const iterator = this[Symbol.iterator]();
         const result = iterator.next();
         return result.value as unknown as T | undefined;
     }
@@ -359,7 +359,7 @@ class SequenceKlass<T> implements BaseSequence<T>, NumberSequence<T>, ArraySeque
     single(predicate?: (arg: T) => any): T {
         if (predicate) return this.where(predicate).single();
 
-        const iterator = this.it[Symbol.iterator]();
+        const iterator = this[Symbol.iterator]();
         const result1 = iterator.next();
         if (result1.done) throw new Error(ErrBecauseEmpty('single'));
         const result2 = iterator.next();
@@ -373,7 +373,7 @@ class SequenceKlass<T> implements BaseSequence<T>, NumberSequence<T>, ArraySeque
     singleOrDefault(predicate?: (arg: T) => any): T | undefined {
         if (predicate) return this.where(predicate).singleOrDefault();
 
-        const iterator = this.it[Symbol.iterator]();
+        const iterator = this[Symbol.iterator]();
         const result1 = iterator.next();
         if (result1.done) return undefined;
         const result2 = iterator.next();
@@ -388,7 +388,7 @@ class SequenceKlass<T> implements BaseSequence<T>, NumberSequence<T>, ArraySeque
         if (predicate) return this.where(predicate).last();
 
         let stored: T | undefined = undefined;
-        for (const x of this.it) {
+        for (const x of this) {
             stored = x;
         }
         if (stored === undefined) throw new Error(ErrBecauseEmpty('last'));
@@ -401,7 +401,7 @@ class SequenceKlass<T> implements BaseSequence<T>, NumberSequence<T>, ArraySeque
         if (predicate) return this.where(predicate).lastOrDefault();
 
         let stored: T | undefined = undefined;
-        for (const x of this.it) {
+        for (const x of this) {
             stored = x;
         }
         return stored;

@@ -40,4 +40,11 @@ export default function contracts(t: Assert) {
         t.eq(mapped.count(), 3);
         t.eq(mapper.callCount, 6);
     });
+
+    t.test('orderBy then something else', t => {
+        const input = from([2, 1, 3]);
+        t.equals(input.first(), 2);
+        t.equals(input.orderBy(x => x).toArray(), [1, 2, 3]);
+        t.equals(input.orderBy(x => x).first(), 1);
+    });
 }
