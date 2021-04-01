@@ -110,6 +110,9 @@ interface BaseSequence<T> extends Iterable<T> {
     /** True if no elements pass the predicate */
     none(predicate: (arg: T) => any): boolean
 
+    /** True if the element is in the sequence. Checked with ===. */
+    contains(value: T): boolean
+
     /** Projects each element to a number and sums the sequence. If empty, returns 0. */
     sum(f: (arg: T) => number): number;
 
@@ -306,6 +309,10 @@ class SequenceKlass<T> implements BaseSequence<T>, NumberSequence<T>, ArraySeque
 
     none(predicate: (arg: T) => any) {
         return !this.any(predicate);
+    }
+
+    contains(value: T) {
+        return this.any(x => x === value);
     }
 
     toArray() {

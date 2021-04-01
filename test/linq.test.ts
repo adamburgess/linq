@@ -417,6 +417,12 @@ export default function linq(t: Assert) {
         t.falsy(finished);
     });
 
+    t.test('contains', t => {
+        t.truthy(numArr.contains(2));
+        t.falsy(numArr.contains(999));
+        t.falsy(from([{ object: '456' }, { object: '123' }]).contains({ object: '123' }));
+    });
+
     t.test('e2e', t => {
         const e2e = from([1, 2, 3])     // 1, 2, 3
             .map(x => x + 1)            // 2, 3, 4

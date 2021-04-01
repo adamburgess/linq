@@ -34,6 +34,10 @@ Completely lazy evaluation.
 1. Distinct
 1. Flat (with projection to sequence)
 
+Missing:
+
+1. Join
+
 ### Outputs
 
 1. Count
@@ -46,16 +50,13 @@ Completely lazy evaluation.
 1. All
 1. Any
 1. None
+1. Contains
 1. Sum (with projection to number)
 1. Average (with projection to number)
 1. Max (with projection to number)
 1. Min (with projection to number)
 1. Min By
 1. Max By
-
-Missing:
-
-1. Join
 
 Special additions for number sequences:
 
@@ -80,7 +81,7 @@ or: why use this one?
 ⚠️ Really doesn't have enough methods to be general purpose. It is missing: Group, Order, Count, First, Last, Distinct. Subjectively, I use all of these.  
 ⚠️ Supports ES iterators, but doesn't support repeatable/lazy ES iterators  
 ✔️ Extremely popular.  
-✔️ 3,744 bytes minified/1,068 bytes brotlied  
+✔️ 3,706 bytes minified/1,047 bytes brotlied  
 
 
 ### [linq.js](https://github.com/mihaifm/linq) (on npm: linq)
@@ -96,7 +97,7 @@ or: why use this one?
 ✔️ Has it all: Yep, it just does.  
 ✔️ Supports ES iterators, including lazy/repeatable. (Nice!)  
 ⚠️ Not very popular, but hey, this library is awesome.  
-✔️ 4,221 bytes minified/1,347 bytes brotlied  
+✔️ 4,212 bytes minified/1,326 bytes brotlied  
 ✅ Great name. `import { from } from 'fromfrom'`  
 
 ### [@adamburgess/linq](https://github.com/adamburgess/linq)
@@ -105,7 +106,7 @@ or: why use this one?
 ⚠️ Has a lot of stuff. Working to get parity with fromfrom.  
 ✔️ Excellent typing, if I do say so myself. Has a couple features that other libraries don't have.  
 ❌ 1 user. Hah.  
-✔️ 3,975 bytes minified/1,091 bytes brotlied (just behind iterare with way more features)  
+✔️ 3,934 bytes minified/1,085 bytes brotlied (just behind iterare with way more features)  
 
 Others not considered:
 
