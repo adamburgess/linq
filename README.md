@@ -118,54 +118,59 @@ Others not considered:
 ⚠️ - doesn't have it, but has an easy work around
 ❌ - have to reimplement yourself
 
-|                                     | @adamburgess/linq | fromfrom | iterare | linq.js |
-|------------------------------------:|:-----------------:|:--------:|:-------:|:-------:|
-|                              Arrays |         ✔️         |    ✔️     |    ✔️    |         |
-|                           Iterables |         ✔️         |    ✔️     |    ✔️    |         |
-|                          Generators |         ✔️         |    ✔️     |    ✔️    |         |
-|       Infinite Iterables/Generators |         ✔️         |    ✔️     |         |         |
-|                                 Map |         ✔️         |    ✔️     |    ✔️    |         |
-|                               Where |         ✔️         |    ✔️     |    ✔️    |         |
-|                             Reverse |         ✔️         |    ✔️     |    ❌    |         |
-|                            Group By |         ✔️         |    ✔️     |    ❌    |         |
-|                            Order By |         ✔️         |    ✔️     |    ❌    |         |
-|                             Then By |         ✔️         |    ✔️     |    ❌    |         |
-|                                Take |         ✔️         |    ✔️     |    ✔️    |         |
-|                                Skip |         ✔️         |    ✔️     |  ⚠️[5]   |         |
-|                          Take While |         ✔️         |    ✔️     |    ❌    |         |
-|                          Skip While |         ✔️         |    ✔️     |    ❌    |         |
-|                              Append |         ✔️         |    ✔️     |    ✔️    |         |
-|                             Prepend |         ✔️         |    ✔️     |    ❌    |         |
-|                            Distinct |         ✔️         |    ✔️     |    ❌    |         |
-|                                Flat |         ✔️         |   ⚠️[[1]](#comparison1)   |    ✔️    |         |
-|                                Join |         ❌         |    ❌     |    ❌    |         |
-|                               Count |         ✔️         |   ⚠️[2]   |  ⚠️[2]   |         |
-|                            to Array |         ✔️         |    ✔️     |    ✔️    |         |
-|                              To Map |         ✔️         |    ✔️     |    ✔️    |         |
-|                           to Object |         ✔️         |    ✔️     |    ❌    |         |
-|                              to Set |         ❌         |    ✔️     |    ✔️    |         |
-|                               First |         ✔️         |    ✔️     |    ✔️    |         |
-|                              Single |         ✔️         |    ❌     |    ❌    |         |
-|                                Last |         ✔️         |    ✔️     |    ❌    |         |
-|                                 All |         ✔️         |    ✔️     |    ✔️    |         |
-|                                 Any |         ✔️         |    ✔️     |    ✔️    |         |
-|                                None |         ✔️         |   ⚠️[3]   |  ⚠️[3]   |         |
-|                            Contains |         ✔️         |    ✔️     |  ⚠️[6]   |         |
-|                                 Sum |         ✔️         |    ✔️     |    ❌    |         |
-|                             Average |         ✔️         |    ❌     |    ❌    |         |
-|                                 Max |         ✔️         |    ❌     |    ❌    |         |
-|                                 Min |         ✔️         |    ❌     |    ❌    |         |
-|                              Min By |         ✔️         |    ❌     |    ❌    |         |
-|                              Max By |         ✔️         |    ❌     |    ❌    |         |
-| Sum/Avg/Max/Min fail on non-numbers |         ✔️         |   ❌[4]   |    ❔    |         |
-|                                     |                   |          |         |         |
+|                                     | @adamburgess/linq |       fromfrom       |       iterare        |       linq.js        |
+|------------------------------------:|:-----------------:|:--------------------:|:--------------------:|:--------------------:|
+|                              Arrays |         ✔️         |          ✔️           |          ✔️           |          ✔️           |
+|                           Iterables |         ✔️         |          ✔️           |          ✔️           |          ❌           |
+|                          Generators |         ✔️         |          ✔️           |          ✔️           |          ✔️           |
+|                  Infinite Iterables |         ✔️         |          ✔️           |          ✔️           |          ❌           |
+|                      Lazy Iterables |         ✔️         |          ✔️           |          ❌           |          ❌           |
+|                                 Map |         ✔️         |          ✔️           |          ✔️           |          ✔️           |
+|                               Where |         ✔️         |          ✔️           |          ✔️           |          ✔️           |
+|                             Reverse |         ✔️         |          ✔️           |          ❌           |          ✔️           |
+|                            Group By |         ✔️         |          ✔️           |          ❌           |          ✔️           |
+|                            Order By |         ✔️         |          ✔️           |          ❌           |          ✔️           |
+|                             Then By |         ✔️         |          ✔️           |          ❌           |          ✔️           |
+|                                Take |         ✔️         |          ✔️           |          ✔️           |          ✔️           |
+|                                Skip |         ✔️         |          ✔️           | ⚠️[[5]](#comparison5) |          ✔️           |
+|                          Take While |         ✔️         |          ✔️           |          ❌           |          ✔️           |
+|                          Skip While |         ✔️         |          ✔️           |          ❌           |          ✔️           |
+|                              Append |         ✔️         |          ✔️           |          ✔️           |          ❌           |
+|                             Prepend |         ✔️         |          ✔️           |          ❌           |          ❌           |
+|                            Distinct |         ✔️         |          ✔️           |          ❌           |          ✔️           |
+|                                Flat |         ✔️         | ⚠️[[1]](#comparison1) |          ✔️           |          ✔️           |
+|                                Join |         ❌         |          ❌           |          ❌           |          ✔️           |
+|                               Count |         ✔️         | ⚠️[[2]](#comparison2) | ⚠️[[2]](#comparison2) |          ✔️           |
+|                            to Array |         ✔️         |          ✔️           |          ✔️           |          ✔️           |
+|                              To Map |         ✔️         |          ✔️           |          ✔️           |          ❌           |
+|                           to Object |         ✔️         |          ✔️           |          ❌           |          ✔️           |
+|                              to Set |         ❌         |          ✔️           |          ✔️           | ⚠️[[8]](#comparison8) |
+|                               First |         ✔️         |          ✔️           |          ✔️           |          ✔️           |
+|                              Single |         ✔️         |          ❌           |          ❌           |          ✔️           |
+|                                Last |         ✔️         |          ✔️           |          ❌           |          ✔️           |
+|                                 All |         ✔️         |          ✔️           |          ✔️           |          ✔️           |
+|                                 Any |         ✔️         |          ✔️           |          ✔️           |          ✔️           |
+|                                None |         ✔️         | ⚠️[[3]](#comparison3) | ⚠️[[3]](#comparison3) | ⚠️[[3]](#comparison3) |
+|                            Contains |         ✔️         |          ✔️           | ⚠️[[6]](#comparison6) |          ✔️           |
+|                                 Sum |         ✔️         |          ✔️           |          ❌           |          ✔️           |
+|                             Average |         ✔️         |          ❌           |          ❌           |          ✔️           |
+|                                 Max |         ✔️         |          ❌           |          ❌           |          ✔️           |
+|                                 Min |         ✔️         |          ❌           |          ❌           |          ✔️           |
+|                              Min By |         ✔️         |          ❌           |          ❌           |          ✔️           |
+|                              Max By |         ✔️         |          ❌           |          ❌           |          ✔️           |
+| Sum/Avg/Max/Min fail on non-numbers |         ✔️         | ❌[[4]](#comparison4) |         ⁿ/ₐ          |          ❌           |
+|      Flatten fails on non-iterables |         ✔️         |         ⁿ/ₐ          | ⚠️[[7]](#comparison7) | ⚠️[[7]](#comparison7) |
+|                                     |                   |                      |                      |                      |
 
-<a href="#comparison1"></a>[1] use flatmap with identity.
-[2] use forEach with a count.
-[3] use !any
-[4] [there is some typing to prevent Sum on non-numbers, but it actually has no effect.](https://github.com/tomi/fromfrom/blob/3876ae0/src/types.ts#L457)
-[5] use slice
-[6] use find, check for !== undefined
+notes:
+<a name="#comparison1"></a>1. Use flatmap with identity.
+<a name="#comparison2"></a>2. Use forEach with a count.
+<a name="#comparison3"></a>3. Use !any
+<a name="#comparison4"></a>4. [There is some typing to prevent Sum on non-numbers, but it actually has no effect.](https://github.com/tomi/fromfrom/blob/3876ae0/src/types.ts#L457)
+<a name="#comparison5"></a>5. Use slice
+<a name="#comparison6"></a>6. Use find, check for !== undefined
+<a name="#comparison7"></a>7. If used on non-iterables, it returns the element unchanged. This follows how JS's .flat() works. My opinion: Why are you flattening an array of things that aren't arrays? Don't.
+<a name="#comparison8"></a>8. It's untyped!
 
 ## Performance
 
