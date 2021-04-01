@@ -149,6 +149,15 @@ export function distinct<T, TKey = T>(input: Iterable<T>, keySelector?: (arg: T)
     return createLazyGenerator(distinct);
 }
 
+export function flat<T>(input: Iterable<Iterable<T>>): Iterable<T> {
+    function* flat() {
+        for (const x of input) {
+            yield* x;
+        }
+    }
+    return createLazyGenerator(flat);
+}
+
 const Enumerable = {
     empty,
     range,
@@ -163,6 +172,7 @@ const Enumerable = {
     skipWhile,
     concat,
     distinct,
+    flat,
 };
 
 export default Enumerable;

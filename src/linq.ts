@@ -1,4 +1,4 @@
-import { concat, distinct, groupBy, map, reverse, skip, skipWhile, take, takeWhile, where } from './enumerable.js'
+import { concat, distinct, flat, groupBy, map, reverse, skip, skipWhile, take, takeWhile, where } from './enumerable.js'
 
 const ErrBecauseEmpty = (x: string) => 'Sequence was empty, cannot ' + x;
 
@@ -121,7 +121,7 @@ interface BaseSequence<T> extends Iterable<T> {
     /** Projects each element to a number and finds the max of the sequence. If empty, throws. */
     min(f: (arg: T) => number): number;
 }
-type NumberSequence<T> = BaseSequence<T> & {
+interface NumberSequence<T> extends BaseSequence<T> {
     /** Sums every number in the sequence. If empty, returns 0. */
     sum(): number
     /** Averages the sequence. If empty, throws. */
@@ -131,6 +131,11 @@ type NumberSequence<T> = BaseSequence<T> & {
     /** Finds the minimum in the sequence. If empty, throws. */
     min(): number
 }
+type UnwrapIterable<T> = [T] extends [Iterable<infer U>] ? U : never;
+interface ArraySequence<T> extends BaseSequence<T> {
+    flat(): Sequence<UnwrapIterable<T>>
+}
+
 interface BaseKeySequence<TKey, TElement> extends BaseSequence<TElement> {
     /** The key that this set was grouped by */
     readonly key: TKey;
@@ -148,28 +153,30 @@ interface BaseOrderedSequence<T> extends BaseSequence<T> {
 }
 
 // disable Distributive Conditional Types
-export type Sequence<T> = [T] extends [number] ? NumberSequence<T> : BaseSequence<T>;
+export type Sequence<T> = [T] extends [number] ? NumberSequence<T> :
+    [T] extends [Iterable<infer _>] ? ArraySequence<T> : BaseSequence<T>;
+
 export type KeySequence<TKey, TElement> = BaseKeySequence<TKey, TElement> & Sequence<TElement>;
 export type OrderedSequence<T> = BaseOrderedSequence<T> & Sequence<T>;
 
-export type SequenceTypes<T> = T extends BaseSequence<infer Y> ? Y : never;
+export type SequenceType<T> = T extends Sequence<infer Y> ? Y : never;
 
-class SequenceKlass<T> implements BaseSequence<T>, NumberSequence<T> {
+class SequenceKlass<T> implements BaseSequence<T>, NumberSequence<T>, ArraySequence<T> {
     constructor(protected it: Iterable<T>) {
     }
 
     map<TResult>(f: (arg: T) => TResult): Sequence<TResult> {
-        return new SequenceKlass(map(this.it, f));
+        return new SequenceKlass(map(this.it, f)) as unknown as Sequence<TResult>;
     }
 
     where<TResult = T>(f: (arg: T | TResult) => arg is TResult): Sequence<TResult>
     where<TResult extends T>(f: (arg: T | TResult) => boolean): Sequence<TResult>
     where<TResult extends T>(f: (arg: T | TResult) => any): Sequence<TResult> {
-        return new SequenceKlass(where(this.it, f) as unknown as Iterable<TResult>);
+        return new SequenceKlass(where(this.it, f) as unknown as Iterable<TResult>) as unknown as Sequence<TResult>;
     }
 
     reverse() {
-        return new SequenceKlass(reverse(this.it));
+        return new SequenceKlass(reverse(this.it)) as unknown as Sequence<T>;
     }
 
     groupBy<TKey, TProject = T>(keySelector: (arg: T) => TKey): Sequence<KeySequence<TKey, TProject>>
@@ -181,41 +188,46 @@ class SequenceKlass<T> implements BaseSequence<T>, NumberSequence<T> {
     orderBy<TKey>(selector: (arg: T) => TKey, comparer?: ICompare<TKey>) {
         return new OrderedSequenceKlass(this.it, [{
             selector, comparer: (comparer as ICompare<unknown>) ?? defaultComparer, ascending: true
-        }]);
+        }]) as unknown as OrderedSequence<T>;
     }
 
     orderByDescending<TKey>(selector: (arg: T) => TKey, comparer?: ICompare<TKey>) {
         return new OrderedSequenceKlass(this.it, [{
             selector, comparer: (comparer as ICompare<unknown>) ?? defaultComparer, ascending: false
-        }]);
+        }]) as unknown as OrderedSequence<T>;
     }
 
     take(count: number) {
-        return new SequenceKlass(take(this.it, count));
+        return new SequenceKlass(take(this.it, count)) as unknown as Sequence<T>;
     }
 
     takeWhile(predicate: (arg: T) => boolean): Sequence<T> {
-        return new SequenceKlass(takeWhile(this.it, predicate));
+        return new SequenceKlass(takeWhile(this.it, predicate)) as unknown as Sequence<T>;
     }
 
     skip(count: number) {
-        return new SequenceKlass(skip(this.it, count));
+        return new SequenceKlass(skip(this.it, count)) as unknown as Sequence<T>;
     }
 
     skipWhile(predicate: (arg: T) => boolean): Sequence<T> {
-        return new SequenceKlass(skipWhile(this.it, predicate));
+        return new SequenceKlass(skipWhile(this.it, predicate)) as unknown as Sequence<T>;
     }
 
     append(iterable: Iterable<T>) {
-        return new SequenceKlass(concat(this.it, iterable));
+        return new SequenceKlass(concat(this.it, iterable)) as unknown as Sequence<T>;
     }
 
     prepend(iterable: Iterable<T>) {
-        return new SequenceKlass(concat(iterable, this.it));
+        return new SequenceKlass(concat(iterable, this.it)) as unknown as Sequence<T>;
     }
 
     distinct(keySelector?: (arg: T) => unknown) {
-        return new SequenceKlass(distinct(this.it, keySelector));
+        return new SequenceKlass(distinct(this.it, keySelector)) as unknown as Sequence<T>;
+    }
+
+    flat() {
+        // e.g. Iterable<string[]> => Iterable<Iterable<string>>
+        return new SequenceKlass(flat(this.it as unknown as Iterable<Iterable<UnwrapIterable<T>>>)) as unknown as Sequence<UnwrapIterable<T>>;
     }
 
     count() {
@@ -395,8 +407,8 @@ class SequenceKlass<T> implements BaseSequence<T>, NumberSequence<T> {
 }
 
 class KeySequenceKlass<TKey, TElement> extends SequenceKlass<TElement> implements BaseKeySequence<TKey, TElement> {
-    constructor(iterable: Iterable<TElement>, public readonly key: TKey) {
-        super(iterable);
+    constructor(it: Iterable<TElement>, public readonly key: TKey) {
+        super(it);
     }
 }
 
@@ -410,8 +422,8 @@ type SelectorComparer<T> = {
 const defaultComparer: ICompare<any> = (a: any, b: any) => a > b ? 1 : a < b ? -1 : 0;
 
 class OrderedSequenceKlass<T> extends SequenceKlass<T> implements BaseOrderedSequence<T> {
-    constructor(iterable: Iterable<T>, protected sc: SelectorComparer<T>[]) {
-        super(iterable);
+    constructor(it: Iterable<T>, protected sc: SelectorComparer<T>[]) {
+        super(it);
     }
 
     thenBy<TKey>(selector: (arg: T) => TKey, comparer?: ICompare<TKey>) {
