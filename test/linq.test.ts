@@ -310,6 +310,16 @@ export default function linq(t: Assert) {
         t.deepEqual(actual, expected);
     });
 
+    t.test('toSet', t => {
+        t.deepEqual(Array.from(numArr.toSet()), Array.from(new Set([1, 2, 3])));
+        const duplicateArray = [1, 2, 2, 1, 3, 4, 5];
+        const withoutDuplicates = [1, 2, 3, 4, 5];
+        t.deepEqual(Array.from(from(duplicateArray).toSet()), withoutDuplicates);
+        const mapped = ['1', '2', '2', '3'];
+        const mappedWithout = [1, 2, 3];
+        t.deepEqual(Array.from(from(mapped).toSet(x => parseInt(x, 10))), mappedWithout);
+    })
+
     t.test('sum', t => {
         t.test('numbers', t => {
             t.equals(numArr.sum(), 1 + 2 + 3);

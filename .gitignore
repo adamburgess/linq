@@ -4,3 +4,4 @@ dist-dev
 publish
 .vscode/settings.json
 coverage
+src/example*.ts

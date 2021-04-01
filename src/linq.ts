@@ -71,6 +71,11 @@ interface BaseSequence<T> extends Iterable<T> {
     /** Converts this sequence into an object */
     toObject<TKey extends PropertyKey, TElement>(keySelector: (arg: T) => TKey, elementSelector: (arg: T) => TElement): Record<TKey, TElement>;
 
+    /** Convert this sequence into a Set */
+    toSet(): Set<T>;
+    /** Map each element and convert the resulting sequence into a set */
+    toSet<TProject>(projector: (arg: T) => TProject): Set<TProject>
+
     /** Get the first element in the sequence. Will throw if empty! Use firstOrDefault if no throw is wanted. */
     first(): T;
     /** Get the first element in the sequence that matches a condition. Will throw if empty! Use firstOrDefault if no throw is wanted. */
@@ -333,6 +338,13 @@ class SequenceKlass<T> implements BaseSequence<T>, NumberSequence<T>, ArraySeque
             record[keySelector(x)] = elementSelector(x);
         }
         return record;
+    }
+
+
+    toSet(): Set<T>;
+    toSet<TProject>(projector: (arg: T) => TProject): Set<TProject>
+    toSet<TProject>(projector?: (arg: T) => TProject): Set<TProject> | Set<T> {
+        return projector ? new Set<TProject>(this.map(projector)) : new Set<T>(this);
     }
 
     first(): T

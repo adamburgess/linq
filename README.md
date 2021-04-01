@@ -146,7 +146,7 @@ Others not considered:
 |                            to Array |    ✔️     |                 ✔️                 |                 ✔️                 |                 ✔️                 |
 |                              To Map |    ✔️     |                 ✔️                 |                 ✔️                 |                 ❌                 |
 |                           to Object |    ✔️     |                 ✔️                 |                 ❌                 |                 ✔️                 |
-|                              to Set |    ❌     |                 ✔️                 |                 ✔️                 | ⚠️[[8]](#user-content-comparison8) |
+|                              to Set |    ✔️     |                 ✔️                 |                 ✔️                 | ⚠️[[8]](#user-content-comparison8) |
 |                               First |    ✔️     |                 ✔️                 |                 ✔️                 |                 ✔️                 |
 |                              Single |    ✔️     |                 ❌                 |                 ❌                 |                 ✔️                 |
 |                                Last |    ✔️     |                 ✔️                 |                 ❌                 |                 ✔️                 |
