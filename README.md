@@ -105,7 +105,7 @@ or: why use this one?
 ⚠️ Has a lot of stuff. Working to get parity with fromfrom.  
 ✔️ Excellent typing, if I do say so myself. Has a couple features that other libraries don't have.  
 ❌ 1 user. Hah.  
-✔️ 3,975 bytes minified/1,070 bytes brotlied (just behind iterare with way more features)  
+✔️ 3,975 bytes minified/1,091 bytes brotlied (just behind iterare with way more features)  
 
 Others not considered:
 

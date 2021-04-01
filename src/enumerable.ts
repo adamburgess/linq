@@ -158,6 +158,39 @@ export function flat<T>(input: Iterable<Iterable<T>>): Iterable<T> {
     return createLazyGenerator(flat);
 }
 
+export function min(input: Iterable<number>) {
+    return byMin_byMax_min_max(input, undefined, true, false);
+}
+
+export function max(input: Iterable<number>) {
+    return byMin_byMax_min_max(input, undefined, false, false);
+}
+
+export function minBy<T>(input: Iterable<T>, selector: (arg: T) => number) {
+    return byMin_byMax_min_max(input, selector, true, true);
+}
+
+export function maxBy<T>(input: Iterable<T>, selector: (arg: T) => number) {
+    return byMin_byMax_min_max(input, selector, false, true);
+}
+
+export function byMin_byMax_min_max<T>(input: Iterable<T>, selector: ((arg: T) => number) | undefined, isMin: boolean, isBy: true): T
+export function byMin_byMax_min_max<T>(input: Iterable<T>, selector: ((arg: T) => number) | undefined, isMin: boolean, isBy: false): number
+export function byMin_byMax_min_max<T>(input: Iterable<T>, selector: ((arg: T) => number) | undefined, isMin: boolean, isBy: boolean): number | T {
+    let element: T;
+    let current: number | undefined;
+    for (const x of input) {
+        const val = selector ? selector(x) : x as unknown as number;
+        if (current === undefined || (isMin ? val < current : val > current)) {
+            current = val;
+            element = x;
+        }
+    }
+    if (current === undefined) throw new Error('empty');
+    if (isBy) return element!;
+    return current;
+}
+
 const Enumerable = {
     empty,
     range,
@@ -173,6 +206,11 @@ const Enumerable = {
     concat,
     distinct,
     flat,
+    min,
+    max,
+    minBy,
+    maxBy,
+    byMin_byMax_min_max
 };
 
 export default Enumerable;

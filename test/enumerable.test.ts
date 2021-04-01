@@ -1,7 +1,7 @@
 import 'source-map-support/register.js'
 import { Assert } from 'zora'
 import { expectType } from './helpers.js'
-import Enumerable, { repeat, take } from '../src/enumerable.js'
+import Enumerable, { max, maxBy, min, minBy, repeat, take } from '../src/enumerable.js'
 
 export default function enumerable(t: Assert) {
     t.test('range', t => {
@@ -28,5 +28,24 @@ export default function enumerable(t: Assert) {
         t.deepEqual(Array.from(repeat(input, 2)), [...input, ...input]);
         // infinite sequence
         t.deepEqual(Array.from(take(repeat(input, -1), 50)).length, 50);
+    });
+
+    t.test('max', t => {
+        t.equals(max([2, 1, 10, 4]), 10);
+        t.throws(() => max([]));
+    });
+
+    t.test('min', t => {
+        t.equals(min([2, 1, 10, 4]), 1);
+        t.throws(() => min([]));
+    });
+
+    t.test('xBy', t => {
+        const numArr = [2, 1, 10, 4];
+        t.equals(minBy(numArr, x => x), 1);
+        t.equals(maxBy(numArr, x => x), 10);
+        const strArr = ['zero', 'one', 'fourteen', 'seven'];
+        t.equals(minBy(strArr, x => x.length), 'one');
+        t.equals(maxBy(strArr, x => x.length), 'fourteen');
     });
 }

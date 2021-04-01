@@ -1,6 +1,4 @@
-import { concat, distinct, flat, groupBy, map, reverse, skip, skipWhile, take, takeWhile, where } from './enumerable.js'
-
-const ErrBecauseEmpty = (x: string) => 'Sequence was empty, cannot ' + x;
+import { byMin_byMax_min_max, concat, distinct, flat, groupBy, map, reverse, skip, skipWhile, take, takeWhile, where } from './enumerable.js'
 
 interface BaseSequence<T> extends Iterable<T> {
     /** Map each element to another */
@@ -272,41 +270,24 @@ class SequenceKlass<T> implements BaseSequence<T>, NumberSequence<T>, ArraySeque
             value += f ? f(x) : x as unknown as number;
             count++;
         }
-        if (count === 0) throw new Error(ErrBecauseEmpty('average'));
+        if (count === 0) throw new Error('empty');
         return value / count;
     }
 
-    private mBy(f: ((arg: T) => number) | undefined, isMin: boolean, isBy: false): number;
-    private mBy(f: ((arg: T) => number) | undefined, isMin: boolean, isBy: true): T;
-    private mBy(f: ((arg: T) => number) | undefined, isMin: boolean, isBy: boolean): number | T {
-        let element: T;
-        let current: number | undefined;
-        for (const x of this) {
-            const val = f ? f(x) : x as unknown as number;
-            if (current === undefined || (isMin ? val < current : val > current)) {
-                current = val;
-                element = x;
-            }
-        }
-        if (current === undefined) throw new Error(ErrBecauseEmpty(isMin ? 'min' : 'max'));
-        if(isBy) return element!;
-        return current;
-    }
-
     min(f?: (arg: T) => number) {
-        return this.mBy(f, true, false);
+        return byMin_byMax_min_max(this, f, true, false);
     }
 
     max(f?: (arg: T) => number) {
-        return this.mBy(f, false, false);
+        return byMin_byMax_min_max(this, f, false, false);
     }
 
     minBy(f: (arg: T) => number): T {
-        return this.mBy(f, true, true);
+        return byMin_byMax_min_max(this, f, true, true);
     }
 
     maxBy(f: (arg: T) => number): T {
-        return this.mBy(f, false, true);
+        return byMin_byMax_min_max(this, f, false, true);
     }
 
     all(predicate: (arg: T) => any) {
@@ -354,7 +335,7 @@ class SequenceKlass<T> implements BaseSequence<T>, NumberSequence<T>, ArraySeque
 
         const iterator = this[Symbol.iterator]();
         const result = iterator.next();
-        if (result.done) throw new Error(ErrBecauseEmpty('first'));
+        if (result.done) throw new Error('empty');
         return result.value;
     }
 
@@ -375,9 +356,9 @@ class SequenceKlass<T> implements BaseSequence<T>, NumberSequence<T>, ArraySeque
 
         const iterator = this[Symbol.iterator]();
         const result1 = iterator.next();
-        if (result1.done) throw new Error(ErrBecauseEmpty('single'));
+        if (result1.done) throw new Error('empty');
         const result2 = iterator.next();
-        if (!result2.done) throw new Error('Sequence had more than 1 element, cannot single');
+        if (!result2.done) throw new Error('more than 1');
 
         return result1.value;
     }
@@ -405,7 +386,7 @@ class SequenceKlass<T> implements BaseSequence<T>, NumberSequence<T>, ArraySeque
         for (const x of this) {
             stored = x;
         }
-        if (stored === undefined) throw new Error(ErrBecauseEmpty('last'));
+        if (stored === undefined) throw new Error('empty');
         return stored;
     }
 
