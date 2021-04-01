@@ -162,7 +162,7 @@ Others not considered:
 |      Flatten fails on non-iterables |         ✔️         |                ⁿ/ₐ                | ⚠️[[7]](#user-content-comparison7) | ⚠️[[7]](#user-content-comparison7) |
 |                                     |                   |                                   |                                   |                                   |
 
-notes:
+notes:  
 <a name="comparison1"></a>1. Use flatmap with identity.  
 <a name="comparison2"></a>2. Use forEach with a count.  
 <a name="comparison3"></a>3. Use !any  
