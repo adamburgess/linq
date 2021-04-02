@@ -65,7 +65,7 @@ interface BaseSequence<T> extends Iterable<T> {
     */
     toArray(): T[]
 
-    /** Converts this sequence to a Map. */
+    /** Converts this sequence to a Map. Last key wins. */
     toMap<TKey, TElement>(keySelector: (arg: T) => TKey, elementSelector: (arg: T) => TElement): Map<TKey, TElement>;
 
     /** Converts this sequence into an object */
