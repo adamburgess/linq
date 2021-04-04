@@ -65,7 +65,7 @@ interface BaseSequence<T> extends Iterable<T> {
     */
     toArray(): T[]
 
-    /** Converts this sequence to a Map. Last key wins. */
+    /** Converts this sequence to a Map. First key wins. */
     toMap<TKey, TElement>(keySelector: (arg: T) => TKey, elementSelector: (arg: T) => TElement): Map<TKey, TElement>;
 
     /** Converts this sequence into an object */
@@ -327,7 +327,9 @@ class SequenceKlass<T> implements BaseSequence<T>, NumberSequence<T>, ArraySeque
     toMap<TKey, TElement>(keySelector: (arg: T) => TKey, elementSelector: (arg: T) => TElement) {
         const map = new Map<TKey, TElement>();
         for (const e of this) {
-            map.set(keySelector(e), elementSelector(e));
+            const key = keySelector(e);
+            if (!map.has(key))
+                map.set(key, elementSelector(e));
         }
         return map;
     }

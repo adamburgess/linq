@@ -295,7 +295,7 @@ export default function linq(t: Assert) {
             [3, '3']
         ]);
         const actual = from<[number, string]>([
-            [1, '1'], [2, 'last wins'], [2, '2'], [3, '3']
+            [1, '1'], [2, '2'], [2, 'first wins'], [3, '3']
         ]).toMap(x => x[0], x => x[1]);
         expectType<Map<number, string>>(actual);
         t.deepEqual(Array.from(actual), Array.from(expected));
