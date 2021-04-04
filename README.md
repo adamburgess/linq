@@ -141,7 +141,7 @@ Others not considered:
 |                             Prepend |    ✔️     |                 ✔️                 |                 ❌                 |                 ❌                 |
 |                            Distinct |    ✔️     |                 ✔️                 |                 ❌                 |                 ✔️                 |
 |                                Flat |    ✔️     | ⚠️[[1]](#user-content-comparison1) |                 ✔️                 |                 ✔️                 |
-|                                Join |    ❌     |                 ❌                 |                 ❌                 |                 ✔️                 |
+|                                Join |    ✔️     |                 ❌                 |                 ❌                 |                 ✔️                 |
 |                               Count |    ✔️     | ⚠️[[2]](#user-content-comparison2) | ⚠️[[2]](#user-content-comparison2) |                 ✔️                 |
 |                            to Array |    ✔️     |                 ✔️                 |                 ✔️                 |                 ✔️                 |
 |                              To Map |    ✔️     |                 ✔️                 |                 ✔️                 |                 ❌                 |
