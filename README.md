@@ -96,7 +96,7 @@ or: why use this one?
 
 ### [fromfrom](https://github.com/tomi/fromfrom)
 
-✔️ Has it all: Yep, it just does.  
+✔️ Has nearly everything you'd like.  
 ✔️ Supports ES iterators, including lazy/repeatable. (Nice!)  
 ⚠️ Not very popular, but hey, this library is awesome.  
 ✔️ 4,212 bytes minified/1,326 bytes brotlied  
