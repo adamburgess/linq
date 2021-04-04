@@ -1,6 +1,6 @@
 # linq
 
-A somewhat decent linq. With also decent types. 1.2kb gzipped.
+A somewhat decent linq. With also decent types. 1.35kb gzipped.
 
 [![codecov](https://codecov.io/gh/adamburgess/linq/branch/master/graph/badge.svg?token=MSQWH7HI95)](https://codecov.io/gh/adamburgess/linq)
 
