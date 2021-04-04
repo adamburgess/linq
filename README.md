@@ -33,9 +33,6 @@ Completely lazy evaluation.
 1. Prepend
 1. Distinct
 1. Flat (with projection to sequence)
-
-Missing:
-
 1. Join
 
 ### Outputs
