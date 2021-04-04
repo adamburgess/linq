@@ -34,7 +34,7 @@ Completely lazy evaluation.
 1. Distinct
 1. Flat (with projection to sequence)
 1. Join (an inner join)
-2. GroupJoin
+1. GroupJoin
 
 ### Outputs
 
@@ -66,6 +66,10 @@ Special additions for number sequences:
 Special additions for iterable/array sequences:
 
 1. Flat
+
+Special additions for string sequences:
+
+1. JoinString
 
 \* Note: Some transformations/most outputs do not work with infinite sequences, such as Group By and Order By.
 
@@ -104,7 +108,7 @@ or: why use this one?
 ⚠️ Has a lot of stuff. Working to get parity with fromfrom.  
 ✔️ Excellent typing, if I do say so myself. Has a couple features that other libraries don't have.  
 ❌ 1 user. Hah.  
-✔️ 3,934 bytes minified/1,085 bytes brotlied (just behind iterare with way more features)  
+✔️ 4,383 bytes minified/1,233 bytes brotlied  
 
 Others not considered:
 
@@ -118,8 +122,8 @@ Others not considered:
 
 |                                     | this one |             fromfrom              |              iterare              |              linq.js              |
 |------------------------------------:|:--------:|:---------------------------------:|:---------------------------------:|:---------------------------------:|
-|            Size in bytes (minified) |  3,987   |            4,212 (+7%)            |           3,725  (-5%)            |         35,750 (+808% ❌)          |
-|            Size in bytes (brotlied) |  1,100   |           1,326 (+22%)            |          1,058   (-2.%)           |         6,655  (+513% ❌)          |
+|            Size in bytes (minified) |  4,383   |               4,212               |               3,725               |         35,750 (+800% ❌)          |
+|            Size in bytes (brotlied) |  1,233   |               1,326               |               1,058               |         6,655  (+500% ❌)          |
 |                              Arrays |    ✔️     |                 ✔️                 |                 ✔️                 |                 ✔️                 |
 |                           Iterables |    ✔️     |                 ✔️                 |                 ✔️                 |                 ❌                 |
 |                          Generators |    ✔️     |                 ✔️                 |                 ✔️                 |                 ✔️                 |
@@ -140,6 +144,7 @@ Others not considered:
 |                            Distinct |    ✔️     |                 ✔️                 |                 ❌                 |                 ✔️                 |
 |                                Flat |    ✔️     | ⚠️[[1]](#user-content-comparison1) |                 ✔️                 |                 ✔️                 |
 |                                Join |    ✔️     |                 ❌                 |                 ❌                 |                 ✔️                 |
+|                          Group Join |    ✔️     |                 ❌                 |                 ❌                 |                 ✔️                 |
 |                               Count |    ✔️     | ⚠️[[2]](#user-content-comparison2) | ⚠️[[2]](#user-content-comparison2) |                 ✔️                 |
 |                            to Array |    ✔️     |                 ✔️                 |                 ✔️                 |                 ✔️                 |
 |                              To Map |    ✔️     |                 ✔️                 |                 ✔️                 |                 ❌                 |
