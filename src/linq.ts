@@ -133,7 +133,7 @@ export interface AnySequence<T> extends Iterable<T> {
      * // => [2, 1]
      * ```
      */
-    take(count: number): Sequence<T>;
+    take(count: number): Sequence<T>
 
     /** Take elements while the predicate is true, then skips the rest 
      * 
@@ -142,7 +142,7 @@ export interface AnySequence<T> extends Iterable<T> {
      * // => [2, 3]
      * ```
      */
-    takeWhile(predicate: (arg: T) => any): Sequence<T>;
+    takeWhile(predicate: (arg: T) => any): Sequence<T>
 
     /** Skip a number of elements before letting the rest through 
      * 
@@ -151,7 +151,7 @@ export interface AnySequence<T> extends Iterable<T> {
      * // => [1, 5]
      * ```
      */
-    skip(count: number): Sequence<T>;
+    skip(count: number): Sequence<T>
 
     /** Skip elements while the predicate is true, then take the rest 
      * 
@@ -160,7 +160,7 @@ export interface AnySequence<T> extends Iterable<T> {
      * // => [1, 5]
      * ```
      */
-    skipWhile(predicate: (arg: T) => any): Sequence<T>;
+    skipWhile(predicate: (arg: T) => any): Sequence<T>
 
     /** Append another iterable to the end 
      * 
@@ -204,7 +204,7 @@ export interface AnySequence<T> extends Iterable<T> {
      * // => ['1', '2', '3', '4']
      * ```
      */
-    flat<TProject>(projector: (input: T) => Iterable<TProject>): Sequence<TProject>;
+    flat<TProject>(projector: (input: T) => Iterable<TProject>): Sequence<TProject>
 
     /** Correlates the elements of two sequences based on matching keys. An inner join. 
      * 
@@ -239,7 +239,7 @@ export interface AnySequence<T> extends Iterable<T> {
         outerKeySelector: (arg: T) => TKey,
         innerKeySelector: (arg: TInner) => TKey,
         resultSelector: (outer: T, inner: TInner) => TResult
-    ): Sequence<TResult>;
+    ): Sequence<TResult>
 
     /** Correlates the elements of two sequences based on matching keys, and groups everything in the other table. 
      * 
@@ -273,7 +273,7 @@ export interface AnySequence<T> extends Iterable<T> {
         outerKeySelector: (arg: T) => TKey,
         innerKeySelector: (arg: TInner) => TKey,
         resultSelector: (outer: T, inner: Sequence<TInner>) => TResult
-    ): Sequence<TResult>;
+    ): Sequence<TResult>
 
     /** Counts the number of elements in the sequence 
      * 
@@ -305,7 +305,7 @@ export interface AnySequence<T> extends Iterable<T> {
      * // => Map([['a', 456], ['b', 456]]);
      * ```
      */
-    toMap<TKey, TElement>(keySelector: (arg: T) => TKey, elementSelector: (arg: T) => TElement): Map<TKey, TElement>;
+    toMap<TKey, TElement>(keySelector: (arg: T) => TKey, elementSelector: (arg: T) => TElement): Map<TKey, TElement>
 
     /** Converts this sequence into an object. First key wins. 
      * 
@@ -314,7 +314,7 @@ export interface AnySequence<T> extends Iterable<T> {
      * // => { a: 123, b: 456 }
      * ```
      */
-    toObject<TKey extends PropertyKey, TElement>(keySelector: (arg: T) => TKey, elementSelector: (arg: T) => TElement): Record<TKey, TElement>;
+    toObject<TKey extends PropertyKey, TElement>(keySelector: (arg: T) => TKey, elementSelector: (arg: T) => TElement): Record<TKey, TElement>
 
     /** Convert this sequence into a Set 
      * 
@@ -323,7 +323,7 @@ export interface AnySequence<T> extends Iterable<T> {
      * // => Set([2, 1, 5])
      * ```
      */
-    toSet(): Set<T>;
+    toSet(): Set<T>
     /** Map each element and convert the resulting sequence into a set 
      * 
      * ```typescript
@@ -342,7 +342,7 @@ export interface AnySequence<T> extends Iterable<T> {
      * // => throws
      * ```
      */
-    first(): T;
+    first(): T
     /** Get the first element in the sequence that matches a condition. Will throw if empty! Use firstOrDefault if no throw is wanted. 
      * 
      * ```typescript
@@ -352,7 +352,7 @@ export interface AnySequence<T> extends Iterable<T> {
      * // => throws
      * ```
      */
-    first(predicate: (arg: T) => any): T;
+    first(predicate: (arg: T) => any): T
 
     /** Get the first element in the sequence. If empty, returns undefined. 
      * 
@@ -363,7 +363,7 @@ export interface AnySequence<T> extends Iterable<T> {
      * // => undefined
      * ```
      */
-    firstOrDefault(): T | undefined;
+    firstOrDefault(): T | undefined
     /** Get the first element in the sequence that matches a condition. If empty or no matches, returns undefined. 
      * 
      * ```typescript
@@ -373,7 +373,7 @@ export interface AnySequence<T> extends Iterable<T> {
      * // => undefined
      * ```
      */
-    firstOrDefault(predicate: (arg: T) => any): T | undefined;
+    firstOrDefault(predicate: (arg: T) => any): T | undefined
 
     /** Get the _only_ element in the sequence. Will throw if empty or more than one element! Use singleOrDefault if no throw is wanted. 
      * 
@@ -396,7 +396,7 @@ export interface AnySequence<T> extends Iterable<T> {
      * // => throws
      * ```
      */
-    single(predicate: (arg: T) => any): T;
+    single(predicate: (arg: T) => any): T
 
     /** Get the _only_ element in the sequence. Returns undefined if empty or more than one element. 
      * 
@@ -417,7 +417,7 @@ export interface AnySequence<T> extends Iterable<T> {
      * // => undefined
      * ```
      */
-    singleOrDefault(predicate: (arg: T) => any): T | undefined;
+    singleOrDefault(predicate: (arg: T) => any): T | undefined
 
     /** Get the last element in the sequence. Will throw if empty! Use lastOrDefault if no throw is wanted. 
      * 
@@ -428,7 +428,7 @@ export interface AnySequence<T> extends Iterable<T> {
      * // => throws
      * ```
      */
-    last(): T;
+    last(): T
     /** Get the last element in the sequence that matches a condition. Will throw if empty! Use lastOrDefault if no throw is wanted. 
      * 
      * ```typescript
@@ -438,7 +438,7 @@ export interface AnySequence<T> extends Iterable<T> {
      * // => throws
      * ```
      */
-    last(predicate: (arg: T) => any): T;
+    last(predicate: (arg: T) => any): T
 
     /** Get the last element in the sequence. If empty, returns undefined. 
      * 
@@ -449,7 +449,7 @@ export interface AnySequence<T> extends Iterable<T> {
      * // => undefined
      * ```
      */
-    lastOrDefault(): T | undefined;
+    lastOrDefault(): T | undefined
     /** Get the last element in the sequence that matches a condition. If empty or no matches, returns undefined. 
      * 
      * ```typescript
@@ -459,7 +459,7 @@ export interface AnySequence<T> extends Iterable<T> {
      * // => undefined
      * ```
      */
-    lastOrDefault(predicate: (arg: T) => any): T | undefined;
+    lastOrDefault(predicate: (arg: T) => any): T | undefined
 
     /** True if all elements pass the predicate 
      * 
@@ -512,7 +512,7 @@ export interface AnySequence<T> extends Iterable<T> {
      * // => 8
      * ```
      */
-    sum(f: (arg: T) => number): number;
+    sum(f: (arg: T) => number): number
 
     /** Projects each element to a number and averages the sequence. If empty, throws. 
      * 
@@ -521,7 +521,7 @@ export interface AnySequence<T> extends Iterable<T> {
      * // => 4
      * ```
      */
-    average(f: (arg: T) => number): number;
+    average(f: (arg: T) => number): number
 
     /** Projects each element to a number and finds the min of the sequence. If empty, throws. 
      * 
@@ -530,7 +530,7 @@ export interface AnySequence<T> extends Iterable<T> {
      * // => 5
      * ```
      */
-    max(f: (arg: T) => number): number;
+    max(f: (arg: T) => number): number
 
     /** Projects each element to a number and finds the max of the sequence. If empty, throws.
      * 
@@ -539,7 +539,7 @@ export interface AnySequence<T> extends Iterable<T> {
      * // => 1
      * ```
      */
-    min(f: (arg: T) => number): number;
+    min(f: (arg: T) => number): number
 
     /** Finds the minimum element in the sequence according to a selector. Equivalent (but faster) to orderBy(f).first(). 
      * 
@@ -548,7 +548,7 @@ export interface AnySequence<T> extends Iterable<T> {
      * // => { key: 'B', value: 1 }
      * ```
      */
-    minBy(f: (arg: T) => number): T;
+    minBy(f: (arg: T) => number): T
     /** Finds the maximum element in the sequence according to a selector. Equivalent (but faster) to orderByDescending(f).first(). 
      * 
      * ```typescript
@@ -556,10 +556,10 @@ export interface AnySequence<T> extends Iterable<T> {
      * // => { key: 'C', value: 10 }
      * ```
      */
-    maxBy(f: (arg: T) => number): T;
+    maxBy(f: (arg: T) => number): T
 
     /** Iterates through this sequence. */
-    [Symbol.iterator](): Iterator<T>;
+    [Symbol.iterator](): Iterator<T>
 }
 /** A sequence of numbers */
 export interface NumberSequence<T> extends AnySequence<T> {
@@ -625,7 +625,7 @@ export interface StringSequence<T> extends AnySequence<T> {
      * // => 'a, b, c'
      * ```
      */
-    joinString(separator?: string): string;
+    joinString(separator?: string): string
 }
 
 interface WithKey<TKey> {
@@ -642,7 +642,7 @@ interface BaseOrderedSequence<T> extends AnySequence<T> {
      * // => ['one', 'two', 'five', 'thirteen']
      * ```
      */
-    thenBy(keySelector: (arg: T) => string | number): OrderedSequence<T>;
+    thenBy(keySelector: (arg: T) => string | number): OrderedSequence<T>
     /** Order the sequence by another key, ascending, with a custom comparer.
      * 
      * See orderBy for an example.
@@ -657,7 +657,7 @@ interface BaseOrderedSequence<T> extends AnySequence<T> {
      * // => 'two', 'one', 'five', 'thirteen'
      * ```
      */
-    thenByDescending(keySelector: (arg: T) => string | number): OrderedSequence<T>;
+    thenByDescending(keySelector: (arg: T) => string | number): OrderedSequence<T>
     /** Order the sequence by another key, descending, with a custom comparer. 
      * 
      * 
@@ -666,21 +666,21 @@ interface BaseOrderedSequence<T> extends AnySequence<T> {
     thenByDescending<TKey>(keySelector: (arg: T) => TKey, comparer: ICompare<TKey>): OrderedSequence<T>
 }
 
-type DoesExtend<T, TWant> = [T] extends [TWant] ? T : never;
-type DoesExtendAny<T> = any extends T ? never : T;
-type ExtendsCarefully<T, TWant> = DoesExtendAny<DoesExtend<T, TWant>>;
+type DoesExtend<T, TWant> = [T] extends [TWant] ? T : never
+type DoesExtendAny<T> = any extends T ? never : T
+type ExtendsCarefully<T, TWant> = DoesExtendAny<DoesExtend<T, TWant>>
 
 /** A sequence of values. */
 export type Sequence<T> = ExtendsCarefully<T, number> extends never ? (
     ExtendsCarefully<T, string> extends never ? (
         ExtendsCarefully<T, Iterable<unknown>> extends never ? AnySequence<T> : ArraySequence<T>
     ) : StringSequence<T>
-) : NumberSequence<T>;
+) : NumberSequence<T>
 
 /** A sequence with a key. Obtained from groupBy. */
-export type KeySequence<TKey, TElement> = WithKey<TKey> & Sequence<TElement>;
+export type KeySequence<TKey, TElement> = WithKey<TKey> & Sequence<TElement>
 /** An ordered sequence. Can use thenBy to continue ordering. */
-export type OrderedSequence<T> = BaseOrderedSequence<T> & Sequence<T>;
+export type OrderedSequence<T> = BaseOrderedSequence<T> & Sequence<T>
 
 /** Gets the sequence type.
  * ```typescript
@@ -689,7 +689,7 @@ export type OrderedSequence<T> = BaseOrderedSequence<T> & Sequence<T>;
  * // MySequenceType === string
  *  ```
  */
-export type SequenceType<T> = T extends Sequence<infer Y> ? Y : never;
+export type SequenceType<T> = T extends Sequence<infer Y> ? Y : never
 
 class SequenceKlass<T> implements AnySequence<T>, NumberSequence<T>, ArraySequence<T>, StringSequence<T> {
     constructor(protected it: Iterable<T>) {
@@ -1067,10 +1067,10 @@ type IsNot<T, Test> = Not<Is<T, Test>>
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 // All the following should be true:
-type Test_NumberSequence = Is<Sequence<number>, NumberSequence<number>>;
-type Test_ArraySequence = Is<Sequence<number[]>, ArraySequence<number[]>>;
-type Test_NumberAnySequence = IsNot<Sequence<number | any>, NumberSequence<number | any>>;
-type Test_NumberAnySequence2 = Is<Sequence<number | any>, AnySequence<number | any>>;
+type Test_NumberSequence = Is<Sequence<number>, NumberSequence<number>>
+type Test_ArraySequence = Is<Sequence<number[]>, ArraySequence<number[]>>
+type Test_NumberAnySequence = IsNot<Sequence<number | any>, NumberSequence<number | any>>
+type Test_NumberAnySequence2 = Is<Sequence<number | any>, AnySequence<number | any>>
 
 /*
 
