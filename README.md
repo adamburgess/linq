@@ -4,6 +4,33 @@ A somewhat decent linq. With also decent types. 1.37kb gzipped.
 
 [![codecov](https://codecov.io/gh/adamburgess/linq/branch/master/graph/badge.svg?token=MSQWH7HI95)](https://codecov.io/gh/adamburgess/linq)
 
+## Docs/Usage
+
+[Generated documentation: https://adamburgess-linq.netlify.app/](https://adamburgess-linq.netlify.app/modules/linq.html)
+
+```typescript
+import from from '@adamburgess/linq'
+const sequence = from(['an', 'iterable', 'here']);
+// now use any methods on sequence!
+// e.g. mapping:
+const uppercases = sequence.map(x => x.toUpperCase());
+// note: the sequence hasn't been mapped yet! toUpperCase hasn't been called!
+// you must _run_ the sequence (see Outputs below)
+Array.from(uppercases); // or uppercases.toArray()
+// => ['AN', 'ITERABLE', 'HERE']
+
+// You can modify already existing transforms:
+const reversed = uppercases.reverse();
+// still! The sequence hasn't been reversed!
+// Again you must run it:
+Array.from(reversed);
+// => ['HERE', 'ITERABLE', 'AN']
+// note! When this reversed array was created, it ran:
+// 1. the uppercase sequence (yes, again!)
+// 2. the reverse method
+// _ALL_ operations are deferred until outputting the sequence!
+```
+
 ## Features
 
 Completely lazy evaluation.
