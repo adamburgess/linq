@@ -1,6 +1,6 @@
 # linq
 
-A somewhat decent linq. With also decent types. 1.35kb gzipped.
+A somewhat decent linq. With also decent types. 1.37kb gzipped.
 
 [![codecov](https://codecov.io/gh/adamburgess/linq/branch/master/graph/badge.svg?token=MSQWH7HI95)](https://codecov.io/gh/adamburgess/linq)
 
@@ -108,7 +108,7 @@ or: why use this one?
 ⚠️ Has a lot of stuff. Working to get parity with fromfrom.  
 ✔️ Excellent typing, if I do say so myself. Has a couple features that other libraries don't have.  
 ❌ 1 user. Hah.  
-✔️ 4,383 bytes minified/1,233 bytes brotlied  
+✔️ 4,383 bytes minified/1,243 bytes brotlied  
 
 Others not considered:
 
@@ -122,8 +122,8 @@ Others not considered:
 
 |                                     | this one |             fromfrom              |              iterare              |              linq.js              |
 |------------------------------------:|:--------:|:---------------------------------:|:---------------------------------:|:---------------------------------:|
-|            Size in bytes (minified) |  4,383   |               4,212               |               3,725               |         35,750 (+800% ❌)          |
-|            Size in bytes (brotlied) |  1,233   |               1,326               |               1,058               |         6,655  (+500% ❌)          |
+|            Size in bytes (minified) |  4,425   |               4,212               |               3,725               |         35,750 (+800% ❌)          |
+|            Size in bytes (brotlied) |  1,243   |               1,326               |               1,058               |         6,655  (+500% ❌)          |
 |                              Arrays |    ✔️     |                 ✔️                 |                 ✔️                 |                 ✔️                 |
 |                           Iterables |    ✔️     |                 ✔️                 |                 ✔️                 |                 ❌                 |
 |                          Generators |    ✔️     |                 ✔️                 |                 ✔️                 |                 ✔️                 |
