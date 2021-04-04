@@ -302,7 +302,7 @@ export default function linq(t: Assert) {
             apples,
             type => type.id,
             apple => apple.type,
-            (type, apples) => `${type.name}: ${apples.map(a => a.name).toArray().join(', ')}`
+            (type, apples) => `${type.name}: ${apples.map(a => a.name).joinString(', ')}`
         );
 
         t.equals(joined.toArray(), [

@@ -153,7 +153,7 @@ interface BaseSequence<T> extends Iterable<T> {
     /** Finds the minimum element in the sequence according to a selector. Equivalent (but faster) to orderByDescending(f).first(). */
     maxBy(f: (arg: T) => number): T;
 }
-interface NumberSequence<T> extends BaseSequence<T> {
+export interface NumberSequence<T> extends BaseSequence<T> {
     /** Sums every number in the sequence. If empty, returns 0. */
     sum(): number
     /** Averages the sequence. If empty, throws. */
@@ -164,11 +164,15 @@ interface NumberSequence<T> extends BaseSequence<T> {
     min(): number
 }
 type UnwrapIterable<T> = [T] extends [Iterable<infer U>] ? U : never;
-interface ArraySequence<T> extends BaseSequence<T> {
+export interface ArraySequence<T> extends BaseSequence<T> {
     /** project each element to an iterable/array, then flatten the result */
     flat<TProject>(projector: (input: T) => Iterable<TProject>): Sequence<TProject>
     /** flatten the sequence */
     flat(): Sequence<UnwrapIterable<T>>
+}
+export interface StringSequence<T> extends BaseSequence<T> {
+    /** Joins the elements with an optional separator */
+    joinString(separator?: string): string;
 }
 
 interface WithKey<TKey> {
@@ -192,14 +196,18 @@ type DoesExtend<T, TWant> = [T] extends [TWant] ? T : never;
 type DoesExtendAny<T> = any extends T ? never : T;
 type ExtendsCarefully<T, TWant> = DoesExtendAny<DoesExtend<T, TWant>>;
 
-export type Sequence<T> = ExtendsCarefully<T, number> extends never ? (ExtendsCarefully<T, Iterable<unknown>> extends never ? BaseSequence<T> : ArraySequence<T>) : NumberSequence<T>;
+export type Sequence<T> = ExtendsCarefully<T, number> extends never ? (
+    ExtendsCarefully<T, string> extends never ? (
+        ExtendsCarefully<T, Iterable<unknown>> extends never ? BaseSequence<T> : ArraySequence<T>
+    ) : StringSequence<T>
+) : NumberSequence<T>;
 
 export type KeySequence<TKey, TElement> = WithKey<TKey> & Sequence<TElement>;
 export type OrderedSequence<T> = BaseOrderedSequence<T> & Sequence<T>;
 
 export type SequenceType<T> = T extends Sequence<infer Y> ? Y : never;
 
-class SequenceKlass<T> implements BaseSequence<T>, NumberSequence<T>, ArraySequence<T> {
+class SequenceKlass<T> implements BaseSequence<T>, NumberSequence<T>, ArraySequence<T>, StringSequence<T> {
     constructor(protected it: Iterable<T>) {
     }
 
@@ -485,6 +493,10 @@ class SequenceKlass<T> implements BaseSequence<T>, NumberSequence<T>, ArraySeque
             stored = x;
         }
         return stored;
+    }
+
+    joinString(separator?: string) {
+        return this.toArray().join(separator);
     }
 
     // debug
