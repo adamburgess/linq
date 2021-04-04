@@ -1,5 +1,17 @@
+/**
+ * ```typescript
+ * import from from '@adamburgess/linq'
+ * const sequence = from(['an', 'iterable', 'here!']);
+ * // now use all the methods on sequence!
+ * ```
+ * 
+ * See {@link AnySequence} for all the transformations you can do to a sequence.
+ * @module
+ */
+
 import { byMin_byMax_min_max, concat, createLazyGenerator, distinct, flat, groupBy, groupByMap, map, reverse, skip, skipWhile, take, takeWhile, where } from './enumerable.js'
 
+/** A sequence of values. */
 export interface AnySequence<T> extends Iterable<T> {
     /** Map each element to another 
      * 
@@ -538,6 +550,9 @@ export interface AnySequence<T> extends Iterable<T> {
      * ```
      */
     maxBy(f: (arg: T) => number): T;
+
+    /** Iterates through this sequence. */
+    [Symbol.iterator](): Iterator<T>;
 }
 /** A sequence of numbers */
 export interface NumberSequence<T> extends AnySequence<T> {
@@ -1022,6 +1037,8 @@ class OrderedSequenceKlass<T> extends SequenceKlass<T> implements BaseOrderedSeq
 /** Start the sequence. Can be used with an array or any iterable. 
  * 
  * ```typescript
+ * // Import me:
+ * import from from '@adamburgess/linq'
  * // Arrays:
  * from([1, 2, 3])
  * // Objects that support the Iterable protocol:
