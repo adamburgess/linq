@@ -19,7 +19,7 @@ const uppercases = sequence.map(x => x.toUpperCase());
 Array.from(uppercases); // or uppercases.toArray()
 // => ['AN', 'ITERABLE', 'HERE']
 
-// You can modify already existing transforms:
+// You can extend already existing transforms:
 const reversed = uppercases.reverse();
 // still! The sequence hasn't been reversed!
 // Again you must run it:
