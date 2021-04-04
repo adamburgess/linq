@@ -97,7 +97,7 @@ export interface AnySequence<T> extends Iterable<T> {
      * // => [1, 4, 10]
      * ```
      */
-    orderBy(keySelector: (arg: T) => string | number): OrderedSequence<T>;
+    orderBy(keySelector: (arg: T) => string | number): OrderedSequence<T>
     /** Sort the array in ascending order of the selector, with a custom comparer 
      * 
      * ```typescript
@@ -115,7 +115,7 @@ export interface AnySequence<T> extends Iterable<T> {
      * // => [10, 4, 1]
      * ```
      */
-    orderByDescending(keySelector: (arg: T) => string | number): OrderedSequence<T>;
+    orderByDescending(keySelector: (arg: T) => string | number): OrderedSequence<T>
     /** Sort the array in descending order of the selector, with a custom comparer 
      * 
      * ```typescript
@@ -187,7 +187,7 @@ export interface AnySequence<T> extends Iterable<T> {
      * // => [1, 2, 3]
      * ```
      */
-    distinct(): Sequence<T>;
+    distinct(): Sequence<T>
     /** Get all distinct elements of the sequence, mapping each element to a key that will be used for strict equality. First value wins. 
      * 
      * ```typescript
@@ -630,7 +630,7 @@ export interface StringSequence<T> extends AnySequence<T> {
 
 interface WithKey<TKey> {
     /** The key that this set was grouped by */
-    readonly key: TKey;
+    readonly key: TKey
 }
 
 interface BaseOrderedSequence<T> extends AnySequence<T> {
@@ -1000,8 +1000,8 @@ class KeySequenceKlass<TKey, TElement> extends SequenceKlass<TElement> implement
 
 type ICompare<T> = (a: T, b: T) => number
 type SelectorComparer<T> = {
-    selector: (arg: T) => unknown,
-    comparer: ICompare<unknown>,
+    selector: (arg: T) => unknown
+    comparer: ICompare<unknown>
     ascending: boolean
 }
 

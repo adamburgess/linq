@@ -48,6 +48,12 @@ rules:
     no-empty:
         - error
         - allowEmptyCatch: true
+    '@typescript-eslint/member-delimiter-style':
+        - warn
+        - multiline:
+            delimiter: none
+          singleline:
+            delimiter: comma
 overrides:
     - files: 
         - "*.js"
