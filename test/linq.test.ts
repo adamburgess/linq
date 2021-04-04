@@ -285,6 +285,33 @@ export default function linq(t: Assert) {
         ]);
     });
 
+    t.test('groupJoin', t => {
+        const applesTypes = [
+            { name: 'green apple', id: 5 },
+            { name: 'red apple', id: 2 },
+            { name: 'other apple', id: 10 }
+        ];
+        const apples = [
+            { name: 'wild twist', type: 10 },
+            { name: 'granny smith', type: 5 },
+            { name: 'pink lady', type: 2 },
+            { name: 'fuji', type: 2 },
+        ];
+
+        const joined = from(applesTypes).groupJoin(
+            apples,
+            type => type.id,
+            apple => apple.type,
+            (type, apples) => `${type.name}: ${apples.map(a => a.name).toArray().join(', ')}`
+        );
+
+        t.equals(joined.toArray(), [
+            'green apple: granny smith',
+            'red apple: pink lady, fuji',
+            'other apple: wild twist'
+        ]);
+    });
+
     t.test('first', t => {
         t.equals(numArr.first(), 1);
         t.throws(() => emptyStrArr.first());

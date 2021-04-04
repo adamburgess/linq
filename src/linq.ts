@@ -65,6 +65,14 @@ interface BaseSequence<T> extends Iterable<T> {
         resultSelector: (outer: T, inner: TInner) => TResult
     ): Sequence<TResult>;
 
+    /** Correlates the elements of two sequences based on matching keys, and groups everything in the other table. */
+    groupJoin<TInner, TKey, TResult>(
+        innerSequence: Iterable<TInner>,
+        outerKeySelector: (arg: T) => TKey,
+        innerKeySelector: (arg: TInner) => TKey,
+        resultSelector: (outer: T, inner: Sequence<TInner>) => TResult
+    ): Sequence<TResult>;
+
     /** Counts the number of elements in the sequence */
     count(): number
 
