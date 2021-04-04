@@ -870,12 +870,16 @@ class SequenceKlass<T> implements BaseSequence<T>, NumberSequence<T>, ArraySeque
 
     toObject<TKey extends PropertyKey, TElement>(keySelector: (arg: T) => TKey, elementSelector: (arg: T) => TElement) {
         const record = {} as Record<TKey, TElement>;
+        const keys = new Set<TKey>();
         for (const x of this) {
-            record[keySelector(x)] = elementSelector(x);
+            const key = keySelector(x);
+            if (!keys.has(key)) {
+                record[key] = elementSelector(x);
+                keys.add(key);
+            }
         }
         return record;
     }
-
 
     toSet(): Set<T>;
     toSet<TProject>(projector: (arg: T) => TProject): Set<TProject>

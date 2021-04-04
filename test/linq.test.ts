@@ -245,20 +245,22 @@ export default function linq(t: Assert) {
         });
     });
 
-    t.test('join', t => {
-        const appleTypes = [
-            { name: 'green apple', id: 5 },
-            { name: 'red apple', id: 2 },
-            { name: 'yellow apple', id: 10 }
-        ];
-        const apples = [
-            { name: 'golden delicious', type: 10 },
-            { name: 'granny smith', type: 5 },
-            { name: 'pink lady', type: 2 },
-            { name: 'fuji', type: 2 },
-            { name: 'unknown', type: 999 }
-        ];
+    interface AppleType { name: string, id: number }
+    interface Apple { name: string, type: number }
+    const appleTypes: AppleType[] = [
+        { name: 'green apple', id: 5 },
+        { name: 'red apple', id: 2 },
+        { name: 'yellow apple', id: 10 }
+    ];
+    const apples: Apple[] = [
+        { name: 'golden delicious', type: 10 },
+        { name: 'granny smith', type: 5 },
+        { name: 'pink lady', type: 2 },
+        { name: 'fuji', type: 2 },
+        { name: 'unknown', type: 999 }
+    ];
 
+    t.test('join', t => {
         const joined = from(apples).join(
             appleTypes,
             apple => apple.type,
@@ -288,19 +290,6 @@ export default function linq(t: Assert) {
     });
 
     t.test('groupJoin', t => {
-        const appleTypes = [
-            { name: 'green apple', id: 5 },
-            { name: 'red apple', id: 2 },
-            { name: 'yellow apple', id: 10 }
-        ];
-        const apples = [
-            { name: 'golden delicious', type: 10 },
-            { name: 'granny smith', type: 5 },
-            { name: 'pink lady', type: 2 },
-            { name: 'fuji', type: 2 },
-            { name: 'unknown', type: 999 }
-        ];
-
         const joined = from(appleTypes).groupJoin(
             apples,
             type => type.id,
