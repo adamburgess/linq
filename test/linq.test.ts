@@ -15,6 +15,11 @@ export default function linq(t: Assert) {
             const result = from(iterable);
             t.equals(result.count(), 3);
         });
+        t.test('with sequence', t => {
+            const one = from([1]);
+            const two = from(one);
+            t.truthy(one === two);
+        })
     });
 
     const numArr = from([1, 2, 3]);
@@ -50,7 +55,7 @@ export default function linq(t: Assert) {
         t.deepEqual(Array.from(addedTwice), [3, 4, 5]);
     });
 
-    t.test('filter', t => {
+    t.test('where', t => {
         t.test('booleans', t => {
             const odd = numArr.where(x => {
                 expectType<number>(x);
@@ -77,16 +82,16 @@ export default function linq(t: Assert) {
                 t.deepEqual(Array.from(numbers), [0, 1, 2]);
             });
             t.test('explicit', t => {
-                const numbers = anyArr.where<number>(x => typeof x === 'number');
-                expectType<Sequence<number>>(numbers);
+                const numbers = anyArr.where((x: any | number) => typeof x === 'number');
+                expectType<number>(numbers.first());
                 t.deepEqual(Array.from(numbers), [0, 1, 2]);
             });
             t.test('implicit, weird', t => {
-                type Marvelous = { marvelous: 'indeed' }
+                type Marvelous = { marvelous: string }
                 function isMarvelous(x: SequenceType<typeof unionArr> | Marvelous): x is Marvelous {
                     return true;
                 }
-                const marvelous = unionArr.where(isMarvelous);
+                const marvelous = unionArr.append([{ marvelous: 'indeed' }]).where(isMarvelous);
                 expectType<Sequence<Marvelous>>(marvelous);
                 t.ok(true);
             });
