@@ -62,22 +62,28 @@ export function where<T>(input: Iterable<T>, predicate: (arg: T) => any) {
     return createLazyGenerator(where);
 }
 
+export function groupByMap<T, TKey>(input: Iterable<T>, keySelector: (arg: T) => TKey): Map<TKey, T[]>
+export function groupByMap<T, TKey, TValue>(input: Iterable<T>, keySelector: (arg: T) => TKey, elementSelector: (arg: T) => TValue): Map<TKey, TValue[]>
+export function groupByMap<T, TKey, TValue>(input: Iterable<T>, keySelector: (arg: T) => TKey, elementSelector?: (arg: T) => TValue): Map<TKey, T[]> | Map<TKey, TValue[]> {
+    const map = new Map<TKey, TValue[]>();
+    for (const x of input) {
+        const key = keySelector(x);
+        const value = elementSelector ? elementSelector(x) : (x as unknown as TValue);
+        const bucket = map.get(key);
+        if (bucket) bucket.push(value);
+        else map.set(key, [value]);
+    }
+    return map;
+}
+
 export function groupBy<T, TKey>(input: Iterable<T>, keySelector: (arg: T) => TKey): Iterable<[TKey, T[]]>
-export function groupBy<T, TKey, TValue>(input: Iterable<T>, keySelector: (arg: T) => TKey, elementSelector?: (arg: T) => TValue): Iterable<[TKey, TValue[]]>
-export function groupBy<T, TKey, TValue>(input: Iterable<T>, keySelector: (arg: T) => TKey, elementSelector?: (arg: T) => TValue): Iterable<[TKey, TValue[]]> {
+export function groupBy<T, TKey, TValue>(input: Iterable<T>, keySelector: (arg: T) => TKey, elementSelector: (arg: T) => TValue): Iterable<[TKey, TValue[]]>
+export function groupBy<T, TKey, TValue>(input: Iterable<T>, keySelector: (arg: T) => TKey, elementSelector?: (arg: T) => TValue): Iterable<[TKey, T[]]> | Iterable<[TKey, TValue[]]> {
     return {
         [Symbol.iterator]() {
-            const map = new Map<TKey, TValue[]>();
-            for (const x of input) {
-                const key = keySelector(x);
-                const value = elementSelector ? elementSelector(x) : (x as unknown as TValue);
-                const bucket = map.get(key);
-                if (bucket) bucket.push(value);
-                else map.set(key, [value]);
-            }
-            return map[Symbol.iterator]();
+            return groupByMap(input, keySelector, elementSelector as any)[Symbol.iterator]() as unknown as Iterator<[TKey, T[]]>;
         }
-    };
+    }
 }
 
 export function take<T>(input: Iterable<T>, count: number) {
