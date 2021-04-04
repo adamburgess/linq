@@ -17,7 +17,7 @@ interface BaseSequence<T> extends Iterable<T> {
     /** Project each element to get a key, and group all items by that key. */
     groupBy<TKey, TProject = T>(keySelector: (arg: T) => TKey): Sequence<KeySequence<TKey, TProject>>
     /** Project each element to get a key, and group all items, each projected onto another type. */
-    groupBy<TKey, TProject = T>(keySelector: (arg: T) => TKey, elementSelector?: (arg: T) => TProject): Sequence<KeySequence<TKey, TProject>>
+    groupBy<TKey, TProject>(keySelector: (arg: T) => TKey, elementSelector: (arg: T) => TProject): Sequence<KeySequence<TKey, TProject>>
 
     /** Sort the array in ascending order of the selector */
     orderBy(keySelector: (arg: T) => string | number): OrderedSequence<T>;
