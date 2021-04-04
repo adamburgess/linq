@@ -2,7 +2,8 @@ import 'source-map-support/register.js'
 import sinon from 'sinon'
 import { Assert } from 'zora'
 import Enumerable from '../src/enumerable.js'
-import from from '../src/linq.js'
+import from, { Sequence } from '../src/linq.js'
+import { expectType } from './helpers.js'
 
 export default function contracts(t: Assert) {
     t.test('drawing from original iterable', t => {
@@ -46,5 +47,16 @@ export default function contracts(t: Assert) {
         t.equals(input.first(), 2);
         t.equals(input.orderBy(x => x).toArray(), [1, 2, 3]);
         t.equals(input.orderBy(x => x).first(), 1);
+    });
+
+    t.test('iterable that is iterable', t => {
+        class Test implements Iterable<string> {
+            [Symbol.iterator]() {
+                return ['one', 'two', 'three'][Symbol.iterator]();
+            }
+        }
+        const input = from([new Test()]);
+        expectType<Test[]>(input.toArray());
+        expectType<Sequence<string>>(input.flat());
     });
 }
