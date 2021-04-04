@@ -1,6 +1,6 @@
 import { byMin_byMax_min_max, concat, createLazyGenerator, distinct, flat, groupBy, groupByMap, map, reverse, skip, skipWhile, take, takeWhile, where } from './enumerable.js'
 
-interface BaseSequence<T> extends Iterable<T> {
+export interface AnySequence<T> extends Iterable<T> {
     /** Map each element to another 
      * 
      * ```typescript
@@ -540,7 +540,7 @@ interface BaseSequence<T> extends Iterable<T> {
     maxBy(f: (arg: T) => number): T;
 }
 /** A sequence of numbers */
-export interface NumberSequence<T> extends BaseSequence<T> {
+export interface NumberSequence<T> extends AnySequence<T> {
     /** Sums every number in the sequence. If empty, returns 0. 
      * 
      * ```typescript
@@ -576,7 +576,7 @@ export interface NumberSequence<T> extends BaseSequence<T> {
 }
 type UnwrapIterable<T> = [T] extends [Iterable<infer U>] ? U : never;
 /** A sequence of iterable elements */
-export interface ArraySequence<T> extends BaseSequence<T> {
+export interface ArraySequence<T> extends AnySequence<T> {
     /** Project each element to an iterable/array, then flatten the result 
      * 
      * ```typescript
@@ -595,7 +595,7 @@ export interface ArraySequence<T> extends BaseSequence<T> {
     flat(): Sequence<UnwrapIterable<T>>
 }
 /** A sequence of strings */
-export interface StringSequence<T> extends BaseSequence<T> {
+export interface StringSequence<T> extends AnySequence<T> {
     /** Joins the elements with an optional separator
      * 
      * ```typescript
@@ -611,7 +611,7 @@ interface WithKey<TKey> {
     readonly key: TKey;
 }
 
-interface BaseOrderedSequence<T> extends BaseSequence<T> {
+interface BaseOrderedSequence<T> extends AnySequence<T> {
     /** Order the sequence by another key, ascending.
      * 
      * ```typescript
@@ -651,7 +651,7 @@ type ExtendsCarefully<T, TWant> = DoesExtendAny<DoesExtend<T, TWant>>;
 /** A sequence of values. */
 export type Sequence<T> = ExtendsCarefully<T, number> extends never ? (
     ExtendsCarefully<T, string> extends never ? (
-        ExtendsCarefully<T, Iterable<unknown>> extends never ? BaseSequence<T> : ArraySequence<T>
+        ExtendsCarefully<T, Iterable<unknown>> extends never ? AnySequence<T> : ArraySequence<T>
     ) : StringSequence<T>
 ) : NumberSequence<T>;
 
@@ -669,7 +669,7 @@ export type OrderedSequence<T> = BaseOrderedSequence<T> & Sequence<T>;
  */
 export type SequenceType<T> = T extends Sequence<infer Y> ? Y : never;
 
-class SequenceKlass<T> implements BaseSequence<T>, NumberSequence<T>, ArraySequence<T>, StringSequence<T> {
+class SequenceKlass<T> implements AnySequence<T>, NumberSequence<T>, ArraySequence<T>, StringSequence<T> {
     constructor(protected it: Iterable<T>) {
     }
 
@@ -1046,7 +1046,7 @@ type IsNot<T, Test> = Not<Is<T, Test>>
 type Test_NumberSequence = Is<Sequence<number>, NumberSequence<number>>;
 type Test_ArraySequence = Is<Sequence<number[]>, ArraySequence<number[]>>;
 type Test_NumberAnySequence = IsNot<Sequence<number | any>, NumberSequence<number | any>>;
-type Test_NumberAnySequence2 = Is<Sequence<number | any>, BaseSequence<number | any>>;
+type Test_NumberAnySequence2 = Is<Sequence<number | any>, AnySequence<number | any>>;
 
 /*
 
