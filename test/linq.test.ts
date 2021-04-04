@@ -246,59 +246,62 @@ export default function linq(t: Assert) {
     });
 
     t.test('join', t => {
-        const categoryNames = [
-            { name: 'Red', id: 3 },
-            { name: 'Blue', id: 10 },
-            { name: 'Green', id: 4 },
-            { name: 'Violet', id: 5555 }
+        const appleTypes = [
+            { name: 'green apple', id: 5 },
+            { name: 'red apple', id: 2 },
+            { name: 'yellow apple', id: 10 }
         ];
-        const otherThings = [
-            { thing: 'foo', catId: 3 },
-            { thing: 'bar', catId: 4 },
-            { thing: 'baz', catId: 10 }
+        const apples = [
+            { name: 'golden delicious', type: 10 },
+            { name: 'granny smith', type: 5 },
+            { name: 'pink lady', type: 2 },
+            { name: 'fuji', type: 2 },
+            { name: 'unknown', type: 999 }
         ];
 
-        const joined = from(otherThings).join(
-            categoryNames,
-            thing => thing.catId,
-            cat => cat.id,
-            (thing, cat) => `${thing.thing} ${cat.name}`
+        const joined = from(apples).join(
+            appleTypes,
+            apple => apple.type,
+            type => type.id,
+            (apple, type) => `${apple.name}: ${type.name}`
         );
-        const joinedBackwards = from(categoryNames).join(
-            otherThings,
-            cat => cat.id,
-            thing => thing.catId,
-            (cat, thing) => `${thing.thing} ${cat.name}`
+        const joinedBackwards = from(appleTypes).join(
+            apples,
+            type => type.id,
+            apple => apple.type,
+            (type, apple) => `${apple.name}: ${type.name}`
         );
 
         t.equals(joined.toArray(), [
-            'foo Red',
-            'bar Green',
-            'baz Blue'
+            'golden delicious: yellow apple',
+            'granny smith: green apple',
+            'pink lady: red apple',
+            'fuji: red apple'
         ]);
 
         // note, when goes the other way, the order differs.
         t.equals(joinedBackwards.toArray(), [
-            'foo Red',
-            'baz Blue',
-            'bar Green'
+            'granny smith: green apple',
+            'pink lady: red apple',
+            'golden delicious: yellow apple',
         ]);
     });
 
     t.test('groupJoin', t => {
-        const applesTypes = [
+        const appleTypes = [
             { name: 'green apple', id: 5 },
             { name: 'red apple', id: 2 },
-            { name: 'other apple', id: 10 }
+            { name: 'yellow apple', id: 10 }
         ];
         const apples = [
-            { name: 'wild twist', type: 10 },
+            { name: 'golden delicious', type: 10 },
             { name: 'granny smith', type: 5 },
             { name: 'pink lady', type: 2 },
             { name: 'fuji', type: 2 },
+            { name: 'unknown', type: 999 }
         ];
 
-        const joined = from(applesTypes).groupJoin(
+        const joined = from(appleTypes).groupJoin(
             apples,
             type => type.id,
             apple => apple.type,
@@ -308,7 +311,7 @@ export default function linq(t: Assert) {
         t.equals(joined.toArray(), [
             'green apple: granny smith',
             'red apple: pink lady, fuji',
-            'other apple: wild twist'
+            'yellow apple: golden delicious'
         ]);
     });
 
