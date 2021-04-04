@@ -33,7 +33,8 @@ Completely lazy evaluation.
 1. Prepend
 1. Distinct
 1. Flat (with projection to sequence)
-1. Join
+1. Join (an inner join)
+2. GroupJoin
 
 ### Outputs
 
