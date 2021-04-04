@@ -240,6 +240,46 @@ export default function linq(t: Assert) {
         });
     });
 
+    t.test('join', t => {
+        const categoryNames = [
+            { name: 'Red', id: 3 },
+            { name: 'Blue', id: 10 },
+            { name: 'Green', id: 4 },
+            { name: 'Violet', id: 5555 }
+        ];
+        const otherThings = [
+            { thing: 'foo', catId: 3 },
+            { thing: 'bar', catId: 4 },
+            { thing: 'baz', catId: 10 }
+        ];
+
+        const joined = from(otherThings).join(
+            categoryNames,
+            thing => thing.catId,
+            cat => cat.id,
+            (thing, cat) => `${thing.thing} ${cat.name}`
+        );
+        const joinedBackwards = from(categoryNames).join(
+            otherThings,
+            cat => cat.id,
+            thing => thing.catId,
+            (cat, thing) => `${thing.thing} ${cat.name}`
+        );
+
+        t.equals(joined.toArray(), [
+            'foo Red',
+            'bar Green',
+            'baz Blue'
+        ]);
+
+        // note, when goes the other way, the order differs.
+        t.equals(joinedBackwards.toArray(), [
+            'foo Red',
+            'baz Blue',
+            'bar Green'
+        ]);
+    });
+
     t.test('first', t => {
         t.equals(numArr.first(), 1);
         t.throws(() => emptyStrArr.first());

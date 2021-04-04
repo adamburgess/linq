@@ -1,4 +1,4 @@
-import { byMin_byMax_min_max, concat, distinct, flat, groupBy, map, reverse, skip, skipWhile, take, takeWhile, where } from './enumerable.js'
+import { byMin_byMax_min_max, concat, createLazyGenerator, distinct, flat, groupBy, map, reverse, skip, skipWhile, take, takeWhile, where } from './enumerable.js'
 
 interface BaseSequence<T> extends Iterable<T> {
     /** Map each element to another */
@@ -54,6 +54,14 @@ interface BaseSequence<T> extends Iterable<T> {
 
     /** Project each element to an iterable/array, then flatten the result */
     flat<TProject>(projector: (input: T) => Iterable<TProject>): Sequence<TProject>;
+
+    /** Correlates the elements of two sequences based on matching keys. An inner join. */
+    join<TInner, TKey, TResult>(
+        innerSequence: Iterable<TInner>,
+        outerKeySelector: (arg: T) => TKey,
+        innerKeySelector: (arg: TInner) => TKey,
+        resultSelector: (outer: T, inner: TInner) => TResult
+    ): Sequence<TResult>;
 
     /** Counts the number of elements in the sequence */
     count(): number
@@ -253,6 +261,27 @@ class SequenceKlass<T> implements BaseSequence<T>, NumberSequence<T>, ArraySeque
                 (projector ? this.map(projector) : this) as unknown as Iterable<Iterable<unknown>>
             )
         ) as unknown as Sequence<TProject>;
+    }
+
+    join<TInner, TKey, TResult>(
+        innerSequence: Iterable<TInner>,
+        outerKeySelector: (arg: T) => TKey,
+        innerKeySelector: (arg: TInner) => TKey,
+        resultSelector: (outer: T, inner: TInner) => TResult
+    ): Sequence<TResult> {
+        const distinctInner = from(innerSequence).toMap(innerKeySelector, x => x);
+        // eslint-disable-next-line @typescript-eslint/no-this-alias
+        const that = this; // oh god no.
+        // https://github.com/tc39/proposal-generator-arrow-functions PLEASE
+        return new SequenceKlass(createLazyGenerator(function* join() {
+            for (const outerValue of that) {
+                const key = outerKeySelector(outerValue);
+                const innerValue = distinctInner.get(key);
+                if (innerValue) {
+                    yield resultSelector(outerValue, innerValue);
+                }
+            }
+        }));
     }
 
     count() {
