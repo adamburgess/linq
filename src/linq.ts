@@ -309,11 +309,11 @@ class SequenceKlass<T> implements BaseSequence<T>, NumberSequence<T>, ArraySeque
         const that = this;
         return new SequenceKlass(createLazyGenerator(function* groupJoin() {
             const groupedInner = groupByMap(innerSequence, innerKeySelector);
-            for(const outerValue of that) {
+            for (const outerValue of that) {
                 const key = outerKeySelector(outerValue);
                 const innerValue = groupedInner.get(key);
-                if(innerValue) {
-                    yield  resultSelector(outerValue, from(innerValue));
+                if (innerValue) {
+                    yield resultSelector(outerValue, from(innerValue));
                 }
             }
         }));
