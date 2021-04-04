@@ -5,3 +5,4 @@ publish
 .vscode/settings.json
 coverage
 ignore
+docs/
