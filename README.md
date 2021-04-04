@@ -132,7 +132,7 @@ or: why use this one?
 ### [@adamburgess/linq](https://github.com/adamburgess/linq)
 
 ✔️ Supports ES iterators, including lazy/repeatable.  
-⚠️ Has a lot of stuff. Working to get parity with fromfrom.  
+✔️ Has everything in fromfrom, everything in iterare, but not everything in linq.js. Thinking about adding an "extended" version.    
 ✔️ Excellent typing, if I do say so myself. Has a couple features that other libraries don't have.  
 ❌ 1 user. Hah.  
 ✔️ 4,383 bytes minified/1,243 bytes brotlied  
