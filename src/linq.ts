@@ -11,7 +11,14 @@
 
 import { byMin_byMax_min_max, concat, createLazyGenerator, distinct, flat, groupBy, groupByMap, map, reverse, skip, skipWhile, take, takeWhile, where } from './enumerable.js'
 
-/** A sequence of values. */
+/** A sequence of values. 
+ * 
+ * To create me, use from:
+ * ```typescript
+ * const sequence = from(['an', 'iterable', 'here!']);
+ * // now use all the methods on sequence!
+ * ```
+*/
 export interface AnySequence<T> extends Iterable<T> {
     /** Map each element to another 
      * 

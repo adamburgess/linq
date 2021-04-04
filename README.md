@@ -6,7 +6,7 @@ A somewhat decent linq. With also decent types. 1.37kb gzipped.
 
 ## Docs/Usage
 
-[Generated documentation: https://adamburgess-linq.netlify.app/](https://adamburgess-linq.netlify.app/modules/linq.html)
+[Generated documentation: https://adamburgess-linq.netlify.app/](https://adamburgess-linq.netlify.app/interfaces/linq.anysequence.html)
 
 ```typescript
 import from from '@adamburgess/linq'
