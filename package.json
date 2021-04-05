@@ -55,7 +55,7 @@
         "source-map-support": "^0.5.19",
         "typedoc": "^0.20.35",
         "typedoc-neo-theme": "^1.1.0",
-        "typescript": "4.3.0-dev.20210403",
+        "typescript": "4.3.0-dev.20210404",
         "zora": "^4.0.2"
     }
 }
