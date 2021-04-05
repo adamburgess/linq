@@ -719,13 +719,13 @@ class SequenceKlass<T> implements AnySequence<T>, NumberSequence<T>, ArraySequen
 
     orderBy<TKey>(selector: (arg: T) => TKey, comparer?: ICompare<TKey>) {
         return new OrderedSequenceKlass(this, [{
-            selector, comparer: (comparer as ICompare<unknown>) ?? defaultComparer, ascending: true
+            selector, comparer: (comparer as ICompare<unknown>) || defaultComparer, ascending: true
         }]);
     }
 
     orderByDescending<TKey>(selector: (arg: T) => TKey, comparer?: ICompare<TKey>) {
         return new OrderedSequenceKlass(this, [{
-            selector, comparer: (comparer as ICompare<unknown>) ?? defaultComparer, ascending: false
+            selector, comparer: (comparer as ICompare<unknown>) || defaultComparer, ascending: false
         }]);
     }
 
@@ -1014,13 +1014,13 @@ class OrderedSequenceKlass<T> extends SequenceKlass<T> implements BaseOrderedSeq
 
     thenBy<TKey>(selector: (arg: T) => TKey, comparer?: ICompare<TKey>) {
         return new OrderedSequenceKlass(this.it, [...this.sc, {
-            selector, comparer: (comparer as ICompare<unknown>) ?? defaultComparer, ascending: true
+            selector, comparer: (comparer as ICompare<unknown>) || defaultComparer, ascending: true
         }]) as unknown as OrderedSequence<T>;
     }
 
     thenByDescending<TKey>(selector: (arg: T) => TKey, comparer?: ICompare<TKey>) {
         return new OrderedSequenceKlass(this.it, [...this.sc, {
-            selector, comparer: (comparer as ICompare<unknown>) ?? defaultComparer, ascending: false
+            selector, comparer: (comparer as ICompare<unknown>) || defaultComparer, ascending: false
         }]) as unknown as OrderedSequence<T>
     }
 
