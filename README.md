@@ -2,7 +2,7 @@
 
 A somewhat decent linq. With also decent types. 1.37kb gzipped.
 
-[![codecov](https://codecov.io/gh/adamburgess/linq/branch/master/graph/badge.svg?token=MSQWH7HI95)](https://codecov.io/gh/adamburgess/linq)
+![npm version](https://img.shields.io/npm/v/@adamburgess/linq) [![codecov](https://codecov.io/gh/adamburgess/linq/branch/master/graph/badge.svg?token=MSQWH7HI95)](https://codecov.io/gh/adamburgess/linq) ![npm type definitions](https://img.shields.io/npm/types/@adamburgess/linq)
 
 ## Docs/Usage
 
