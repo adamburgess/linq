@@ -1,8 +1,8 @@
 # linq
 
-A somewhat decent linq. With also decent types. 1.37kb gzipped.
+A decent linq. With decent types. Less than 2kb gzipped.
 
-[![npm version](https://img.shields.io/npm/v/@adamburgess/linq)](https://www.npmjs.com/package/@adamburgess/linq) [![codecov](https://codecov.io/gh/adamburgess/linq/branch/master/graph/badge.svg?token=MSQWH7HI95)](https://codecov.io/gh/adamburgess/linq) [![npm type definitions](https://img.shields.io/npm/types/@adamburgess/linq)](https://unpkg.com/browse/@adamburgess/linq/linq.d.ts)
+[![npm version](https://img.shields.io/npm/v/@adamburgess/linq)](https://www.npmjs.com/package/@adamburgess/linq) [![codecov](https://codecov.io/gh/adamburgess/linq/branch/master/graph/badge.svg?token=MSQWH7HI95)](https://codecov.io/gh/adamburgess/linq) [![npm type definitions](https://img.shields.io/npm/types/@adamburgess/linq)](https://unpkg.com/browse/@adamburgess/linq/linq.d.ts) [![npm bundle size (scoped)](https://img.shields.io/bundlephobia/minzip/@adamburgess/linq)](https://bundlephobia.com/result?p=@adamburgess/linq)
 
 ## Docs/Usage
 
