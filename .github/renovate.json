@@ -6,7 +6,7 @@
     "rangeStrategy": "bump",
     "packageRules": [
         {
-          "packageNames": ["node"],
+          "matchPackageNames": ["node", "typescript"],
           "enabled": false
         }
     ],
