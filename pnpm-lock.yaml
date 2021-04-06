@@ -2,8 +2,8 @@ devDependencies:
   '@adamburgess/nr': 1.0.3
   '@types/node': 14.14.37
   '@types/sinon': 9.0.11
-  '@typescript-eslint/eslint-plugin': 4.21.0_9c82b37510cb6c74b30777f9c3375be3
-  '@typescript-eslint/parser': 4.21.0_8c1489c008cea1012a03812362b7c3e8
+  '@typescript-eslint/eslint-plugin': 4.21.0_cdadf81a06280cf476cdf587a7cb6fb8
+  '@typescript-eslint/parser': 4.21.0_1e7b01da4627e42143214ac9216dd59c
   c8: 7.7.0
   delay: 5.0.0
   esbuild: 0.11.5
@@ -12,9 +12,9 @@ devDependencies:
   pta: 0.2.2
   sinon: 10.0.0
   source-map-support: 0.5.19
-  typedoc: 0.20.35_typescript@4.3.0-dev.20210404
-  typedoc-neo-theme: 1.1.0_typescript@4.3.0-dev.20210404
-  typescript: 4.3.0-dev.20210404
+  typedoc: 0.20.35_typescript@4.3.0-dev.20210405
+  typedoc-neo-theme: 1.1.0_typescript@4.3.0-dev.20210405
+  typescript: 4.3.0-dev.20210405
   zora: 4.0.2
 lockfileVersion: 5.2
 packages:
@@ -155,10 +155,10 @@ packages:
     dev: true
     resolution:
       integrity: sha512-dIPoZ3g5gcx9zZEszaxLSVTvMReD3xxyyDnQUjA6IYDG9Ba2AV0otMPs+77sG9ojB4Qr2N2Vk5RnKeuA0X/0bg==
-  /@typescript-eslint/eslint-plugin/4.21.0_9c82b37510cb6c74b30777f9c3375be3:
+  /@typescript-eslint/eslint-plugin/4.21.0_cdadf81a06280cf476cdf587a7cb6fb8:
     dependencies:
-      '@typescript-eslint/experimental-utils': 4.21.0_8c1489c008cea1012a03812362b7c3e8
-      '@typescript-eslint/parser': 4.21.0_8c1489c008cea1012a03812362b7c3e8
+      '@typescript-eslint/experimental-utils': 4.21.0_1e7b01da4627e42143214ac9216dd59c
+      '@typescript-eslint/parser': 4.21.0_1e7b01da4627e42143214ac9216dd59c
       '@typescript-eslint/scope-manager': 4.21.0
       debug: 4.3.1
       eslint: 7.23.0
@@ -166,8 +166,8 @@ packages:
       lodash: 4.17.21
       regexpp: 3.1.0
       semver: 7.3.5
-      tsutils: 3.21.0_typescript@4.3.0-dev.20210404
-      typescript: 4.3.0-dev.20210404
+      tsutils: 3.21.0_typescript@4.3.0-dev.20210405
+      typescript: 4.3.0-dev.20210405
     dev: true
     engines:
       node: ^10.12.0 || >=12.0.0
@@ -180,12 +180,12 @@ packages:
         optional: true
     resolution:
       integrity: sha512-FPUyCPKZbVGexmbCFI3EQHzCZdy2/5f+jv6k2EDljGdXSRc0cKvbndd2nHZkSLqCNOPk0jB6lGzwIkglXcYVsQ==
-  /@typescript-eslint/experimental-utils/4.21.0_8c1489c008cea1012a03812362b7c3e8:
+  /@typescript-eslint/experimental-utils/4.21.0_1e7b01da4627e42143214ac9216dd59c:
     dependencies:
       '@types/json-schema': 7.0.7
       '@typescript-eslint/scope-manager': 4.21.0
       '@typescript-eslint/types': 4.21.0
-      '@typescript-eslint/typescript-estree': 4.21.0_typescript@4.3.0-dev.20210404
+      '@typescript-eslint/typescript-estree': 4.21.0_typescript@4.3.0-dev.20210405
       eslint: 7.23.0
       eslint-scope: 5.1.1
       eslint-utils: 2.1.0
@@ -197,14 +197,14 @@ packages:
       typescript: '*'
     resolution:
       integrity: sha512-cEbgosW/tUFvKmkg3cU7LBoZhvUs+ZPVM9alb25XvR0dal4qHL3SiUqHNrzoWSxaXA9gsifrYrS1xdDV6w/gIA==
-  /@typescript-eslint/parser/4.21.0_8c1489c008cea1012a03812362b7c3e8:
+  /@typescript-eslint/parser/4.21.0_1e7b01da4627e42143214ac9216dd59c:
     dependencies:
       '@typescript-eslint/scope-manager': 4.21.0
       '@typescript-eslint/types': 4.21.0
-      '@typescript-eslint/typescript-estree': 4.21.0_typescript@4.3.0-dev.20210404
+      '@typescript-eslint/typescript-estree': 4.21.0_typescript@4.3.0-dev.20210405
       debug: 4.3.1
       eslint: 7.23.0
-      typescript: 4.3.0-dev.20210404
+      typescript: 4.3.0-dev.20210405
     dev: true
     engines:
       node: ^10.12.0 || >=12.0.0
@@ -231,7 +231,7 @@ packages:
       node: ^8.10.0 || ^10.13.0 || >=11.10.1
     resolution:
       integrity: sha512-+OQaupjGVVc8iXbt6M1oZMwyKQNehAfLYJJ3SdvnofK2qcjfor9pEM62rVjBknhowTkh+2HF+/KdRAc/wGBN2w==
-  /@typescript-eslint/typescript-estree/4.21.0_typescript@4.3.0-dev.20210404:
+  /@typescript-eslint/typescript-estree/4.21.0_typescript@4.3.0-dev.20210405:
     dependencies:
       '@typescript-eslint/types': 4.21.0
       '@typescript-eslint/visitor-keys': 4.21.0
@@ -239,8 +239,8 @@ packages:
       globby: 11.0.3
       is-glob: 4.0.1
       semver: 7.3.5
-      tsutils: 3.21.0_typescript@4.3.0-dev.20210404
-      typescript: 4.3.0-dev.20210404
+      tsutils: 3.21.0_typescript@4.3.0-dev.20210405
+      typescript: 4.3.0-dev.20210405
     dev: true
     engines:
       node: ^10.12.0 || >=12.0.0
@@ -2105,10 +2105,10 @@ packages:
     dev: true
     resolution:
       integrity: sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==
-  /tsutils/3.21.0_typescript@4.3.0-dev.20210404:
+  /tsutils/3.21.0_typescript@4.3.0-dev.20210405:
     dependencies:
       tslib: 1.14.1
-      typescript: 4.3.0-dev.20210404
+      typescript: 4.3.0-dev.20210405
     dev: true
     engines:
       node: '>= 6'
@@ -2154,10 +2154,10 @@ packages:
       node: '>= 8'
     resolution:
       integrity: sha512-fIS001cAYHkyQPidWXmHuhs8usjP5XVJjWB8oZGqkTowZaz3v7g3KDZeeqE82FBrmkAnIBOY3jgy7lnPnqATbA==
-  /typedoc-neo-theme/1.1.0_typescript@4.3.0-dev.20210404:
+  /typedoc-neo-theme/1.1.0_typescript@4.3.0-dev.20210405:
     dependencies:
       lunr: 2.3.9
-      typedoc: 0.20.35_typescript@4.3.0-dev.20210404
+      typedoc: 0.20.35_typescript@4.3.0-dev.20210405
     dev: true
     engines:
       node: '>=6'
@@ -2165,7 +2165,7 @@ packages:
       typescript: '*'
     resolution:
       integrity: sha512-4VBGSJEd01Bi9ddHb9iMBD9vSR+F6PyfZUWu5fKinaDUJ84rd4ux05joGWWLHhBSgGeLnVG22EE8Jo8xO102Ng==
-  /typedoc/0.20.35_typescript@4.3.0-dev.20210404:
+  /typedoc/0.20.35_typescript@4.3.0-dev.20210405:
     dependencies:
       colors: 1.4.0
       fs-extra: 9.1.0
@@ -2178,7 +2178,7 @@ packages:
       shelljs: 0.8.4
       shiki: 0.9.3
       typedoc-default-themes: 0.12.10
-      typescript: 4.3.0-dev.20210404
+      typescript: 4.3.0-dev.20210405
     dev: true
     engines:
       node: '>= 10.8.0'
@@ -2187,13 +2187,13 @@ packages:
       typescript: 3.9.x || 4.0.x || 4.1.x || 4.2.x
     resolution:
       integrity: sha512-7sNca19LXg2hgyGHq3b33tQ1YFApmd8aBDEzWQ2ry4VDkw/NdFWkysGiGRY1QckDCB0gVH8+MlXA4K71IB3azg==
-  /typescript/4.3.0-dev.20210404:
+  /typescript/4.3.0-dev.20210405:
     dev: true
     engines:
       node: '>=4.2.0'
     hasBin: true
     resolution:
-      integrity: sha512-j5JMjB/KNX1bnFrojw3kLdbye/bYp8ZKVeZ1Fv//Bda+aea0+0sYa2iX/4QgD+G7OiDwMWo/ZvPO02fYoEBArQ==
+      integrity: sha512-MAyzFoV6zJCa/3HzQfWqh6WeFtfmO08MsPT1ygN+c6cfN0yyHFsrL473pm2YyQ493p9zz3THIOr95jAwLmA9HQ==
   /uglify-js/3.13.3:
     dev: true
     engines:
@@ -2390,5 +2390,5 @@ specifiers:
   source-map-support: ^0.5.19
   typedoc: ^0.20.35
   typedoc-neo-theme: ^1.1.0
-  typescript: 4.3.0-dev.20210404
+  typescript: 4.3.0-dev.20210405
   zora: ^4.0.2
