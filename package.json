@@ -47,15 +47,15 @@
         "@typescript-eslint/parser": "^4.21.0",
         "c8": "^7.7.1",
         "delay": "^5.0.0",
-        "esbuild": "^0.11.7",
+        "esbuild": "^0.11.8",
         "eslint": "^7.24.0",
         "nodemon": "^2.0.7",
-        "pta": "^0.2.2",
+        "pta": "^0.2.3",
         "sinon": "^10.0.0",
         "source-map-support": "^0.5.19",
         "typedoc": "^0.20.35",
         "typedoc-neo-theme": "^1.1.0",
-        "typescript": "4.3.0-dev.20210410",
-        "zora": "^4.0.2"
+        "typescript": "4.3.0-dev.20210411",
+        "zora": "^4.1.0"
     }
 }
