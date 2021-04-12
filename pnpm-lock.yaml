@@ -17,7 +17,7 @@ specifiers:
   typedoc: ^0.20.35
   typedoc-neo-theme: ^1.1.0
   typescript: 4.3.0-dev.20210410
-  zora: ^4.0.2
+  zora: ^4.1.0
 
 devDependencies:
   '@adamburgess/nr': 1.0.3
@@ -36,7 +36,7 @@ devDependencies:
   typedoc: 0.20.35_typescript@4.3.0-dev.20210410
   typedoc-neo-theme: 1.1.0_typescript@4.3.0-dev.20210410
   typescript: 4.3.0-dev.20210410
-  zora: 4.0.2
+  zora: 4.1.0
 
 packages:
 
@@ -2206,4 +2206,8 @@ packages:
 
   /zora/4.0.2:
     resolution: {integrity: sha512-dSJlPNzWOVJxLcgItXSAPPszatQ7SJctQQthuFfkRxyrhciMzH5GIdTYJYwpw/vx9DMbwRKocVJgoyj8UX2NUw==}
+    dev: true
+
+  /zora/4.1.0:
+    resolution: {integrity: sha512-tFowFksaFIwp0hzZ9dhM1rlaicS6VNjNMxEH3phgR5Glz3EMAoRujjJ50aTLAsl//SArTdG/kBt5EuvhqS6mww==}
     dev: true
