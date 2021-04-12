@@ -50,7 +50,7 @@
         "esbuild": "^0.11.7",
         "eslint": "^7.24.0",
         "nodemon": "^2.0.7",
-        "pta": "^0.2.2",
+        "pta": "^0.2.3",
         "sinon": "^10.0.0",
         "source-map-support": "^0.5.19",
         "typedoc": "^0.20.35",
