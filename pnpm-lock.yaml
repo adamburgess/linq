@@ -2,7 +2,7 @@ lockfileVersion: 5.3
 
 specifiers:
   '@adamburgess/nr': ^1.0.3
-  '@types/node': ^14.14.37
+  '@types/node': ^14.14.41
   '@types/sinon': ^9.0.11
   '@typescript-eslint/eslint-plugin': ^4.21.0
   '@typescript-eslint/parser': ^4.21.0
@@ -21,7 +21,7 @@ specifiers:
 
 devDependencies:
   '@adamburgess/nr': 1.0.3
-  '@types/node': 14.14.37
+  '@types/node': 14.14.41
   '@types/sinon': 9.0.11
   '@typescript-eslint/eslint-plugin': 4.21.0_62b7ab0e395dd9d39974d01847e1f30d
   '@typescript-eslint/parser': 4.21.0_41ac9ccc7982d036b46c9cdbbef687ee
@@ -158,8 +158,8 @@ packages:
     resolution: {integrity: sha512-cxWFQVseBm6O9Gbw1IWb8r6OS4OhSt3hPZLkFApLjM8TEXROBuQGLAH2i2gZpcXdLBIrpXuTDhH7Vbm1iXmNGA==}
     dev: true
 
-  /@types/node/14.14.37:
-    resolution: {integrity: sha512-XYmBiy+ohOR4Lh5jE379fV2IU+6Jn4g5qASinhitfyO71b/sCo6MKsMLF5tc7Zf2CE8hViVQyYSobJNke8OvUw==}
+  /@types/node/14.14.41:
+    resolution: {integrity: sha512-dueRKfaJL4RTtSa7bWeTK1M+VH+Gns73oCgzvYfHZywRCoPSd8EkXBL0mZ9unPTveBn+D9phZBaxuzpwjWkW0g==}
     dev: true
 
   /@types/sinon/9.0.11:
