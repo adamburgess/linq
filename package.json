@@ -53,7 +53,7 @@
         "pta": "^0.2.3",
         "sinon": "^10.0.0",
         "source-map-support": "^0.5.19",
-        "typedoc": "^0.20.35",
+        "typedoc": "^0.20.36",
         "typedoc-neo-theme": "^1.1.0",
         "typescript": "4.3.0-dev.20210411",
         "zora": "^4.1.0"

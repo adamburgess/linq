@@ -14,7 +14,7 @@ specifiers:
   pta: ^0.2.3
   sinon: ^10.0.0
   source-map-support: ^0.5.19
-  typedoc: ^0.20.35
+  typedoc: ^0.20.36
   typedoc-neo-theme: ^1.1.0
   typescript: 4.3.0-dev.20210411
   zora: ^4.1.0
@@ -33,7 +33,7 @@ devDependencies:
   pta: 0.2.3
   sinon: 10.0.0
   source-map-support: 0.5.19
-  typedoc: 0.20.35_typescript@4.3.0-dev.20210411
+  typedoc: 0.20.36_typescript@4.3.0-dev.20210411
   typedoc-neo-theme: 1.1.0_typescript@4.3.0-dev.20210411
   typescript: 4.3.0-dev.20210411
   zora: 4.1.0
@@ -2020,6 +2020,27 @@ packages:
 
   /typedoc/0.20.35_typescript@4.3.0-dev.20210411:
     resolution: {integrity: sha512-7sNca19LXg2hgyGHq3b33tQ1YFApmd8aBDEzWQ2ry4VDkw/NdFWkysGiGRY1QckDCB0gVH8+MlXA4K71IB3azg==}
+    engines: {node: '>= 10.8.0'}
+    hasBin: true
+    peerDependencies:
+      typescript: 3.9.x || 4.0.x || 4.1.x || 4.2.x
+    dependencies:
+      colors: 1.4.0
+      fs-extra: 9.1.0
+      handlebars: 4.7.7
+      lodash: 4.17.21
+      lunr: 2.3.9
+      marked: 2.0.3
+      minimatch: 3.0.4
+      progress: 2.0.3
+      shelljs: 0.8.4
+      shiki: 0.9.3
+      typedoc-default-themes: 0.12.10
+      typescript: 4.3.0-dev.20210411
+    dev: true
+
+  /typedoc/0.20.36_typescript@4.3.0-dev.20210411:
+    resolution: {integrity: sha512-qFU+DWMV/hifQ9ZAlTjdFO9wbUIHuUBpNXzv68ZyURAP9pInjZiO4+jCPeAzHVcaBCHER9WL/+YzzTt6ZlN/Nw==}
     engines: {node: '>= 10.8.0'}
     hasBin: true
     peerDependencies:
