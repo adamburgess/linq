@@ -473,6 +473,10 @@ export default function linq(t: Assert) {
         t.falsy(finished);
         t.falsy(input.any(x => x === 999));
         t.truthy(finished);
+        t.test('without predicate', t => {
+            t.truthy(numArr.any());
+            t.falsy(emptyNumArr.any());
+        });
     });
 
     t.test('none', t => {
