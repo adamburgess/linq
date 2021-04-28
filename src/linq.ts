@@ -483,6 +483,17 @@ export interface AnySequence<T> extends Iterable<T> {
      */
     any(predicate: (arg: T) => any): boolean
 
+    /** True if the sequence is not empty  
+     * 
+     * ```typescript
+     * from([2, 1, 5]).any()
+     * // => true
+     * from([]).any()
+     * // => false
+     * ```
+     */
+    any(): boolean
+
     /** True if no elements pass the predicate 
      * 
      * ```typescript
@@ -861,9 +872,9 @@ class SequenceKlass<T> implements AnySequence<T>, NumberSequence<T>, ArraySequen
         return true;
     }
 
-    any(predicate: (arg: T) => any) {
+    any(predicate?: (arg: T) => any) {
         for (const x of this) {
-            if (predicate(x)) return true;
+            if (predicate ? predicate(x) : true) return true;
         }
         return false;
     }
