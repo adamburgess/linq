@@ -1,3 +1,7 @@
+### 1.1.1
+
+Mark module as side effects free.
+
 ### 1.1.0
 
 Add CommonJS module support.

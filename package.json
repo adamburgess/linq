@@ -1,6 +1,6 @@
 {
     "name": "@adamburgess/linq",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "description": "A linq library.",
     "scripts": {
         "tsd:esm": "tsc --build tsconfig-publish-esm.json",
@@ -40,6 +40,7 @@
         "linq",
         "iterator"
     ],
+    "sideEffects": false,
     "author": "Adam Burgess",
     "license": "MIT",
     "bugs": {
