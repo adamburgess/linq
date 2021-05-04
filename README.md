@@ -2,7 +2,7 @@
 
 A decent linq. With decent types. Less than 2kb gzipped.
 
-[![npm version](https://img.shields.io/npm/v/@adamburgess/linq)](https://www.npmjs.com/package/@adamburgess/linq) [![npm bundle size (scoped)](https://img.shields.io/endpoint?color=blue&label=minzipped%20size&url=https%3A%2F%2Fbundlephobia.netlify.app%2Fsize%2F%40adamburgess%2Flinq%3Fshieldsio)](https://bundlephobia.com/result?p=@adamburgess/linq) [![npm type definitions](https://img.shields.io/npm/types/@adamburgess/linq)](https://unpkg.com/browse/@adamburgess/linq/linq.d.ts) [![codecov](https://codecov.io/gh/adamburgess/linq/branch/master/graph/badge.svg?token=MSQWH7HI95)](https://codecov.io/gh/adamburgess/linq) 
+[![npm version](https://img.shields.io/npm/v/@adamburgess/linq)](https://www.npmjs.com/package/@adamburgess/linq) [![npm bundle size](https://img.shields.io/endpoint?color=blue&label=gzipped%20size&url=https%3A%2F%2Fbundlephobia.netlify.app%2Fsize%2F%40adamburgess%2Flinq%3Fshieldsio)](https://bundlephobia.com/result?p=@adamburgess/linq) [![npm bundle size](https://img.shields.io/endpoint?color=blue&label=brotlied%20size&url=https%3A%2F%2Fbundlephobia.netlify.app%2Fsize%2F%40adamburgess%2Flinq%3Fshieldsio%26brotli)](https://bundlephobia.com/result?p=@adamburgess/linq) [![npm type definitions](https://img.shields.io/npm/types/@adamburgess/linq)](https://unpkg.com/browse/@adamburgess/linq/linq.d.ts) [![codecov](https://codecov.io/gh/adamburgess/linq/branch/master/graph/badge.svg?token=MSQWH7HI95)](https://codecov.io/gh/adamburgess/linq) 
 
 ## Docs/Usage
 
@@ -135,7 +135,7 @@ or: why use this one?
 ✔️ Has everything in fromfrom, everything in iterare, but not everything in linq.js. Thinking about adding an "extended" version.    
 ✔️ Excellent typing, if I do say so myself. Has a couple features that other libraries don't have.  
 ❌ 1 user. Hah.  
-✔️ 4,383 bytes minified/1,243 bytes brotlied  
+✔️ 4,447 bytes minified/1,254 bytes brotlied  
 
 Others not considered:
 
@@ -149,8 +149,8 @@ Others not considered:
 
 |                                     | this one |             fromfrom              |              iterare              |              linq.js              |
 |------------------------------------:|:--------:|:---------------------------------:|:---------------------------------:|:---------------------------------:|
-|            Size in bytes (minified) |  4,425   |               4,212               |               3,725               |         35,750 (+800% ❌)          |
-|            Size in bytes (brotlied) |  1,243   |               1,326               |               1,058               |         6,655  (+500% ❌)          |
+|            Size in bytes (minified) |  4,447   |               4,212               |               3,725               |         35,750 (+800% ❌)          |
+|            Size in bytes (brotlied) |  1,254   |               1,326               |               1,058               |         6,655  (+500% ❌)          |
 |                              Arrays |    ✔️     |                 ✔️                 |                 ✔️                 |                 ✔️                 |
 |                           Iterables |    ✔️     |                 ✔️                 |                 ✔️                 |                 ❌                 |
 |                          Generators |    ✔️     |                 ✔️                 |                 ✔️                 |                 ✔️                 |
