@@ -1,3 +1,7 @@
+### 1.1.0
+
+Add CommonJS module support.
+
 ### 1.0.0
 
 Initial release.  

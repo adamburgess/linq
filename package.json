@@ -1,11 +1,12 @@
 {
     "name": "@adamburgess/linq",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "description": "A linq library.",
     "scripts": {
         "tsd:esm": "tsc --build tsconfig-publish-esm.json",
         "build:esm": "esbuild src/*.ts --platform=node --outdir=dist",
-        "publish:build": "rm -rf dist dist-cjs && nr build:esm && nr tsd:esm",
+        "build:cjs": "esbuild src/*.ts --platform=node --format=cjs --out-extension:.js=.cjs --outdir=dist",
+        "publish:build": "rm -rf dist dist-cjs && nr build:esm && nr build:cjs && nr tsd:esm",
         "publish:copy": "rm -rf publish && mkdir -p publish && cp -r dist/* package.json LICENSE README.md publish && node scripts/publish",
         "publish": "nr publish:build && nr publish:copy && cd publish && npm publish --dry-run",
         "publish:__GO__": "nr publish && cd publish && npm publish --access=public",
@@ -17,10 +18,16 @@
     },
     "type": "module",
     "types": "linq.d.ts",
-    "main": "linq.js",
+    "main": "linq.cjs",
     "exports": {
-        ".": "./linq.js",
-        "./enumerable": "./enumerable.js"
+        ".": {
+            "import": "./linq.js",
+            "require": "./linq.cjs"
+        },
+        "./enumerable": {
+            "import": "./enumerable.js",
+            "require": "./enumerable.cjs"
+        }
     },
     "repository": {
         "type": "git",
