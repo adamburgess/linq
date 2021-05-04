@@ -1,3 +1,7 @@
+### 1.1.2
+
+Remove the "engines" from package.json.
+
 ### 1.1.1
 
 Mark module as side effects free.
