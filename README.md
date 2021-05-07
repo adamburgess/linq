@@ -2,7 +2,7 @@
 
 A decent linq. With decent types. Less than 2kb gzipped.
 
-[![npm version](https://img.shields.io/npm/v/@adamburgess/linq)](https://www.npmjs.com/package/@adamburgess/linq) [![npm bundle size](https://img.shields.io/endpoint?color=blue&label=gzipped%20size&url=https%3A%2F%2Fbundlephobia.netlify.app%2Fsize%2F%40adamburgess%2Flinq%3Fshieldsio)](https://bundlephobia.com/result?p=@adamburgess/linq) [![npm bundle size](https://img.shields.io/endpoint?color=blue&label=brotlied%20size&url=https%3A%2F%2Fbundlephobia.netlify.app%2Fsize%2F%40adamburgess%2Flinq%3Fshieldsio%26brotli)](https://bundlephobia.com/result?p=@adamburgess/linq) [![npm type definitions](https://img.shields.io/npm/types/@adamburgess/linq)](https://unpkg.com/browse/@adamburgess/linq/linq.d.ts) [![codecov](https://codecov.io/gh/adamburgess/linq/branch/master/graph/badge.svg?token=MSQWH7HI95)](https://codecov.io/gh/adamburgess/linq) 
+[![npm version](https://img.shields.io/npm/v/@adamburgess/linq)](https://www.npmjs.com/package/@adamburgess/linq) [![gzipped size](https://bundlephobia.fly.adam.id.au/size/@adamburgess/linq?shield)](https://bundlephobia.com/result?p=@adamburgess/linq) [![brotlied size](https://bundlephobia.fly.adam.id.au/size/@adamburgess/linq?shield&brotli)](https://bundlephobia.com/result?p=@adamburgess/linq) [![npm type definitions](https://img.shields.io/npm/types/@adamburgess/linq)](https://unpkg.com/browse/@adamburgess/linq/linq.d.ts) [![codecov](https://codecov.io/gh/adamburgess/linq/branch/master/graph/badge.svg?token=MSQWH7HI95)](https://codecov.io/gh/adamburgess/linq) 
 
 ## Docs/Usage
 
