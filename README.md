@@ -1,4 +1,4 @@
-# linq
+# @adamburgess/linq
 
 A decent linq. With decent types. Less than 2kb gzipped.
 
