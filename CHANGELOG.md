@@ -1,3 +1,7 @@
+### 1.1.3/1.1.4
+
+Miscellaneous readme updates.
+
 ### 1.1.2
 
 Remove the "engines" from package.json.
