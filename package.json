@@ -59,7 +59,7 @@
         "sinon": "^10.0.0",
         "source-map-support": "^0.5.19",
         "typedoc": "^0.20.36",
-        "typedoc-neo-theme": "^1.1.0",
+        "typedoc-neo-theme": "^1.1.1",
         "typescript": "4.3.0-dev.20210427",
         "zora": "^4.1.0"
     }
