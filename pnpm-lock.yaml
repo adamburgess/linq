@@ -8,7 +8,7 @@ specifiers:
   '@typescript-eslint/parser': ^4.22.1
   c8: ^7.7.2
   delay: ^5.0.0
-  esbuild: ^0.11.18
+  esbuild: ^0.11.20
   eslint: ^7.26.0
   nodemon: ^2.0.7
   pta: ^0.2.3
@@ -27,7 +27,7 @@ devDependencies:
   '@typescript-eslint/parser': 4.22.1_b881678c798a0bd593676935a5c75715
   c8: 7.7.2
   delay: 5.0.0
-  esbuild: 0.11.18
+  esbuild: 0.11.20
   eslint: 7.26.0
   nodemon: 2.0.7
   pta: 0.2.3
@@ -693,8 +693,8 @@ packages:
       ansi-colors: 4.1.1
     dev: true
 
-  /esbuild/0.11.18:
-    resolution: {integrity: sha512-KD7v4N9b5B8bxPUNn/3GA9r0HWo4nJk3iwjZ+2zG1ffg+r8ig+wqj7sW6zgI6Sn4/B2FnbzqWxcAokAGGM5zwQ==}
+  /esbuild/0.11.20:
+    resolution: {integrity: sha512-QOZrVpN/Yz74xfat0H6euSgn3RnwLevY1mJTEXneukz1ln9qB+ieaerRMzSeETpz/UJWsBMzRVR/andBht5WKw==}
     hasBin: true
     requiresBuild: true
     dev: true
