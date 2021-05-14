@@ -639,12 +639,12 @@ export interface StringSequence<T> extends AnySequence<T> {
     joinString(separator?: string): string
 }
 
-interface WithKey<TKey> {
+export interface WithKey<TKey> {
     /** The key that this set was grouped by */
     readonly key: TKey
 }
 
-interface BaseOrderedSequence<T> extends AnySequence<T> {
+export interface WithOrderedMethods<T> {
     /** Order the sequence by another key, ascending.
      * 
      * ```typescript
@@ -691,14 +691,14 @@ export type Sequence<T> = ExtendsCarefully<T, number> extends never ? (
 /** A sequence with a key. Obtained from groupBy. */
 export type KeySequence<TKey, TElement> = WithKey<TKey> & Sequence<TElement>
 /** An ordered sequence. Can use thenBy to continue ordering. */
-export type OrderedSequence<T> = BaseOrderedSequence<T> & Sequence<T>
+export type OrderedSequence<T> = WithOrderedMethods<T> & Sequence<T>
 
 /** Gets the sequence type.
  * ```typescript
  * type MySequence = Sequence<string>
  * type MySequenceType = SequenceType<MySequence>
  * // MySequenceType === string
- *  ```
+ * ```
  */
 export type SequenceType<T> = T extends Sequence<infer Y> ? Y : never
 
@@ -1009,7 +1009,12 @@ class KeySequenceKlass<TKey, TElement> extends SequenceKlass<TElement> implement
     }
 }
 
-type ICompare<T> = (a: T, b: T) => number
+/** Compares two values.  
+ *  If a comes before b, the result should be negative.  
+ *  If both values are equal, the result should be zero.  
+ *  If a comes after b, the result should be positive.  
+ */
+export type ICompare<T> = (a: T, b: T) => number
 type SelectorComparer<T> = {
     selector: (arg: T) => unknown
     comparer: ICompare<unknown>
@@ -1018,7 +1023,7 @@ type SelectorComparer<T> = {
 
 const defaultComparer: ICompare<any> = (a: any, b: any) => a > b ? 1 : a < b ? -1 : 0;
 
-class OrderedSequenceKlass<T> extends SequenceKlass<T> implements BaseOrderedSequence<T> {
+class OrderedSequenceKlass<T> extends SequenceKlass<T> implements WithOrderedMethods<T> {
     constructor(it: Iterable<T>, protected sc: SelectorComparer<T>[]) {
         super(it);
     }

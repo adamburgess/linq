@@ -1,3 +1,9 @@
+### 1.2.0 (unreleased)
+
+Exported and documented ICompare.
+Renamed BaseOrderedSequence to WithOrderedMethods and exported.
+Exported WithKey.
+
 ### 1.1.3/1.1.4
 
 Miscellaneous readme updates.
