@@ -52,7 +52,7 @@
         "@typescript-eslint/parser": "^4.23.0",
         "c8": "^7.7.2",
         "delay": "^5.0.0",
-        "esbuild": "^0.11.20",
+        "esbuild": "^0.11.23",
         "eslint": "^7.26.0",
         "nodemon": "^2.0.7",
         "pta": "^0.2.3",
