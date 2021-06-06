@@ -3,10 +3,10 @@
     "version": "1.2.0",
     "description": "A linq library.",
     "scripts": {
-        "tsd:esm": "tsc --build tsconfig-publish-esm.json",
+        "tsd": "tsc --build tsconfig-publish-tsd.json",
         "build:esm": "esbuild src/*.ts --platform=node --outdir=dist",
         "build:cjs": "esbuild src/*.ts --platform=node --format=cjs --out-extension:.js=.cjs --outdir=dist",
-        "publish:build": "rm -rf dist dist-cjs && nr build:esm && nr build:cjs && nr tsd:esm",
+        "publish:build": "rm -rf dist dist-cjs && nr build:esm && nr build:cjs && nr tsd",
         "publish:copy": "rm -rf publish && mkdir -p publish && cp -r dist/* package.json LICENSE README.md publish && node scripts/publish",
         "publish": "nr publish:build && nr publish:copy && cd publish && npm publish --dry-run",
         "publish:__GO__": "nr publish && cd publish && npm publish --access=public",
