@@ -1,4 +1,7 @@
-### 1.2.0 (unreleased)
+### 1.2.0
+
+Update documentation - some examples were incorrect.
+They are now tested!
 
 Exported and documented ICompare.
 Renamed BaseOrderedSequence to WithOrderedMethods and exported.
