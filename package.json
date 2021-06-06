@@ -12,7 +12,7 @@
         "publish:__GO__": "nr publish && cd publish && npm publish --access=public",
         "build:dev": "esbuild --log-level=warning src/*.ts test/*.ts --platform=node --sourcemap --outdir=dist-dev",
         "test": "c8 --r lcov --r text -- pta dist-dev/test/*.test.js",
-        "bt": "nr build:dev && nr test && tsc",
+        "bt": "nr build:dev && nr test && nr tsd",
         "watch": "nodemon -w src -w test -e ts -x nr -- bt",
         "docs": "typedoc src/linq.ts src/enumerable.ts --theme ./node_modules/typedoc-neo-theme/bin/default --plugin typedoc-neo-theme"
     },
@@ -46,14 +46,14 @@
     "homepage": "https://github.com/adamburgess/linq#readme",
     "devDependencies": {
         "@adamburgess/nr": "^1.0.3",
-        "@types/node": "^15.6.1",
-        "@types/sinon": "^10.0.1",
+        "@types/node": "^15.12.1",
+        "@types/sinon": "^10.0.2",
         "@typescript-eslint/eslint-plugin": "^4.26.0",
         "@typescript-eslint/parser": "^4.26.0",
         "c8": "^7.7.2",
         "delay": "^5.0.0",
-        "esbuild": "^0.12.5",
-        "eslint": "^7.27.0",
+        "esbuild": "^0.12.6",
+        "eslint": "^7.28.0",
         "nodemon": "^2.0.7",
         "pta": "^0.2.3",
         "sinon": "^11.1.1",
@@ -61,7 +61,7 @@
         "ts-morph": "^11.0.0",
         "typedoc": "^0.20.36",
         "typedoc-neo-theme": "^1.1.1",
-        "typescript": "^4.3",
+        "typescript": "^4.3.2",
         "zora": "^4.1.0"
     }
 }
