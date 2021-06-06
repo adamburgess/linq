@@ -1,5 +1,5 @@
 /**
- * ```typescript
+ * ```js
  * import from from '@adamburgess/linq'
  * const sequence = from(['an', 'iterable', 'here!']);
  * // now use all the methods on sequence!
@@ -14,7 +14,7 @@ import { byMin_byMax_min_max, concat, createLazyGenerator, distinct, flat, group
 /** A sequence of values. 
  * 
  * To create me, use from:
- * ```typescript
+ * ```js
  * const sequence = from(['an', 'iterable', 'here!']);
  * // now use all the methods on sequence!
  * ```
@@ -22,7 +22,7 @@ import { byMin_byMax_min_max, concat, createLazyGenerator, distinct, flat, group
 export interface AnySequence<T> extends Iterable<T> {
     /** Map each element to another 
      * 
-     * ```typescript
+     * ```js
      * from([2, 1, 5]).map(x => x + 1)
      * // => [3, 2, 6]
      * ```
@@ -53,7 +53,7 @@ export interface AnySequence<T> extends Iterable<T> {
     where<TNarrowed extends T>(f: (arg: T | TNarrowed) => boolean): Sequence<TNarrowed>
     /** Filters with a predicate that must return a truthy value 
      * 
-     * ```typescript
+     * ```js
      * from([5, 10, 20]).where(x => x >= 8)
      * // => [10, 20]
      * ```
@@ -62,7 +62,7 @@ export interface AnySequence<T> extends Iterable<T> {
 
     /** Reverses the sequence. 
      * 
-     * ```typescript
+     * ```js
      * from([2, 1, 5]).reverse()
      * // => [5, 1, 2]
      * ```
@@ -73,7 +73,7 @@ export interface AnySequence<T> extends Iterable<T> {
 
     /** Project each element to get a key, and group all items by that key. 
      * 
-     * ```typescript
+     * ```js
      * from([10, 15, 20]).groupBy(x => Math.trunc(x / 10))
      * // => key: 1, values: [10, 15]
      * //    key: 2, values: [20]
@@ -82,7 +82,7 @@ export interface AnySequence<T> extends Iterable<T> {
     groupBy<TKey>(keySelector: (arg: T) => TKey): ArraySequence<KeySequence<TKey, T>>
     /** Project each element to get a key, and group all items, each projected onto another type. 
      * 
-     * ```typescript
+     * ```js
      * from([10, 15, 20]).groupBy(x => Math.trunc(x / 10), x => x.toString())
      * // => key: 1, values: ['10', '15']
      * //    key: 2, values: ['20']
@@ -92,7 +92,7 @@ export interface AnySequence<T> extends Iterable<T> {
 
     /** Sort the array in ascending order of the selector 
      * 
-     * ```typescript
+     * ```js
      * from([4, 1, 10]).orderBy(x => x)
      * // => [1, 4, 10]
      * ```
@@ -100,7 +100,7 @@ export interface AnySequence<T> extends Iterable<T> {
     orderBy(keySelector: (arg: T) => string | number): OrderedSequence<T>
     /** Sort the array in ascending order of the selector, with a custom comparer 
      * 
-     * ```typescript
+     * ```js
      * // Sort alphabetically, ignoring case.
      * from(['A xylophone', 'a frog', 'a zoo']).orderBy(x => x, new Intl.Collator('en', { sensitivity: 'base' }).compare)
      * // => ['a frog', 'A xylophone', 'a zoo']
@@ -110,7 +110,7 @@ export interface AnySequence<T> extends Iterable<T> {
 
     /** Sort the array in descending order of the selector 
      * 
-     * ```typescript
+     * ```js
      * from([4, 1, 10]).orderBy(x => x)
      * // => [10, 4, 1]
      * ```
@@ -118,7 +118,7 @@ export interface AnySequence<T> extends Iterable<T> {
     orderByDescending(keySelector: (arg: T) => string | number): OrderedSequence<T>
     /** Sort the array in descending order of the selector, with a custom comparer 
      * 
-     * ```typescript
+     * ```js
      * // Sort reverse alphabetically, ignoring case.
      * from(['A xylophone', 'a frog', 'a zoo']).orderBy(x => x, new Intl.Collator('en', { sensitivity: 'base' }).compare)
      * // => ['a zoo', 'A xylophone', 'a frog']
@@ -128,7 +128,7 @@ export interface AnySequence<T> extends Iterable<T> {
 
     /** Take a maximum amount of elements 
      * 
-     * ```typescript
+     * ```js
      * from([2, 1, 5]).take(2)
      * // => [2, 1]
      * ```
@@ -137,7 +137,7 @@ export interface AnySequence<T> extends Iterable<T> {
 
     /** Take elements while the predicate is true, then skips the rest 
      * 
-     * ```typescript
+     * ```js
      * from([2, 3, 1, 5]).takeWhile(x => x >= 2)
      * // => [2, 3]
      * ```
@@ -146,7 +146,7 @@ export interface AnySequence<T> extends Iterable<T> {
 
     /** Skip a number of elements before letting the rest through 
      * 
-     * ```typescript
+     * ```js
      * from([2, 3, 1, 5]).skip(2)
      * // => [1, 5]
      * ```
@@ -155,7 +155,7 @@ export interface AnySequence<T> extends Iterable<T> {
 
     /** Skip elements while the predicate is true, then take the rest 
      * 
-     * ```typescript
+     * ```js
      * from([2, 3, 1, 5]).skipWhile(x => x >= 2)
      * // => [1, 5]
      * ```
@@ -164,7 +164,7 @@ export interface AnySequence<T> extends Iterable<T> {
 
     /** Append another iterable to the end 
      * 
-     * ```typescript
+     * ```js
      * from([1, 2]).append([3, 4])
      * // => [1, 2, 3, 4]
      * ```
@@ -173,7 +173,7 @@ export interface AnySequence<T> extends Iterable<T> {
 
     /** Prepend another iterable to the start 
      * 
-     * ```typescript
+     * ```js
      * from([1, 2]).prepend([3, 4])
      * // => [3, 4, 1, 2]
      * ```
@@ -182,7 +182,7 @@ export interface AnySequence<T> extends Iterable<T> {
 
     /** Get all distinct elements of the sequence using strict equality. First value wins. 
      * 
-     * ```typescript
+     * ```js
      * from([1, 2, 2, 3]).distinct()
      * // => [1, 2, 3]
      * ```
@@ -190,7 +190,7 @@ export interface AnySequence<T> extends Iterable<T> {
     distinct(): Sequence<T>
     /** Get all distinct elements of the sequence, mapping each element to a key that will be used for strict equality. First value wins. 
      * 
-     * ```typescript
+     * ```js
      * from([10, 15, 20, 25, 30]).distinct(x => Math.trunc(x / 10))
      * // => [10, 20, 30]
      * ```
@@ -199,8 +199,8 @@ export interface AnySequence<T> extends Iterable<T> {
 
     /** Project each element to an iterable/array, then flatten the result 
      * 
-     * ```typescript
      * from(['1 2', '3 4']).flat(x => x.split(' ')))
+     * ```js
      * // => ['1', '2', '3', '4']
      * ```
      */
@@ -208,7 +208,7 @@ export interface AnySequence<T> extends Iterable<T> {
 
     /** Correlates the elements of two sequences based on matching keys. An inner join. 
      * 
-     * ```typescript
+     * ```js
      * const appleTypes = [
      *     { name: 'green apple', id: 5 },
      *     { name: 'red apple', id: 2 },
@@ -243,7 +243,7 @@ export interface AnySequence<T> extends Iterable<T> {
 
     /** Correlates the elements of two sequences based on matching keys, and groups everything in the other table. 
      * 
-     * ```typescript
+     * ```js
      * const appleTypes = [
      *     { name: 'green apple', id: 5 },
      *     { name: 'red apple', id: 2 },
@@ -277,7 +277,7 @@ export interface AnySequence<T> extends Iterable<T> {
 
     /** Counts the number of elements in the sequence 
      * 
-     * ```typescript
+     * ```js
      * from([2, 1, 5]).count()
      * // => 3
      * from([]).count()
@@ -291,7 +291,7 @@ export interface AnySequence<T> extends Iterable<T> {
      * Note: If you are using this Sequence in a for..of loop, you do _not_ need this --
      *       you can use the sequence directly.
      * 
-     * ```typescript
+     * ```js
      * from([2, 1, 5]).toArray()
      * // => [2, 1, 5]
      * ```
@@ -300,7 +300,7 @@ export interface AnySequence<T> extends Iterable<T> {
 
     /** Converts this sequence to a Map. First key wins. 
      * 
-     * ```typescript
+     * ```js
      * from([{ k: 'a', v: 123 }, { k: 'b', v: 456 }]).toMap(x => x.k, x => x.v)
      * // => Map([['a', 456], ['b', 456]]);
      * ```
@@ -309,7 +309,7 @@ export interface AnySequence<T> extends Iterable<T> {
 
     /** Converts this sequence into an object. First key wins. 
      * 
-     * ```typescript
+     * ```js
      * from([{ k: 'a', v: 123 }, { k: 'b', v: 456 }]).toObject(x => x.k, x => x.v)
      * // => { a: 123, b: 456 }
      * ```
@@ -318,7 +318,7 @@ export interface AnySequence<T> extends Iterable<T> {
 
     /** Convert this sequence into a Set 
      * 
-     * ```typescript
+     * ```js
      * from([2, 1, 1, 5]).toSet()
      * // => Set([2, 1, 5])
      * ```
@@ -326,7 +326,7 @@ export interface AnySequence<T> extends Iterable<T> {
     toSet(): Set<T>
     /** Map each element and convert the resulting sequence into a set 
      * 
-     * ```typescript
+     * ```js
      * from([2, 1, 1, 5]).toSet(x => x + 1)
      * // => Set([3, 2, 6])
      * ```
@@ -335,7 +335,7 @@ export interface AnySequence<T> extends Iterable<T> {
 
     /** Get the first element in the sequence. Will throw if empty! Use firstOrDefault if no throw is wanted. 
      * 
-     * ```typescript
+     * ```js
      * from([2, 1, 5]).first()
      * // => 2
      * from([]).first()
@@ -345,7 +345,7 @@ export interface AnySequence<T> extends Iterable<T> {
     first(): T
     /** Get the first element in the sequence that matches a condition. Will throw if empty! Use firstOrDefault if no throw is wanted. 
      * 
-     * ```typescript
+     * ```js
      * from([2, 1, 5]).first(x => x >= 4)
      * // => 5
      * from([2, 1, 5]).first(x => x < 0)
@@ -356,7 +356,7 @@ export interface AnySequence<T> extends Iterable<T> {
 
     /** Get the first element in the sequence. If empty, returns undefined. 
      * 
-     * ```typescript
+     * ```js
      * from([2, 1, 5]).firstOrDefault()
      * // => 2
      * from([]).firstOrDefault()
@@ -366,7 +366,7 @@ export interface AnySequence<T> extends Iterable<T> {
     firstOrDefault(): T | undefined
     /** Get the first element in the sequence that matches a condition. If empty or no matches, returns undefined. 
      * 
-     * ```typescript
+     * ```js
      * from([2, 1, 5]).firstOrDefault(x => x >= 4)
      * // => 5
      * from([2, 1, 5]).firstOrDefault(x => x < 0)
@@ -377,7 +377,7 @@ export interface AnySequence<T> extends Iterable<T> {
 
     /** Get the _only_ element in the sequence. Will throw if empty or more than one element! Use singleOrDefault if no throw is wanted. 
      * 
-     * ```typescript
+     * ```js
      * from([2]).single()
      * // => 2
      * from([2, 1, 5]).single()
@@ -389,7 +389,7 @@ export interface AnySequence<T> extends Iterable<T> {
     single(): T
     /** Get the _only_ element in the sequence that matches a condition. Will throw if empty or more than one element! Use singleOrDefault if no throw is wanted. 
      * 
-     * ```typescript
+     * ```js
      * from([2, 1, 5]).single(x => x >= 4)
      * // => 5
      * from([2, 1, 5]).single(x => x >= 1)
@@ -400,7 +400,7 @@ export interface AnySequence<T> extends Iterable<T> {
 
     /** Get the _only_ element in the sequence. Returns undefined if empty or more than one element. 
      * 
-     * ```typescript
+     * ```js
      * from([2]).singleOrDefault()
      * // => 2
      * from([2, 1, 5]).singleOrDefault()
@@ -410,7 +410,7 @@ export interface AnySequence<T> extends Iterable<T> {
     singleOrDefault(): T | undefined
     /** Get the _only_ element in the sequence that matches a condition. Returns undefined if empty or more than one element. 
      * 
-     * ```typescript
+     * ```js
      * from([2, 1, 5]).singleOrDefault(x => x >= 4)
      * // => 5
      * from([2, 1, 5]).singleOrDefault(x => x >= 1)
@@ -421,7 +421,7 @@ export interface AnySequence<T> extends Iterable<T> {
 
     /** Get the last element in the sequence. Will throw if empty! Use lastOrDefault if no throw is wanted. 
      * 
-     * ```typescript
+     * ```js
      * from([2, 1, 5]).last()
      * // => 5
      * from([]).last()
@@ -431,7 +431,7 @@ export interface AnySequence<T> extends Iterable<T> {
     last(): T
     /** Get the last element in the sequence that matches a condition. Will throw if empty! Use lastOrDefault if no throw is wanted. 
      * 
-     * ```typescript
+     * ```js
      * from([2, 1, 5]).last(x => x < 4)
      * // => 1
      * from([]).last(x => x < 0)
@@ -442,7 +442,7 @@ export interface AnySequence<T> extends Iterable<T> {
 
     /** Get the last element in the sequence. If empty, returns undefined. 
      * 
-     * ```typescript
+     * ```js
      * from([2, 1, 5]).lastOrDefault()
      * // => 5
      * from([]).lastOrDefault()
@@ -452,7 +452,7 @@ export interface AnySequence<T> extends Iterable<T> {
     lastOrDefault(): T | undefined
     /** Get the last element in the sequence that matches a condition. If empty or no matches, returns undefined. 
      * 
-     * ```typescript
+     * ```js
      * from([2, 1, 5]).lastOrDefault(x => x < 4)
      * // => 1
      * from([2, 1, 5]).lastOrDefault(x => x < 0)
@@ -463,7 +463,7 @@ export interface AnySequence<T> extends Iterable<T> {
 
     /** True if all elements pass the predicate 
      * 
-     * ```typescript
+     * ```js
      * from([2, 1, 5]).all(x => x >= 1)
      * // => true
      * from([2, 1, 5]).all(x => x >= 2)
@@ -474,7 +474,7 @@ export interface AnySequence<T> extends Iterable<T> {
 
     /** True if any elements pass the predicate 
      * 
-     * ```typescript
+     * ```js
      * from([2, 1, 5]).any(x => x >= 4)
      * // => true
      * from([2, 1, 5]).any(x => x <= 0)
@@ -485,7 +485,7 @@ export interface AnySequence<T> extends Iterable<T> {
 
     /** True if the sequence is not empty  
      * 
-     * ```typescript
+     * ```js
      * from([2, 1, 5]).any()
      * // => true
      * from([]).any()
@@ -496,7 +496,7 @@ export interface AnySequence<T> extends Iterable<T> {
 
     /** True if no elements pass the predicate 
      * 
-     * ```typescript
+     * ```js
      * from([2, 1, 5]).none(x => x === 0)
      * // => true
      * from([2, 1, 5]).none(x => x === 1)
@@ -507,7 +507,7 @@ export interface AnySequence<T> extends Iterable<T> {
 
     /** True if the element is in the sequence. Checked with ===. 
      * 
-     * ```typescript
+     * ```js
      * from([2, 1, 5]).contains(1)
      * // => true
      * from([{ a: '1' }]).contains({ a: '1' })
@@ -518,7 +518,7 @@ export interface AnySequence<T> extends Iterable<T> {
 
     /** Projects each element to a number and sums the sequence. If empty, returns 0. 
      * 
-     * ```typescript
+     * ```js
      * from(['2', '1', '5']).sum(x => parseFloat(x))
      * // => 8
      * ```
@@ -527,7 +527,7 @@ export interface AnySequence<T> extends Iterable<T> {
 
     /** Projects each element to a number and averages the sequence. If empty, throws. 
      * 
-     * ```typescript
+     * ```js
      * from(['2', '1', '5']).average(x => parseFloat(x))
      * // => 4
      * ```
@@ -536,7 +536,7 @@ export interface AnySequence<T> extends Iterable<T> {
 
     /** Projects each element to a number and finds the min of the sequence. If empty, throws. 
      * 
-     * ```typescript
+     * ```js
      * from(['2', '1', '5']).max(x => parseFloat(x))
      * // => 5
      * ```
@@ -545,7 +545,7 @@ export interface AnySequence<T> extends Iterable<T> {
 
     /** Projects each element to a number and finds the max of the sequence. If empty, throws.
      * 
-     * ```typescript
+     * ```js
      * from(['2', '1', '5']).min(x => parseFloat(x))
      * // => 1
      * ```
@@ -554,7 +554,7 @@ export interface AnySequence<T> extends Iterable<T> {
 
     /** Finds the minimum element in the sequence according to a selector. Equivalent (but faster) to orderBy(f).first(). 
      * 
-     * ```typescript
+     * ```js
      * from([{ key: 'A', value: 2 }, { key: 'B', value: 1 }, { key: 'C', value: 10 }]).minBy(x => x.value)
      * // => { key: 'B', value: 1 }
      * ```
@@ -562,7 +562,7 @@ export interface AnySequence<T> extends Iterable<T> {
     minBy(f: (arg: T) => number): T
     /** Finds the maximum element in the sequence according to a selector. Equivalent (but faster) to orderByDescending(f).first(). 
      * 
-     * ```typescript
+     * ```js
      * from([{ key: 'A', value: 2 }, { key: 'B', value: 1 }, { key: 'C', value: 10 }]).maxBy(x => x.value)
      * // => { key: 'C', value: 10 }
      * ```
@@ -576,7 +576,7 @@ export interface AnySequence<T> extends Iterable<T> {
 export interface NumberSequence<T> extends AnySequence<T> {
     /** Sums every number in the sequence. If empty, returns 0. 
      * 
-     * ```typescript
+     * ```js
      * from([2, 1, 5]).sum()
      * // => 8
      * ```
@@ -584,7 +584,7 @@ export interface NumberSequence<T> extends AnySequence<T> {
     sum(): number
     /** Averages the sequence. If empty, throws. 
      * 
-     * ```typescript
+     * ```js
      * from([2, 1, 5]).average()
      * // => 4
      * ```
@@ -592,7 +592,7 @@ export interface NumberSequence<T> extends AnySequence<T> {
     average(): number
     /** Finds the maximum in the sequence. If empty, throws. 
      * 
-     * ```typescript
+     * ```js
      * from([2, 1, 5]).max()
      * // => 5
      * ```
@@ -600,7 +600,7 @@ export interface NumberSequence<T> extends AnySequence<T> {
     max(): number
     /** Finds the minimum in the sequence. If empty, throws. 
      * 
-     * ```typescript
+     * ```js
      * from([2, 1, 5]).min()
      * // => 1
      * ```
@@ -612,7 +612,7 @@ type UnwrapIterable<T> = [T] extends [Iterable<infer U>] ? U : never;
 export interface ArraySequence<T> extends AnySequence<T> {
     /** Project each element to an iterable/array, then flatten the result 
      * 
-     * ```typescript
+     * ```js
      * from([[1, 2], [3, 4]]).flat(x => [...x, 0])
      * // => [1, 2, 0, 3, 4, 0]
      * ```
@@ -620,7 +620,7 @@ export interface ArraySequence<T> extends AnySequence<T> {
     flat<TProject>(projector: (input: T) => Iterable<TProject>): Sequence<TProject>
     /** Flatten the sequence 
      * 
-     * ```typescript
+     * ```js
      * from([[1, 2], [3, 4]]).flat()
      * // => [1, 2, 3, 4]
      * ```
@@ -631,8 +631,8 @@ export interface ArraySequence<T> extends AnySequence<T> {
 export interface StringSequence<T> extends AnySequence<T> {
     /** Joins the elements with an optional separator
      * 
-     * ```typescript
      * from(['a', 'b', 'c']).join(', ')
+     * ```js
      * // => 'a, b, c'
      * ```
      */
@@ -647,7 +647,7 @@ export interface WithKey<TKey> {
 export interface WithOrderedMethods<T> {
     /** Order the sequence by another key, ascending.
      * 
-     * ```typescript
+     * ```js
      * // Sort by length of the string, then alphabetical order
      * from(['two', 'one', 'thirteen', 'five']).orderBy(x => x.length).thenBy(x => x)
      * // => ['one', 'two', 'five', 'thirteen']
@@ -662,7 +662,7 @@ export interface WithOrderedMethods<T> {
 
     /** Order the sequence by another key, descending.
      * 
-     * ```typescript
+     * ```js
      * // Sort by length of the string, then reverse alphabetical order
      * from(['one', 'two', 'thirteen', 'five']).orderBy(x => x.length).thenBy(x => x)
      * // => 'two', 'one', 'five', 'thirteen'
@@ -1059,7 +1059,7 @@ class OrderedSequenceKlass<T> extends SequenceKlass<T> implements WithOrderedMet
 
 /** Start the sequence. Can be used with an array or any iterable. 
  * 
- * ```typescript
+ * ```js
  * // Import me:
  * import from from '@adamburgess/linq'
  * // Arrays:

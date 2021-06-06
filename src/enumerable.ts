@@ -1,6 +1,6 @@
 /**
  * Some handy methods to create repeatable iterables.
- * ```typescript
+ * ```js
  * // you can import _all_ of them:
  * import Enumerable from '@adamburgess/linq/enumerable'
  * // or just the one you want:
