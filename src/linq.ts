@@ -75,8 +75,9 @@ export interface AnySequence<T> extends Iterable<T> {
      * 
      * ```js
      * from([10, 15, 20]).groupBy(x => Math.trunc(x / 10))
-     * // => key: 1, values: [10, 15]
-     * //    key: 2, values: [20]
+     *                    .map(g => ({ key: g.key, values: Array.from(g) }))
+     * // => [{ key: 1, values: [10, 15] },
+     * //     { key: 2, values: [20] }]
      * ```
      */
     groupBy<TKey>(keySelector: (arg: T) => TKey): ArraySequence<KeySequence<TKey, T>>
@@ -84,8 +85,9 @@ export interface AnySequence<T> extends Iterable<T> {
      * 
      * ```js
      * from([10, 15, 20]).groupBy(x => Math.trunc(x / 10), x => x.toString())
-     * // => key: 1, values: ['10', '15']
-     * //    key: 2, values: ['20']
+     *                    .map(g => ({ key: g.key, values: Array.from(g) }))
+     * // => [{ key: 1, values: ['10', '15'] },
+     * //     { key: 2, values: ['20'] }]
      * ```
      */
     groupBy<TKey, TProject>(keySelector: (arg: T) => TKey, elementSelector: (arg: T) => TProject): ArraySequence<KeySequence<TKey, TProject>>
@@ -111,7 +113,7 @@ export interface AnySequence<T> extends Iterable<T> {
     /** Sort the array in descending order of the selector 
      * 
      * ```js
-     * from([4, 1, 10]).orderBy(x => x)
+     * from([4, 1, 10]).orderByDescending(x => x)
      * // => [10, 4, 1]
      * ```
      */
@@ -120,7 +122,7 @@ export interface AnySequence<T> extends Iterable<T> {
      * 
      * ```js
      * // Sort reverse alphabetically, ignoring case.
-     * from(['A xylophone', 'a frog', 'a zoo']).orderBy(x => x, new Intl.Collator('en', { sensitivity: 'base' }).compare)
+     * from(['A xylophone', 'a frog', 'a zoo']).orderByDescending(x => x, new Intl.Collator('en', { sensitivity: 'base' }).compare)
      * // => ['a zoo', 'A xylophone', 'a frog']
      * ```
      */
@@ -199,8 +201,8 @@ export interface AnySequence<T> extends Iterable<T> {
 
     /** Project each element to an iterable/array, then flatten the result 
      * 
-     * from(['1 2', '3 4']).flat(x => x.split(' ')))
      * ```js
+     * from(['1 2', '3 4']).flat(x => x.split(' '))
      * // => ['1', '2', '3', '4']
      * ```
      */
@@ -302,7 +304,7 @@ export interface AnySequence<T> extends Iterable<T> {
      * 
      * ```js
      * from([{ k: 'a', v: 123 }, { k: 'b', v: 456 }]).toMap(x => x.k, x => x.v)
-     * // => Map([['a', 456], ['b', 456]]);
+     * // => new Map([['a', 123], ['b', 456]])
      * ```
      */
     toMap<TKey, TElement>(keySelector: (arg: T) => TKey, elementSelector: (arg: T) => TElement): Map<TKey, TElement>
@@ -320,7 +322,7 @@ export interface AnySequence<T> extends Iterable<T> {
      * 
      * ```js
      * from([2, 1, 1, 5]).toSet()
-     * // => Set([2, 1, 5])
+     * // => new Set([2, 1, 5])
      * ```
      */
     toSet(): Set<T>
@@ -328,7 +330,7 @@ export interface AnySequence<T> extends Iterable<T> {
      * 
      * ```js
      * from([2, 1, 1, 5]).toSet(x => x + 1)
-     * // => Set([3, 2, 6])
+     * // => new Set([3, 2, 6])
      * ```
      */
     toSet<TProject>(projector: (arg: T) => TProject): Set<TProject>
@@ -511,7 +513,7 @@ export interface AnySequence<T> extends Iterable<T> {
      * from([2, 1, 5]).contains(1)
      * // => true
      * from([{ a: '1' }]).contains({ a: '1' })
-     * // => false (strict equality. use any instead.)
+     * // => false (strict equality. use any with a custom search instead.)
      * ```
      */
     contains(value: T): boolean
@@ -528,8 +530,8 @@ export interface AnySequence<T> extends Iterable<T> {
     /** Projects each element to a number and averages the sequence. If empty, throws. 
      * 
      * ```js
-     * from(['2', '1', '5']).average(x => parseFloat(x))
-     * // => 4
+     * from(['2', '1', '6']).average(x => parseFloat(x))
+     * // => 3
      * ```
      */
     average(f: (arg: T) => number): number
@@ -585,8 +587,8 @@ export interface NumberSequence<T> extends AnySequence<T> {
     /** Averages the sequence. If empty, throws. 
      * 
      * ```js
-     * from([2, 1, 5]).average()
-     * // => 4
+     * from([2, 1, 6]).average()
+     * // => 3
      * ```
      */
     average(): number
@@ -631,8 +633,8 @@ export interface ArraySequence<T> extends AnySequence<T> {
 export interface StringSequence<T> extends AnySequence<T> {
     /** Joins the elements with an optional separator
      * 
-     * from(['a', 'b', 'c']).join(', ')
      * ```js
+     * from(['a', 'b', 'c']).joinString(', ')
      * // => 'a, b, c'
      * ```
      */
@@ -664,8 +666,8 @@ export interface WithOrderedMethods<T> {
      * 
      * ```js
      * // Sort by length of the string, then reverse alphabetical order
-     * from(['one', 'two', 'thirteen', 'five']).orderBy(x => x.length).thenBy(x => x)
-     * // => 'two', 'one', 'five', 'thirteen'
+     * from(['one', 'two', 'thirteen', 'five']).orderBy(x => x.length).thenByDescending(x => x)
+     * // => ['two', 'one', 'five', 'thirteen']
      * ```
      */
     thenByDescending(keySelector: (arg: T) => string | number): OrderedSequence<T>
