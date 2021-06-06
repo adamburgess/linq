@@ -43,8 +43,6 @@ function commentToCodeAnswerSegments(comment: string) {
         }
 
         if (inAnswer) {
-            // where has this
-            if (line.includes('sequence is now')) continue;
             // sometimes there is an inline note
             const inlineNote = /(\/\/ => .+)( \(.+\))/
             if (inlineNote.test(line)) {
