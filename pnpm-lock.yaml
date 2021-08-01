@@ -15,7 +15,7 @@ specifiers:
   sinon: ^11.1.1
   source-map-support: ^0.5.19
   ts-morph: ^11.0.0
-  typedoc: ^0.21.2
+  typedoc: ^0.21.5
   typescript: ^4.3.4
   zora: ^4.1.0
 
@@ -34,7 +34,7 @@ devDependencies:
   sinon: 11.1.1
   source-map-support: 0.5.19
   ts-morph: 11.0.0
-  typedoc: 0.21.2_typescript@4.3.4
+  typedoc: 0.21.5_typescript@4.3.4
   typescript: 4.3.4
   zora: 4.1.0
 
@@ -1280,10 +1280,6 @@ packages:
     resolution: {integrity: sha1-WjUNoLERO4N+z//VgSy+WNbq4ZM=}
     dev: true
 
-  /lodash/4.17.21:
-    resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
-    dev: true
-
   /lowercase-keys/1.0.1:
     resolution: {integrity: sha512-G2Lj61tXDnVFFOi8VZds+SoQjtQC3dgokKdDG2mTm1tx4m50NUHBOZSBwQQHyy0V12A0JTG4icfZQH+xPyh8VA==}
     engines: {node: '>=0.10.0'}
@@ -1903,16 +1899,15 @@ packages:
     engines: {node: '>= 8'}
     dev: true
 
-  /typedoc/0.21.2_typescript@4.3.4:
-    resolution: {integrity: sha512-SR1ByJB3USg+jxoxwzMRP07g/0f/cQUE5t7gOh1iTUyjTPyJohu9YSKRlK+MSXXqlhIq+m0jkEHEG5HoY7/Adg==}
-    engines: {node: '>= 12.20.0'}
+  /typedoc/0.21.5_typescript@4.3.4:
+    resolution: {integrity: sha512-uRDRmYheE5Iju9Zz0X50pTASTpBorIHFt02F5Y8Dt4eBt55h3mwk1CBSY2+EfwBxY16N4Xm7f8KXhnfFZ0AmBw==}
+    engines: {node: '>= 12.10.0'}
     hasBin: true
     peerDependencies:
       typescript: 4.0.x || 4.1.x || 4.2.x || 4.3.x
     dependencies:
       glob: 7.1.7
       handlebars: 4.7.7
-      lodash: 4.17.21
       lunr: 2.3.9
       marked: 2.1.1
       minimatch: 3.0.4
