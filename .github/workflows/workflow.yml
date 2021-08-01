@@ -29,7 +29,7 @@ jobs:
         shell: 'script -q -e -c "bash {0}"'
       - name: check types
         run: tsc
-      - uses: codecov/codecov-action@v1
+      - uses: codecov/codecov-action@v2
         if: ${{ matrix.node == '14' }}
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
