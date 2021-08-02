@@ -1,13 +1,16 @@
 {
     "extends": [
-        "config:base",
-        "schedule:monthly"
+        "config:base"
     ],
     "rangeStrategy": "bump",
     "packageRules": [
         {
-          "matchPackageNames": ["node", "typescript"],
-          "enabled": false
+            "matchPackageNames": ["node", "typescript"],
+            "enabled": false
+        },
+        {
+            "matchDepTypes": ["devDependencies"],
+            "groupName": "dev dependencies"
         }
     ],
     "prHourlyLimit": 999
