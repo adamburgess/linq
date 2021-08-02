@@ -12,7 +12,8 @@
         {
             "matchDepTypes": ["devDependencies"],
             "groupName": "dev dependencies",
-            "rangeStrategy": "bump"
+            "rangeStrategy": "bump",
+            "separateMajorMinor": false
         }
     ],
     "prHourlyLimit": 999
