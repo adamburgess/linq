@@ -2,7 +2,7 @@
     "extends": [
         "config:base"
     ],
-    "rangeStrategy": "bump",
+    "rangeStrategy": "replace",
     "packageRules": [
         {
             "matchPackageNames": ["node", "typescript"],
@@ -10,7 +10,8 @@
         },
         {
             "matchDepTypes": ["devDependencies"],
-            "groupName": "dev dependencies"
+            "groupName": "dev dependencies",
+            "rangeStrategy": "bump"
         }
     ],
     "prHourlyLimit": 999
