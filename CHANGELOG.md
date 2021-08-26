@@ -1,3 +1,9 @@
+### 2.0.0
+
+Map and Where now include the index as the second parameter.
+As the signature is changing, this is a breaking change.
+See https://jakearchibald.com/2021/function-callback-risks/ for details.
+
 ### 1.2.0
 
 Update documentation - some examples were incorrect.

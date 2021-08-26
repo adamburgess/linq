@@ -27,7 +27,7 @@ export interface AnySequence<T> extends Iterable<T> {
      * // => [3, 2, 6]
      * ```
      */
-    map<TResult>(f: (arg: T) => TResult): Sequence<TResult>
+    map<TResult>(f: (arg: T, index: number) => TResult): Sequence<TResult>
 
     /** Filters with a TS type assertion ('is'), narrowing to that type 
      * 
@@ -40,7 +40,7 @@ export interface AnySequence<T> extends Iterable<T> {
      * // sequence is now Sequence<number>
      * ```
      */
-    where<TNarrowed extends T>(f: (arg: T | TNarrowed) => arg is TNarrowed): Sequence<TNarrowed>
+    where<TNarrowed extends T>(f: (arg: T | TNarrowed, index: number) => arg is TNarrowed): Sequence<TNarrowed>
     /** Filters with and narrows to a type 
      * 
      * ```typescript
@@ -50,7 +50,7 @@ export interface AnySequence<T> extends Iterable<T> {
      * ```
      * note! must use generic type! otherwise this overload is not used, and the type is not narrowed.
      */
-    where<TNarrowed extends T>(f: (arg: T | TNarrowed) => boolean): Sequence<TNarrowed>
+    where<TNarrowed extends T>(f: (arg: T | TNarrowed, index: number) => boolean): Sequence<TNarrowed>
     /** Filters with a predicate that must return a truthy value 
      * 
      * ```js
@@ -58,7 +58,7 @@ export interface AnySequence<T> extends Iterable<T> {
      * // => [10, 20]
      * ```
      */
-    where(f: (arg: T) => any): Sequence<T>
+    where(f: (arg: T, index: number) => any): Sequence<T>
 
     /** Reverses the sequence. 
      * 
@@ -708,13 +708,13 @@ class SequenceKlass<T> implements AnySequence<T>, NumberSequence<T>, ArraySequen
     constructor(protected it: Iterable<T>) {
     }
 
-    map<TResult>(f: (arg: T) => TResult): Sequence<TResult> {
+    map<TResult>(f: (arg: T, index: number) => TResult): Sequence<TResult> {
         return new SequenceKlass(map(this, f));
     }
 
-    where<TResult>(f: (arg: T | TResult) => arg is TResult): Sequence<TResult>
-    where(f: (arg: T) => any): Sequence<T>
-    where<TResult>(f: ((arg: T) => any) | ((arg: T | TResult) => arg is TResult)): Sequence<T> | Sequence<TResult> {
+    where<TResult>(f: (arg: T | TResult, index: number) => arg is TResult): Sequence<TResult>
+    where(f: (arg: T, index: number) => any): Sequence<T>
+    where<TResult>(f: ((arg: T, index: number) => any) | ((arg: T | TResult) => arg is TResult)): Sequence<T> | Sequence<TResult> {
         return new SequenceKlass(where(this, f));
     }
 

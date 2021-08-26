@@ -55,6 +55,19 @@ export default function linq(t: Assert) {
         t.deepEqual(Array.from(addedTwice), [3, 4, 5]);
     });
 
+    t.test('select with index', t => {
+        const withIndex = <T>(x: T, i: number) => ({ x, i });
+        const mapped = numArr.map(withIndex);
+        const mappedTwice = mapped.map(withIndex);
+
+        t.deepEqual(Array.from(mapped), [{ x: 1, i: 0 }, { x: 2, i: 1 }, { x: 3, i: 2 }]);
+        t.deepEqual(Array.from(mappedTwice), [
+            { x: { x: 1, i: 0 }, i: 0 },
+            { x: { x: 2, i: 1 }, i: 1 },
+            { x: { x: 3, i: 2 }, i: 2 }
+        ]);
+    });
+
     t.test('where', t => {
         t.test('booleans', t => {
             const odd = numArr.where(x => {
@@ -95,6 +108,11 @@ export default function linq(t: Assert) {
                 expectType<Sequence<Marvelous>>(marvelous);
                 t.ok(true);
             });
+        });
+
+        t.test('index', t => {
+            const skipEveryOther = numArr.where((x, i) => i % 2 === 0);
+            t.deepEqual(Array.from(skipEveryOther), [1, 3]);
         });
     });
 

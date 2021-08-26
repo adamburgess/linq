@@ -70,10 +70,11 @@ export function reverse<T>(input: Iterable<T>) {
  * 
  *  See {@link AnySequence.map} for examples.
  */
-export function map<T, TOut>(input: Iterable<T>, convert: (arg: T) => TOut) {
+export function map<T, TOut>(input: Iterable<T>, convert: (arg: T, index: number) => TOut) {
     function* map() {
+        let i = 0;
         for (const x of input) {
-            yield convert(x);
+            yield convert(x, i++);
         }
     }
     return createLazyGenerator(map);
@@ -83,10 +84,11 @@ export function map<T, TOut>(input: Iterable<T>, convert: (arg: T) => TOut) {
  * 
  *  See {@link AnySequence.where} for examples.
  */
-export function where<T>(input: Iterable<T>, predicate: (arg: T) => any) {
+export function where<T>(input: Iterable<T>, predicate: (arg: T, index: number) => any) {
     function* where() {
+        let i = 0;
         for (const x of input) {
-            if (predicate(x)) yield x;
+            if (predicate(x, i++)) yield x;
         }
     }
     return createLazyGenerator(where);
