@@ -1,3 +1,6 @@
+### 2.0.1
+Fix small typo on max/min documentation. No code changes.
+
 ### 2.0.0
 
 Map and Where now include the index as the second parameter.

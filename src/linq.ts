@@ -536,7 +536,7 @@ export interface AnySequence<T> extends Iterable<T> {
      */
     average(f: (arg: T) => number): number
 
-    /** Projects each element to a number and finds the min of the sequence. If empty, throws. 
+    /** Projects each element to a number and finds the max of the sequence. If empty, throws. 
      * 
      * ```js
      * from(['2', '1', '5']).max(x => parseFloat(x))
@@ -545,7 +545,7 @@ export interface AnySequence<T> extends Iterable<T> {
      */
     max(f: (arg: T) => number): number
 
-    /** Projects each element to a number and finds the max of the sequence. If empty, throws.
+    /** Projects each element to a number and finds the min of the sequence. If empty, throws.
      * 
      * ```js
      * from(['2', '1', '5']).min(x => parseFloat(x))
