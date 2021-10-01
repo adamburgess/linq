@@ -1,7 +1,7 @@
 import fs from 'fs/promises'
 // insert the library into the docs using Skypack
 
-const fn = 'docs/assets/js/main.js';
+const fn = 'docs/assets/main.js';
 const js = await fs.readFile(fn, 'utf8');
 
 const footer = `
