@@ -139,7 +139,7 @@ or: why use this one?
 
 Others not considered:
 
-❌ [@siderite/linqer](https://github.com/Siderite/LInQer): 5kb brotlied, and the typings _aren't generic_. For that reason, useless. Has similar features to fromfrom.
+❌ [@siderite/linqer](https://github.com/Siderite/LInQer): 5kb brotlied, ~~and the typings _aren't generic_.~~ It now has a typescript version. Yet, they've borked the packaging -- I can't import the module without changing their package.json and importing the direct path. For that reason, useless. Has similar features to fromfrom.
 
 ## Table comparison to other libraries
 
