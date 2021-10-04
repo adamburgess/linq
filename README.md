@@ -116,9 +116,9 @@ or: why use this one?
 ### [linq.js](https://github.com/mihaifm/linq) (on npm: linq)
 
 ✔️ Has _everything_.  
-❌ Except iterator support.  
+❌ Except iterable support. It supports [_iterators_](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols#the_iterator_protocol) but not [_iterables_](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols#the_iterable_protocol). Most of the time, you use iterables. Arrays are iterables. You use the iterable protocol to convert them to _iterators_. Technically, it doesn't even support iterators. Only objects that are **both** iterators and iterables.
 ✔️ Very popular.  
-⚠️ Types could be improved: toObject is not typed  
+⚠️ Types could be improved: toObject ~~is~~ **_was_** not typed  
 ❌ 35KB minified/6.6KB brotlied  
 
 ### [fromfrom](https://github.com/tomi/fromfrom)
