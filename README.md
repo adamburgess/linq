@@ -110,7 +110,7 @@ or: why use this one?
 ⚠️ Really doesn't have enough methods to be general purpose. It is missing: Group, Order, Count, First, Last, Distinct. Subjectively, I use all of these.  
 ⚠️ Supports ES iterators, but doesn't support repeatable/lazy ES iterators  
 ✔️ Extremely popular.  
-✔️ 3,706 bytes minified/1,047 bytes brotlied  
+✔️ 3,818 bytes minified/1,065 bytes brotlied  
 
 
 ### [linq.js](https://github.com/mihaifm/linq) (on npm: linq)
@@ -126,7 +126,7 @@ or: why use this one?
 ✔️ Has nearly everything you'd like.  
 ✔️ Supports ES iterators, including lazy/repeatable. (Nice!)  
 ⚠️ Not very popular, but hey, this library is awesome.  
-✔️ 4,212 bytes minified/1,326 bytes brotlied  
+✔️ 4,216 bytes minified/1,330 bytes brotlied  
 ✅ Great name. `import { from } from 'fromfrom'`  
 
 ### [@adamburgess/linq](https://github.com/adamburgess/linq)
@@ -135,7 +135,7 @@ or: why use this one?
 ✔️ Has everything in fromfrom, everything in iterare, but not everything in linq.js. Thinking about adding an "extended" version.    
 ✔️ Excellent typing, if I do say so myself. Has a couple features that other libraries don't have.  
 ❌ 1 user. Hah.  
-✔️ 4,447 bytes minified/1,254 bytes brotlied  
+✔️ 4,457 bytes minified/1,251 bytes brotlied  
 
 Others not considered:
 
@@ -149,8 +149,8 @@ Others not considered:
 
 |                                     | this one |             fromfrom              |              iterare              |              linq.js              |
 |------------------------------------:|:--------:|:---------------------------------:|:---------------------------------:|:---------------------------------:|
-|            Size in bytes (minified) |  4,447   |               4,212               |               3,725               |         35,750 (+800% ❌)          |
-|            Size in bytes (brotlied) |  1,254   |               1,326               |               1,058               |         6,655  (+500% ❌)          |
+|            Size in bytes (minified) |  4,457   |               4,216               |               3,818               |         35,451 (+800% ❌)          |
+|            Size in bytes (brotlied) |  1,251   |               1,330               |               1,065               |         6,516  (+500% ❌)          |
 |                              Arrays |    ✔️     |                 ✔️                 |                 ✔️                 |                 ✔️                 |
 |                           Iterables |    ✔️     |                 ✔️                 |                 ✔️                 |                 ❌                 |
 |                          Generators |    ✔️     |                 ✔️                 |                 ✔️                 |                 ✔️                 |
