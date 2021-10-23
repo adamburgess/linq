@@ -1,3 +1,6 @@
+### 2.0.2
+Add 'types' field inside package.json exports
+
 ### 2.0.1
 Fix small typo on max/min documentation. No code changes.
 
