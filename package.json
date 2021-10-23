@@ -1,6 +1,6 @@
 {
     "name": "@adamburgess/linq",
-    "version": "2.0.1",
+    "version": "2.0.2",
     "description": "A linq library.",
     "scripts": {
         "tsd": "tsc --build tsconfig-publish-tsd.json",
