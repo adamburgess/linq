@@ -22,11 +22,13 @@
     "exports": {
         ".": {
             "import": "./linq.js",
-            "require": "./linq.cjs"
+            "require": "./linq.cjs",
+            "types": "./linq.d.ts"
         },
         "./enumerable": {
             "import": "./enumerable.js",
-            "require": "./enumerable.cjs"
+            "require": "./enumerable.cjs",
+            "types": "./enumerable.d.ts"
         }
     },
     "repository": {
