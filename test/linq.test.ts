@@ -95,7 +95,7 @@ export default function linq(t: Assert) {
                 t.deepEqual(Array.from(numbers), [0, 1, 2]);
             });
             t.test('explicit', t => {
-                const numbers = anyArr.where((x: any | number) => typeof x === 'number');
+                const numbers = anyArr.where<number>(x => typeof x === 'number');
                 expectType<number>(numbers.first());
                 t.deepEqual(Array.from(numbers), [0, 1, 2]);
             });
