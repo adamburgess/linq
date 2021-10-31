@@ -112,7 +112,7 @@ export function groupByMap<T, TKey, TValue>(input: Iterable<T>, keySelector: (ar
     return map;
 }
 
-/** Groups the input and into an iterable with the key and values.
+/** Groups the input into an iterable with the key and values.
  * 
  *  See {@link AnySequence.groupBy} for examples.
  */
@@ -121,7 +121,7 @@ export function groupBy<T, TKey, TValue>(input: Iterable<T>, keySelector: (arg: 
 export function groupBy<T, TKey, TValue>(input: Iterable<T>, keySelector: (arg: T) => TKey, elementSelector?: (arg: T) => TValue): Iterable<[TKey, T[]]> | Iterable<[TKey, TValue[]]> {
     return {
         [Symbol.iterator]() {
-            return groupByMap(input, keySelector, elementSelector as any)[Symbol.iterator]() as unknown as Iterator<[TKey, T[]]>;
+            return groupByMap(input, keySelector, elementSelector as unknown as (arg: T) => TKey)[Symbol.iterator]() as unknown as Iterator<[TKey, T[]]>;
         }
     }
 }

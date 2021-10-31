@@ -726,7 +726,7 @@ class SequenceKlass<T> implements AnySequence<T>, NumberSequence<T>, ArraySequen
     groupBy<TKey, TProject>(keySelector: (arg: T) => TKey, elementSelector: (arg: T) => TProject): ArraySequence<KeySequence<TKey, TProject>>
     groupBy<TKey, TProject>(keySelector: (arg: T) => TKey, elementSelector?: (arg: T) => TProject): ArraySequence<KeySequence<TKey, TProject>> | ArraySequence<KeySequence<TKey, T>> {
         // in a nice world TS would let us pass the elementSelector being undefined/or not and it'd still work
-        return new SequenceKlass(groupBy(this, keySelector, elementSelector as any))
+        return new SequenceKlass(groupBy(this, keySelector, elementSelector as unknown as (arg: T) => TProject))
             .map(kv => new KeySequenceKlass(kv[1], kv[0])) as unknown as ArraySequence<KeySequence<TKey, TProject>> | ArraySequence<KeySequence<TKey, T>>;
     }
 
