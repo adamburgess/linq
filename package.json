@@ -5,8 +5,7 @@
     "scripts": {
         "tsd": "tsc --build tsconfig-publish-tsd.json",
         "build:esm": "esbuild src/*.ts --platform=node --outdir=dist",
-        "build:cjs": "esbuild src/*.ts --platform=node --format=cjs --out-extension:.js=.cjs --outdir=dist",
-        "publish:build": "rm -rf dist dist-cjs && nr build:esm && nr build:cjs && nr tsd",
+        "publish:build": "rm -rf dist && nr build:esm && nr tsd",
         "publish:copy": "rm -rf publish && mkdir -p publish && cp -r dist/* package.json LICENSE README.md publish && node scripts/publish",
         "publish": "nr publish:build && nr publish:copy && cd publish && npm publish --dry-run",
         "publish:__GO__": "nr publish && cd publish && npm publish --access=public",
@@ -18,16 +17,14 @@
     },
     "type": "module",
     "types": "linq.d.ts",
-    "main": "linq.cjs",
+    "main": "linq.js",
     "exports": {
         ".": {
             "import": "./linq.js",
-            "require": "./linq.cjs",
             "types": "./linq.d.ts"
         },
         "./enumerable": {
             "import": "./enumerable.js",
-            "require": "./enumerable.cjs",
             "types": "./enumerable.d.ts"
         }
     },
@@ -48,21 +45,21 @@
     "homepage": "https://github.com/adamburgess/linq#readme",
     "devDependencies": {
         "@adamburgess/nr": "^1.0.3",
-        "@types/node": "^16.11.6",
+        "@types/node": "^16.11.10",
         "@types/sinon": "^10.0.6",
-        "@typescript-eslint/eslint-plugin": "^5.2.0",
-        "@typescript-eslint/parser": "^5.2.0",
+        "@typescript-eslint/eslint-plugin": "^5.4.0",
+        "@typescript-eslint/parser": "^5.4.0",
         "c8": "^7.10.0",
         "delay": "^5.0.0",
-        "esbuild": "^0.13.12",
-        "eslint": "^8.1.0",
-        "nodemon": "^2.0.14",
+        "esbuild": "^0.14.0",
+        "eslint": "^8.3.0",
+        "nodemon": "^2.0.15",
         "pta": "0.2.3",
-        "sinon": "^11.1.2",
-        "source-map-support": "^0.5.20",
-        "ts-morph": "^12.1.0",
-        "typedoc": "^0.22.7",
-        "typescript": "^4.4.4",
+        "sinon": "^12.0.1",
+        "source-map-support": "^0.5.21",
+        "ts-morph": "^13.0.2",
+        "typedoc": "^0.22.10",
+        "typescript": "^4.5.2",
         "zora": "4.1.0"
     }
 }
