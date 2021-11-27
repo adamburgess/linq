@@ -1,3 +1,6 @@
+### 3.0.0
+Remove CJS build. ESM only.
+
 ### 2.0.2
 Add 'types' field inside package.json exports
 
