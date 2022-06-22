@@ -10,6 +10,7 @@ specifiers:
   delay: ^5.0.0
   esbuild: ^0.14.47
   eslint: ^8.18.0
+  nlfurniss-typedoc-plugin-sourcefile-url: ^2.0.0
   nodemon: ^2.0.16
   pta: 0.2.3
   sinon: ^14.0.0
@@ -29,6 +30,7 @@ devDependencies:
   delay: 5.0.0
   esbuild: 0.14.47
   eslint: 8.18.0
+  nlfurniss-typedoc-plugin-sourcefile-url: 2.0.0_typedoc@0.22.17
   nodemon: 2.0.16
   pta: 0.2.3
   sinon: 14.0.0
@@ -1538,6 +1540,14 @@ packages:
       '@sinonjs/text-encoding': 0.7.1
       just-extend: 4.2.1
       path-to-regexp: 1.8.0
+    dev: true
+
+  /nlfurniss-typedoc-plugin-sourcefile-url/2.0.0_typedoc@0.22.17:
+    resolution: {integrity: sha512-oLm4jxSz9BEj9qnD92FEWVX+ObKjxwiUzKAeFXuBOftLlq2/PdoUD/DwfRFYnuL3nbSycw+e+x90U3EVMdGEhw==}
+    peerDependencies:
+      typedoc: '>=0.22.0'
+    dependencies:
+      typedoc: 0.22.17_typescript@4.7.4
     dev: true
 
   /nodemon/2.0.16:

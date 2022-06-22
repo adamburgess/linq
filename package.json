@@ -13,7 +13,7 @@
         "test": "c8 --r lcov --r text -- pta dist-dev/test/*.test.js",
         "bt": "nr build:dev && nr test && nr tsd",
         "watch": "nodemon -w src -w test -e ts -x nr -- bt",
-        "docs": "typedoc src/linq.ts src/enumerable.ts && node scripts/docs.js",
+        "docs": "typedoc --sourcefile-url-prefix \"https://github.com/adamburgess/linq/tree/master/src/\" src/linq.ts src/enumerable.ts && node scripts/docs.js",
         "lint": "eslint"
     },
     "type": "module",
@@ -54,6 +54,7 @@
         "delay": "^5.0.0",
         "esbuild": "^0.14.47",
         "eslint": "^8.18.0",
+        "nlfurniss-typedoc-plugin-sourcefile-url": "^2.0.0",
         "nodemon": "^2.0.16",
         "pta": "0.2.3",
         "sinon": "^14.0.0",
