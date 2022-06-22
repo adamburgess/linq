@@ -14,7 +14,7 @@
         "bt": "nr build:dev && nr test && nr tsd",
         "watch": "nodemon -w src -w test -e ts -x nr -- bt",
         "docs": "typedoc --sourcefile-url-prefix \"https://github.com/adamburgess/linq/tree/master/src/\" src/linq.ts src/enumerable.ts && node scripts/docs.js",
-        "lint": "eslint"
+        "lint": "eslint src"
     },
     "type": "module",
     "types": "linq.d.ts",
