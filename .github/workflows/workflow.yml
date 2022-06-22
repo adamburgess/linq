@@ -22,6 +22,8 @@ jobs:
         run: echo "node_modules/.bin" >> $GITHUB_PATH
       - name: install jq
         run: curl -L https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64 > node_modules/.bin/jq && chmod +x node_modules/.bin/jq
+      - name: run lint
+        run: nr lint
       - name: build ts
         run: nr build:dev
       - name: run tests

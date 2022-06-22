@@ -15,8 +15,6 @@ ignorePatterns:
     - dist
     - dist-dev
     - publish
-    # I would like to lint scripts, but it doesn't support top level await. "not stage 4" yet supported in node/chrome, yeah sure mate.
-    - scripts 
 rules:
     '@typescript-eslint/restrict-template-expressions': off
     'no-constant-condition':

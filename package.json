@@ -13,7 +13,8 @@
         "test": "c8 --r lcov --r text -- pta dist-dev/test/*.test.js",
         "bt": "nr build:dev && nr test && nr tsd",
         "watch": "nodemon -w src -w test -e ts -x nr -- bt",
-        "docs": "typedoc src/linq.ts src/enumerable.ts && node scripts/docs.js"
+        "docs": "typedoc src/linq.ts src/enumerable.ts && node scripts/docs.js",
+        "lint": "eslint"
     },
     "type": "module",
     "types": "linq.d.ts",
