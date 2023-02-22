@@ -86,7 +86,7 @@ export default function linq(t: Assert) {
         });
 
         t.test('narrowing', t => {
-            t.test('implicit', t => {
+            t.test('very explicit', t => {
                 function isNumber(x: string | number | boolean | symbol): x is number {
                     return typeof x === 'number';
                 }
@@ -99,7 +99,7 @@ export default function linq(t: Assert) {
                 expectType<number>(numbers.first());
                 t.deepEqual(Array.from(numbers), [0, 1, 2]);
             });
-            t.test('implicit, weird', t => {
+            t.test('explicit, weird', t => {
                 type Marvelous = { marvelous: string }
                 function isMarvelous(x: SequenceType<typeof unionArr> | Marvelous): x is Marvelous {
                     return true;

@@ -1,6 +1,5 @@
 node_modules
-dist
-dist-dev
+dist*
 publish
 .vscode/settings.json
 coverage

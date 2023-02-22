@@ -5,7 +5,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node: [ '14', '16', '18' ]
+        node: [ '14', '16', '18', '19' ]
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -31,8 +31,10 @@ jobs:
         shell: 'script -q -e -c "bash {0}"'
       - name: check types
         run: tsc
+      - name: print size
+        run: nr size
       - uses: codecov/codecov-action@v3
-        if: ${{ matrix.node == '14' }}
+        if: ${{ matrix.node == '18' }}
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: coverage/lcov.info

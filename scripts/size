@@ -1,0 +1,9 @@
+#!/bin/bash
+
+nr build:size
+M=$(wc -c < dist-size.js)
+G=$(gzip -c dist-size.js | wc -c)
+B=$(brotli -c dist-size.js | wc -c)
+echo "minified: $M"
+echo "gzip:     $G"
+echo "brotli:   $B"
