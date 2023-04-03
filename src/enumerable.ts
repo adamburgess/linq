@@ -51,7 +51,7 @@ export function repeat<T>(input: Iterable<T>, count: number) {
 
 /** An iterable that reverses _input_. 
  * 
- *  See {@link AnySequence.reverse} for examples.
+ *  See {@link linq!AnySequence.reverse | from(sequence).reverse} for examples.
  */
 export function reverse<T>(input: Iterable<T>) {
     function* reverse() {
@@ -68,7 +68,7 @@ export function reverse<T>(input: Iterable<T>) {
 
 /** An iterable that maps each element of _input_ to another value with _convert_.
  * 
- *  See {@link AnySequence.map} for examples.
+ *  See {@link linq!AnySequence.map | from(sequence).map} for examples.
  */
 export function map<T, TOut>(input: Iterable<T>, convert: (arg: T, index: number) => TOut) {
     function* map() {
@@ -82,7 +82,7 @@ export function map<T, TOut>(input: Iterable<T>, convert: (arg: T, index: number
 
 /** An iterable that filters _input_ to only elements that are truthy in _predicate_.
  * 
- *  See {@link AnySequence.where} for examples.
+ *  See {@link linq!AnySequence.where | from(sequence).where} for examples.
  */
 export function where<T>(input: Iterable<T>, predicate: (arg: T, index: number) => any) {
     function* where() {
@@ -96,7 +96,7 @@ export function where<T>(input: Iterable<T>, predicate: (arg: T, index: number) 
 
 /** Groups the input and returns a map. 
  * 
- *  See {@link AnySequence.groupBy} for examples.
+ *  See {@link linq!AnySequence.groupBy | from(sequence).groupBy} for examples.
  */
 export function groupByMap<T, TKey>(input: Iterable<T>, keySelector: (arg: T) => TKey): Map<TKey, T[]>
 export function groupByMap<T, TKey, TValue>(input: Iterable<T>, keySelector: (arg: T) => TKey, elementSelector: (arg: T) => TValue): Map<TKey, TValue[]>
@@ -114,7 +114,7 @@ export function groupByMap<T, TKey, TValue>(input: Iterable<T>, keySelector: (ar
 
 /** Groups the input into an iterable with the key and values.
  * 
- *  See {@link AnySequence.groupBy} for examples.
+ *  See {@link linq!AnySequence.groupBy | from(sequence).groupBy} for examples.
  */
 export function groupBy<T, TKey>(input: Iterable<T>, keySelector: (arg: T) => TKey): Iterable<[TKey, T[]]>
 export function groupBy<T, TKey, TValue>(input: Iterable<T>, keySelector: (arg: T) => TKey, elementSelector: (arg: T) => TValue): Iterable<[TKey, TValue[]]>
@@ -128,7 +128,7 @@ export function groupBy<T, TKey, TValue>(input: Iterable<T>, keySelector: (arg: 
 
 /** Takes X elements from input.
  * 
- *  See {@link AnySequence.take} for examples.
+ *  See {@link linq!AnySequence.take | from(sequence).take} for examples.
  */
 export function take<T>(input: Iterable<T>, count: number) {
     function* take() {
@@ -144,7 +144,7 @@ export function take<T>(input: Iterable<T>, count: number) {
 
 /** Takes X elements from input while a predicate is true.
  * 
- *  See {@link AnySequence.takeWhile} for examples.
+ *  See {@link linq!AnySequence.takeWhile | from(sequence).takeWhile} for examples.
  */
 export function takeWhile<T>(input: Iterable<T>, predicate: (arg: T) => boolean) {
     function* takeWhile() {
@@ -158,7 +158,7 @@ export function takeWhile<T>(input: Iterable<T>, predicate: (arg: T) => boolean)
 
 /** Skips X elements from input.
  * 
- *  See {@link AnySequence.skip} for examples.
+ *  See {@link linq!AnySequence.skip | from(sequence).skip} for examples.
  */
 export function skip<T>(input: Iterable<T>, count: number) {
     function* skip() {
@@ -173,7 +173,7 @@ export function skip<T>(input: Iterable<T>, count: number) {
 
 /** Skips X elements from input while a predicate is true.
  * 
- *  See {@link AnySequence.skipWhile} for examples.
+ *  See {@link linq!AnySequence.skipWhile | from(sequence).skipWhile} for examples.
  */
 export function skipWhile<T>(input: Iterable<T>, predicate: (arg: T) => boolean) {
     function* skipWhile() {
@@ -191,7 +191,7 @@ export function skipWhile<T>(input: Iterable<T>, predicate: (arg: T) => boolean)
 
 /** Concatenates two iterables together.
  * 
- *  See {@link AnySequence.append} and {@link AnySequence.prepend} for examples.
+ *  See {@link linq!AnySequence.append | from(sequence).append} and {@link linq!AnySequence.prepend from(sequence).prepend} for examples.
  */
 export function concat<T>(a: Iterable<T>, b: Iterable<T>): Iterable<T> {
     function* concat() {
@@ -203,7 +203,7 @@ export function concat<T>(a: Iterable<T>, b: Iterable<T>): Iterable<T> {
 
 /** Finds the distinct values in a sequence
  * 
- *  See {@link AnySequence.distinct} for examples.
+ *  See {@link linq!AnySequence.distinct | from(sequence).distinct} for examples.
  */
 export function distinct<T, TKey = T>(input: Iterable<T>, keySelector?: (arg: T) => TKey) {
     function* distinct() {
@@ -221,7 +221,7 @@ export function distinct<T, TKey = T>(input: Iterable<T>, keySelector?: (arg: T)
 
 /** Flattens a sequence.
  * 
- *  See {@link ArraySequence.flat} for examples.
+ *  See {@link linq!ArraySequence.flat | from(array).flat} for examples.
  */
 export function flat<T>(input: Iterable<Iterable<T>>): Iterable<T> {
     function* flat() {
@@ -234,7 +234,7 @@ export function flat<T>(input: Iterable<Iterable<T>>): Iterable<T> {
 
 /** Finds the min of a number sequence
  * 
- *  See {@link NumberSequence.min} for examples.
+ *  See {@link linq!NumberSequence.min | from(numArray).min} for examples.
  */
 export function min(input: Iterable<number>) {
     return byMin_byMax_min_max(input, undefined, true, false);
@@ -242,7 +242,7 @@ export function min(input: Iterable<number>) {
 
 /** Finds the max of a number sequence
  * 
- *  See {@link NumberSequence.max} for examples.
+ *  See {@link linq!NumberSequence.max | from(numArray).max} for examples.
  */
 export function max(input: Iterable<number>) {
     return byMin_byMax_min_max(input, undefined, false, false);
@@ -250,7 +250,7 @@ export function max(input: Iterable<number>) {
 
 /** Finds the value of a sequence that is the min of a projected value.
  * 
- *  See {@link AnySequence.minBy} for more info.
+ *  See {@link linq!AnySequence.minBy | from(sequence).minBy} for more info.
  */
 export function minBy<T>(input: Iterable<T>, selector: (arg: T) => number) {
     return byMin_byMax_min_max(input, selector, true, true);
@@ -258,7 +258,7 @@ export function minBy<T>(input: Iterable<T>, selector: (arg: T) => number) {
 
 /** Finds the value of a sequence that is the max of a projected value.
  * 
- *  See {@link AnySequence.maxBy} for more info.
+ *  See {@link linq!AnySequence.maxBy | from(sequence).maxBy} for more info.
  */
 export function maxBy<T>(input: Iterable<T>, selector: (arg: T) => number) {
     return byMin_byMax_min_max(input, selector, false, true);

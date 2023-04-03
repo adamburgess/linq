@@ -13,7 +13,7 @@
         "test": "c8 --r lcov --r text -- pta dist-dev/test/*.test.js",
         "bt": "nr build:dev && nr test && nr tsd",
         "watch": "nodemon -w src -w test -e ts -x nr -- bt",
-        "docs": "typedoc --sourcefile-url-prefix \"https://github.com/adamburgess/linq/tree/master/src/\" src/linq.ts src/enumerable.ts && node scripts/docs.js",
+        "docs": "typedoc src/linq.ts src/enumerable.ts --searchInComments && node scripts/docs.js",
         "lint": "eslint src",
         "build:size": "echo \"import from from './src/linq.js'; import enumerable from './src/enumerable.js'; export { from, enumerable };\" | esbuild --log-level=warning --bundle --minify --format=esm --outfile=dist-size.js",
         "size": "scripts/size"
@@ -56,14 +56,13 @@
         "delay": "^5.0.0",
         "esbuild": "^0.17.10",
         "eslint": "^8.34.0",
-        "nlfurniss-typedoc-plugin-sourcefile-url": "^2.0.0",
         "nodemon": "^2.0.20",
         "pta": "0.2.3",
         "sinon": "^15.0.1",
         "source-map-support": "^0.5.21",
-        "ts-morph": "^17.0.1",
-        "typedoc": "^0.22.18",
-        "typescript": "^4.9.5",
+        "ts-morph": "^18.0.0",
+        "typedoc": "^0.23.28",
+        "typescript": "^5.0.3",
         "zora": "4.1.0"
     }
 }
