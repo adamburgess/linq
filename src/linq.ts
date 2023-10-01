@@ -1084,6 +1084,7 @@ type Is<T, Test> = T extends Test ? true : false
 type IsNot<T, Test> = Not<Is<T, Test>>
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-redundant-type-constituents */
 // All the following should be true:
 type Test_NumberSequence = Is<Sequence<number>, NumberSequence<number>>
 type Test_ArraySequence = Is<Sequence<number[]>, ArraySequence<number[]>>
